@@ -1,0 +1,31 @@
+.both-container {
+    width: 350px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #eee;
+}
+
+.both-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.both-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.both-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: orange;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}

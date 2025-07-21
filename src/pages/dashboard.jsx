@@ -1,7 +1,12 @@
-import React from "react";
+ import React from "react";
+import ProgressGraph from "../components/progressgraph";
 
 function Dashboard() {
-  return <h1>📊 Dashboard Page</h1>;
+  return (
+    <div>
+      <ProgressGraph />
+    </div>
+  );
 }
 
 export default Dashboard;

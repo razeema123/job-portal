@@ -17,7 +17,7 @@ const Signup = () => {
   return (
     <div className="auth-page">
       <div className="auth-illustration">
-        <img src="/src/4165379.jpg" alt="Signup Illustration" />
+        <img src="/src/2754-Photoroom.png" alt="Signup Illustration" />
       </div>
       <div className="auth-form">
         <h2>Signup</h2>

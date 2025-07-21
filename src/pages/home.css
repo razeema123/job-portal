@@ -19,7 +19,6 @@
 
 .hero-text h1 span {
     color: #0a3871;
-   
 }
 
 .hero-text p {
@@ -66,4 +65,39 @@
 .hero-image img {
     max-width: 100%;
     height: auto;
+}
+
+.site-header {
+    background-color: #0a3871;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.site-header h2 {
+    color: #f6f8fa;
+    margin: 0;
+}
+
+.site-header nav a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: #fefcfc;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+}
+
+.site-footer {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #666;
 }

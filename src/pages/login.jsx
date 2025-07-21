@@ -19,10 +19,13 @@ const Login = () => {
   };
 
   return (
+    
     <div className="auth-page">
       <div className="auth-illustration">
-        <img src="/src/4165379.jpg" alt="Login Illustration" />
-      </div>
+  <h1 className="auth-title">Welcome to Job Portal</h1>
+  <img src="/src/2754-Photoroom.png" alt="Login Illustration" />
+</div>
+
       <div className="auth-form">
         <h2>Login</h2>
         <form onSubmit={handleLogin}>

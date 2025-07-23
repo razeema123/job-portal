@@ -33,28 +33,27 @@ const Header = () => {
     <header className="site-header">
       <FaBriefcase className="logo-icon" />
       <nav>
-  <a href="/"><AiFillHome /><span>Home</span></a>
-  <a href="/find-jobs"><FaSearch /><span>Find Jobs</span></a>
-  <a href="/recruiter"><MdPostAdd /><span>Post Jobs</span></a>
+        <a href="/"><AiFillHome /> Home</a>
+        <a href="/find-jobs"><FaSearch /> Find Jobs</a>
+        <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
 
-  <div className="profile-menu-wrapper" ref={profileRef}>
-    <button className="profile-btn" onClick={() => setShowProfileMenu(!showProfileMenu)}>
-      <FaUserCircle /><span>Profile</span>
-    </button>
+        <div className="profile-menu-wrapper" ref={profileRef}>
+          <button className="profile-btn" onClick={() => setShowProfileMenu(!showProfileMenu)}>
+            <FaUserCircle /> Profile
+          </button>
 
-    {showProfileMenu && (
-      <div className="profile-popup">
-        <button onClick={() => navigate('/view-profile')}>
-          <BsPersonLinesFill /><span>View Profile</span>
-        </button>
-        <button onClick={handleLogout}>
-          <FiLogOut /><span>Logout</span>
-        </button>
-      </div>
-    )}
-  </div>
-</nav>
-
+          {showProfileMenu && (
+            <div className="profile-popup">
+              <button onClick={() => navigate('/view-profile')}>
+                <BsPersonLinesFill /> View Profile
+              </button>
+              <button onClick={handleLogout}>
+                <FiLogOut /> Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </nav>
     </header>
   );
 };

@@ -11,12 +11,11 @@ const Header = () => (
   <header className="site-header">
     <FaBriefcase className="logo-icon" />
     <nav>
-  <a href="/home"><AiFillHome /> <span>Home</span></a>
-  <a href="/find-jobs"><FaSearch /> <span>Find Jobs</span></a>
-  <a href="/recruiter"><MdPostAdd /> <span>Post Jobs</span></a>
-  <a href="/login"><FiLogOut /> <span>Logout</span></a>
-</nav>
-
+      <a href="/home"><AiFillHome /> Home</a>
+      <a href="/find-jobs"><FaSearch /> Find Jobs</a>
+      <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
+      <a href="/login"><FiLogOut /> Logout</a>
+    </nav>
   </header>
 );
 

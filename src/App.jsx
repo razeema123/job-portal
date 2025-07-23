@@ -6,6 +6,8 @@ import Home from './pages/home.jsx';
 import FindJobs from './findjob.jsx';
 import ForgotPassword from './forgott.jsx';
 import ApplyJob from './applyjob.jsx';
+import ViewProfile from './pages/viewprofile.jsx';
+
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/find-jobs" element={<FindJobs />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/apply" element={<ApplyJob />} />
+        <Route path="/view-profile" element={<ViewProfile />} />
+      
       </Routes>
     </Router>
   );

@@ -22,8 +22,10 @@ const Login = () => {
     
     <div className="auth-page">
       <div className="auth-illustration">
+      <img src="/src/rag-doll-red-word-career-Photoroom (1).png" alt="Job Logo" className="job-logo" />
   <h1 className="auth-title">Welcome to Job Portal</h1>
-  <img src="/src/2754-Photoroom.png" alt="Login Illustration" />
+  
+  <img src="/src/2754-Photoroom.png" alt="Login Illustration" className="illustration" />
 </div>
 
       <div className="auth-form">

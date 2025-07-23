@@ -14,6 +14,8 @@ import Home from './pages/home.jsx';
 import FindJobs from './findjob.jsx';
 import ForgotPassword from './forgott.jsx';
 import ApplyJob from './applyjob.jsx';
+import ViewProfile from './pages/viewprofile.jsx';
+
 
  
 
@@ -30,7 +32,7 @@ function App() {
         <Route path="/admin/progressgraph" element={<ProgressGraph />} />
         <Route path="/admin/adminlayout" element={<AdminLayout />} />
        
-=======
+
         <Route path="/recruiter/create" element={<CreateJob/>}/>
         <Route path="/recruiter/view" element={<ViewJobs/>}/>
        <Route path="/sidebar" element={<Sidebar />} />
@@ -39,7 +41,12 @@ function App() {
         <Route path="/find-jobs" element={<FindJobs />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/apply" element={<ApplyJob />} />
+
+        <Route path="/view-profile" element={<ViewProfile />} />
+      
+
  
+
       </Routes>
     </Router>
   );

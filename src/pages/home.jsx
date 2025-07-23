@@ -1,23 +1,62 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import { AiFillHome } from 'react-icons/ai';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaBriefcase, FaUserCircle } from 'react-icons/fa';
 import { MdPostAdd } from 'react-icons/md';
-import { FaBriefcase } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
+import { BsPersonLinesFill } from 'react-icons/bs';
 
-const Header = () => (
-  <header className="site-header">
-   <FaBriefcase className="logo-icon" />
-    <nav>
-      <a href=""><AiFillHome /> Home</a>
-      <a href="/find-jobs"><FaSearch /> Find Jobs</a>
-      <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
-      <a href="/login"><FiLogOut /> Logout</a>
-    </nav>
-  </header>
-);
+const Header = () => {
+  const navigate = useNavigate();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const profileRef = useRef();
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+   
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  return (
+    <header className="site-header">
+      <FaBriefcase className="logo-icon" />
+      <nav>
+        <a href="/"><AiFillHome /> Home</a>
+        <a href="/find-jobs"><FaSearch /> Find Jobs</a>
+        <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
+
+        <div className="profile-menu-wrapper" ref={profileRef}>
+          <button className="profile-btn" onClick={() => setShowProfileMenu(!showProfileMenu)}>
+            <FaUserCircle /> Profile
+          </button>
+
+          {showProfileMenu && (
+            <div className="profile-popup">
+              <button onClick={() => navigate('/view-profile')}>
+                <BsPersonLinesFill /> View Profile
+              </button>
+              <button onClick={handleLogout}>
+                <FiLogOut /> Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </nav>
+    </header>
+  );
+};
 
 const Footer = () => (
   <footer className="site-footer">

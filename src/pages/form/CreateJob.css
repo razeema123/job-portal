@@ -1,0 +1,162 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+  height: 100vh;
+}
+ 
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #1f2937;
+  color: white;
+  padding: 14px 20px;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #93c5fd;
+}
+
+ 
+.page-container {
+  margin-top: 60px; 
+  height: calc(100vh - 60px); 
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background: #f9fafb;
+}
+
+ 
+.page-container h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+
+ 
+form {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;  
+  gap: 20px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 4px rgba(37, 99, 235, 0.3);
+}
+
+
+textarea {
+  grid-column: span 2;
+  resize: vertical;
+  min-height: 120px;
+}
+
+button[type="submit"] {
+  grid-column: span 2;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #1d4ed8;
+}
+
+
+form::-webkit-scrollbar {
+  width: 6px;
+}
+form::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+ 
+@media (max-width: 900px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+  textarea,
+  button[type="submit"] {
+    grid-column: span 1;
+  }
+}
+
+ 
+@media (max-width: 600px) {
+  .page-container {
+    padding: 15px;
+  }
+
+  .page-container h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button[type="submit"] {
+    font-size: 16px;
+    padding: 12px;
+  }
+}

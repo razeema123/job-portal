@@ -2,17 +2,7 @@ import React from "react";
 import Sidebar from "../components/sidebar";
 import ProgressGraph from "../components/progressgraph";
 import "./AdminLayout.css";  
-import weathercard from "../components/weather card"; // adjust path if needed
-
-  <div className="dashboard-container">
-  {/* Existing metric cards */}
-  <div className="dashboard-card">...</div>
-  <div className="dashboard-card">...</div>
-  <div className="dashboard-card">...</div>
-
-  {/* Weather widget */}
-  <WeatherCard />
-</div>
+ 
 
 
 function AdminLayout() {

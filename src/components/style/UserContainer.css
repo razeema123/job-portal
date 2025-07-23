@@ -1,0 +1,32 @@
+.user-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
+  align-content: right;
+}
+
+.user-container h3 {
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+  color: #444;
+}
+
+.user-table th {
+  background-color: #f0f2f5;
+}

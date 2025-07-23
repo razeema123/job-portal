@@ -1,26 +1,28 @@
-import React from "react";
+  import React from "react";
 import Sidebar from "../components/sidebar";
 import ProgressGraph from "../components/progressgraph";
-import "./AdminLayout.css";  
-import weathercard from "../components/weather card"; // adjust path if needed
+import WeatherCard from "../components/weather card";
+import "./AdminLayout.css";
 
-  <div className="dashboard-container">
-  {/* Existing metric cards */}
-  <div className="dashboard-card">...</div>
-  <div className="dashboard-card">...</div>
-  <div className="dashboard-card">...</div>
-
-  {/* Weather widget */}
-  <WeatherCard />
-</div>
-
+const users = [
+  { id: 1, name: "Revathi R.", email: "revathi@example.com", role: "Frontend Developer" },
+  { id: 2, name: "Ajay Kumar", email: "ajay@example.com", role: "UI/UX Designer" },
+  { id: 3, name: "Sneha S.", email: "sneha@example.com", role: "Backend Developer" },
+];
 
 function AdminLayout() {
   return (
     <div className="admin-container">
       <Sidebar />
-      <div className="graph-container">  
-        <h1>Dashboard Overview</h1>
+
+      <div className="main-content">
+        {/* Weather card in top-right corner */}
+        <div className="weather-container">
+          <WeatherCard />
+        </div>
+
+        <h3>Dashboard Overview</h3>
+
         <div className="dashboard-boxes">
           <div className="dashboard-box">
             <h3>Views</h3>
@@ -35,9 +37,33 @@ function AdminLayout() {
             <p>87</p>
           </div>
         </div>
+
         <ProgressGraph />
+</div> 
+        {/* 👥 on the right corner */}
+        <div className="user-container" align="right">
+          <h3>👥 All Users</h3>
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    
   );
 }
 

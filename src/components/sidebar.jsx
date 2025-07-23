@@ -26,8 +26,9 @@ function Sidebar() {
       <h2>Admin Panel</h2>
       <ul>
         <li><Link to="/admin/dashboard">Dashboard</Link></li>
-        <li><Link to="/admin/users">Users</Link></li>
+        <li><Link to="/admin/UserContain">Users</Link></li>
         <li><Link to="/admin/settings">Settings</Link></li>
+       <li><Link to="/admin/jobrequests">job requests </Link> </li>
       </ul>
 
       </div>

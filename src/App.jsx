@@ -15,6 +15,7 @@ import FindJobs from './findjob.jsx';
 import ForgotPassword from './forgott.jsx';
 import ApplyJob from './applyjob.jsx';
 import ViewProfile from './pages/viewprofile.jsx';
+import JobDetail from './jobdetails.jsx';
 
 
  
@@ -43,6 +44,7 @@ function App() {
         <Route path="/apply" element={<ApplyJob />} />
 
         <Route path="/view-profile" element={<ViewProfile />} />
+        <Route path="/job/:jobId" element={<JobDetail />} />
       
 
  

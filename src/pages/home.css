@@ -1,3 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+    background-color: #fff;
+    /* Or your main background color */
+}
 .hero-container {
     display: flex;
     align-items: center;
@@ -93,13 +105,16 @@
 }
 
 .site-footer {
-    background-color: #f8f9fa;
-    padding: 1rem;
+    background-color: #0a3871;
+   
+    color: #fff;
+    padding: 20px;
     text-align: center;
-    border-top: 1px solid #ddd;
-    margin-top: 2rem;
     font-size: 0.9rem;
-    color: #666;
+    border-top: none;
+
+    position: relative;
+    z-index: 1;
 }
 .profile-menu-wrapper {
     position: relative;
@@ -190,7 +205,7 @@
         height: auto;
     }
 }
-/* Default: icons + text */
+
 nav a, .profile-btn {
   display: flex;
   align-items: center;
@@ -200,7 +215,6 @@ nav a, .profile-btn {
   color: #fbf7f7;
 }
 
-/* Responsive: only icons */
 @media screen and (max-width: 768px) {
   nav a span,
   .profile-btn span {

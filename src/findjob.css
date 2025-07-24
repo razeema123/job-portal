@@ -218,3 +218,13 @@ body,
         font-size: 14px;
     }
 }
+.clickable-title {
+    cursor: pointer;
+    color: #0077cc;
+    transition: 0.2s;
+}
+
+.clickable-title:hover {
+    text-decoration: underline;
+    color: #0057a3;
+}

@@ -110,6 +110,10 @@ const FindJobs = () => {
   const handleApply = (job) => {
     navigate('/apply', { state: { job } });
   };
+  const handleViewDetails = (job) => {
+    navigate(`/job/${job.title.replace(/\s+/g, '-').toLowerCase()}`, { state: { job } });
+  };
+  
 
   return (
     <>
@@ -147,7 +151,9 @@ const FindJobs = () => {
 
         {filteredJobs.map((job, index) => (
           <div className="job-card" key={index}>
-            <h3>{job.title}</h3>
+          
+            <h3 onClick={() => handleViewDetails(job)} className="clickable-title">{job.title}</h3>
+
             <p className="company">{job.company}</p>
             <p className="location">📍 {job.location}</p>
 

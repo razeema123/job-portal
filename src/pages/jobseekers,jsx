@@ -23,6 +23,34 @@ const initialRequests = [
     appliedDate: "2025-07-18",
     status: "Rejected",
   },
+{
+ id: 4,
+    name: "Sneha saji",
+    jobTitle: "Backend Developer",
+    appliedDate: "2025-07-18",
+    status: "Rejected",
+  },
+  {
+ id: 4,
+    name: "Sneha saji",
+    jobTitle: "Backend Developer",
+    appliedDate: "2025-07-18",
+    status: "Rejected",
+  },
+  {
+ id: 4,
+    name: "Sneha saji",
+    jobTitle: "Backend Developer",
+    appliedDate: "2025-07-18",
+    status: "Rejected",
+  },
+  {
+ id: 4,
+    name: "Sneha saji",
+    jobTitle: "Backend Developer",
+    appliedDate: "2025-07-18",
+    status: "Rejected",
+  },
 ];
 
 function JobRequests() {

@@ -14,6 +14,7 @@ import CreateJob from './applications/createjob.jsx';
 import PostJob from './applications/postjob.jsx';
 import ViewApplications from './applications/ViewApplications.jsx';
 import ViewProfile from './pages/viewprofile.jsx';
+import JobDetail from './jobdetails.jsx';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
 
 
         <Route path="/view-profile" element={<ViewProfile />} />
+        <Route path="/job/:jobId" element={<JobDetail />} />
       
 
  

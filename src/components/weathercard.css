@@ -1,24 +1,9 @@
-.weather-card {
-  background-color: #e3f2fd;
-  color: #0d47a1;
-  border-radius: 12px;
-  padding: 20px;
+ .weather-card {
+  background-color: #0077b6;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 180px;
   text-align: center;
-  width: 220px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.weather-card h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.temperature {
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.condition {
-  font-size: 18px;
-  margin-top: 5px;
 }

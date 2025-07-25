@@ -59,8 +59,8 @@ export default function ViewApplications() {
       <div className="sidebar">
         <h2 className="sidebar-title">Job Portal</h2>
         <ul className="sidebar-menu">
-          <li><Link to="/postjob">Posted Job</Link></li>
-          <li><Link to="/createjob">Create Job</Link></li>
+          <li><Link to="/postjob">Jobs</Link></li>
+          <li><Link to="/createjob">Applications</Link></li>
         </ul>
       </div>
 

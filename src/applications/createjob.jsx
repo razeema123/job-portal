@@ -41,8 +41,8 @@ export default function CreateJob() {
       <div className="sidebar">
         <h2 className="sidebar-title">Job Portal</h2>
         <ul className="sidebar-menu">
+          <li><Link to="/find-jobs">Jobs</Link></li>
           <li><Link to="/postjob">Posted Job</Link></li>
-          <li><Link to="/createjob">Create Job</Link></li>
         </ul>
       </div>
 

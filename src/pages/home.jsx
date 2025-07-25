@@ -35,7 +35,7 @@ const Header = () => {
       <nav>
         <a href="/"><AiFillHome /> Home</a>
         <a href="/find-jobs"><FaSearch /> Find Jobs</a>
-        <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
+        <a href="/postjob"><MdPostAdd /> Post Jobs</a>
 
         <div className="profile-menu-wrapper" ref={profileRef}>
           <button className="profile-btn" onClick={() => setShowProfileMenu(!showProfileMenu)}>
@@ -77,7 +77,7 @@ const Home = () => {
           <p>Apply to a plethora of hiring opportunities & work with your dream companies!</p>
           <div className="hero-buttons">
             <button className="find-btn" onClick={() => navigate('/find-jobs')}>Find Jobs</button>
-            <button className="post-btn" onClick={() => navigate('/recruiter')}>+ Post Jobs</button>
+            <button className="post-btn" onClick={() => navigate('/postjob')}>+ Post Jobs</button>
           </div>
         </div>
         <div className="hero-image">

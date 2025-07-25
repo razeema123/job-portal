@@ -1,8 +1,17 @@
   import React from "react";
 import Sidebar from "../components/sidebar";
 import ProgressGraph from "../components/progressgraph";
+ 
 import WeatherCard from "../components/weather card";
 import "./AdminLayout.css";
+=======
+import "./AdminLayout.css";  
+
+
+
+ 
+
+ 
 
 const users = [
   { id: 1, name: "Revathi R.", email: "revathi@example.com", role: "Frontend Developer" },

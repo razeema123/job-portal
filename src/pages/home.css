@@ -1,3 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+    background-color: #fff;
+    /* Or your main background color */
+}
 .hero-container {
     display: flex;
     align-items: center;
@@ -93,11 +105,127 @@
 }
 
 .site-footer {
-    background-color: #f8f9fa;
-    padding: 1rem;
+    background-color: #0a3871;
+   
+    color: #fff;
+    padding: 20px;
     text-align: center;
-    border-top: 1px solid #ddd;
-    margin-top: 2rem;
     font-size: 0.9rem;
-    color: #666;
+    border-top: none;
+
+    position: relative;
+    z-index: 1;
 }
+.profile-menu-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-popup {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.profile-popup button {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #333;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.profile-popup button:hover {
+    background-color: #f0f0f0;
+
+}
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 80px;
+    background-color: #fff;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+
+@media (max-width: 768px) {
+    .hero-container {
+        flex-direction: column-reverse;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .find-btn,
+    .post-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .hero-image img {
+        max-width: 80%;
+        height: auto;
+    }
+}
+
+nav a, .profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #fbf7f7;
+}
+
+@media screen and (max-width: 768px) {
+  nav a span,
+  .profile-btn span {
+    display: none;
+  }
+
+  nav a,
+  .profile-btn {
+    justify-content: center;
+    font-size: 17px;
+  }
+}
+

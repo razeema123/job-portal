@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import './findjob.css';
 import { AiFillHome } from 'react-icons/ai';
-
 import { MdPostAdd } from 'react-icons/md';
-import { FaBriefcase } from 'react-icons/fa';
-
-import { FaSearch } from 'react-icons/fa';
+import { FaBriefcase, FaSearch } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
+
 const Header = () => (
   <header className="site-header">
-   <FaBriefcase className="logo-icon" />
+    <FaBriefcase className="logo-icon" />
     <nav>
       <a href="/home"><AiFillHome /> Home</a>
       <a href="/find-jobs"><FaSearch /> Find Jobs</a>
-            <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
-            <a href="/login"><FiLogOut /> Logout</a>
-            
+      <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
+      <a href="/login"><FiLogOut /> Logout</a>
     </nav>
   </header>
 );
@@ -28,9 +25,7 @@ const Footer = () => (
   </footer>
 );
 
-
-const jobsData = [
-  {
+const jobsData = [{
     title: 'Fresher Software testing intern',
     company: 'UST Global',
     location: 'Kochi, Kerala',
@@ -86,53 +81,97 @@ const jobsData = [
 
 const FindJobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredJobs = jobsData.filter((job) =>
-    job.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [selectedType, setSelectedType] = useState('All');
+  const [sortOption, setSortOption] = useState('');
   const navigate = useNavigate();
+
+  // ➕ Filter based on search and job type
+  const filteredJobs = jobsData
+    .filter((job) =>
+      job.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((job) =>
+      selectedType === 'All' || job.type.includes(selectedType)
+    )
+    .sort((a, b) => {
+      if (sortOption === 'company-asc') {
+        return a.company.localeCompare(b.company);
+      } else if (sortOption === 'company-desc') {
+        return b.company.localeCompare(a.company);
+      } else if (sortOption === 'salary-asc') {
+        return parseInt(a.salary.replace(/\D/g, '')) - parseInt(b.salary.replace(/\D/g, ''));
+      } else if (sortOption === 'salary-desc') {
+        return parseInt(b.salary.replace(/\D/g, '')) - parseInt(a.salary.replace(/\D/g, ''));
+      }
+      return 0;
+    });
 
   const handleApply = (job) => {
     navigate('/apply', { state: { job } });
   };
+  const handleViewDetails = (job) => {
+    navigate(`/job/${job.title.replace(/\s+/g, '-').toLowerCase()}`, { state: { job } });
+  };
   
-    return (
-      <>
+
+  return (
+    <>
       <Header />
-    <div className="jobs-page">
-      <div className="search-bar">
-        <FaSearch className="search-icon" />
-        <input
-          type="text"
-          placeholder="Job title"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-
-      <h2>Jobs for you</h2>
-
-      {filteredJobs.map((job, index) => (
-        <div className="job-card" key={index}>
-          <h3>{job.title}</h3>
-          <p className="company">{job.company}</p>
-<p className="location">📍 {job.location}</p>
-
-          <div className="job-tags">
-            <span className="tag salary">{job.salary}</span>
-            {job.type.map((item, i) => (
-              <span className="tag" key={i}>{item}</span>
-            ))}
-          </div>
-          <div className="apply-row">
-  <span className="apply" onClick={() => handleApply(job)}>
-    📩 <strong>Easily apply</strong>
-  </span>
-          </div>
+      <div className="jobs-page">
+        <div className="search-bar">
+          <FaSearch className="search-icon" />
+          <input
+            type="text"
+            placeholder="Job title"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
-      ))}
-    </div>
-      </>
+
+        {/* ➕ Filters */}
+        <div className="filter-sort-container">
+          <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+            <option value="All">All Job Types</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Work from home">Work from home</option>
+            <option value="Monday to Friday">Monday to Friday</option>
+          </select>
+
+          <select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+            <option value="">Sort By</option>
+            <option value="company-asc">Company A-Z</option>
+            <option value="company-desc">Company Z-A</option>
+            <option value="salary-asc">Salary Low to High</option>
+            <option value="salary-desc">Salary High to Low</option>
+          </select>
+        </div>
+
+        <h2>Jobs for you</h2>
+
+        {filteredJobs.map((job, index) => (
+          <div className="job-card" key={index}>
+          
+            <h3 onClick={() => handleViewDetails(job)} className="clickable-title">{job.title}</h3>
+
+            <p className="company">{job.company}</p>
+            <p className="location">📍 {job.location}</p>
+
+            <div className="job-tags">
+              <span className="tag salary">{job.salary}</span>
+              {job.type.map((item, i) => (
+                <span className="tag" key={i}>{item}</span>
+              ))}
+            </div>
+            <div className="apply-row">
+              <span className="apply" onClick={() => handleApply(job)}>
+                📩 <strong>Easily apply</strong>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <Footer />
+    </>
   );
 };
 

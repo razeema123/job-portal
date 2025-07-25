@@ -217,6 +217,7 @@ body,
         max-width: none;
         font-size: 14px;
     }
+
 }
 .clickable-title {
     cursor: pointer;
@@ -228,3 +229,4 @@ body,
     text-decoration: underline;
     color: #0057a3;
 }
+

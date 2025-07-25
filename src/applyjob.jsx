@@ -9,13 +9,12 @@ import { FiLogOut } from 'react-icons/fi';
 const Header = () => (
   <header className="site-header">
     <FaBriefcase className="logo-icon" />
-     <nav>
-      <a href="/home"><AiFillHome /> <span>Home</span></a>
-      <a href="/find-jobs"><FaSearch /> <span>Find Jobs</span></a>
-      <a href="/recruiter"><MdPostAdd /> <span>Post Jobs</span></a>
-      <a href="/login"><FiLogOut /> <span>Logout</span></a>
+    <nav>
+      <a href="/home"><AiFillHome /> Home</a>
+      <a href="/find-jobs"><FaSearch /> Find Jobs</a>
+      <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
+      <a href="/login"><FiLogOut /> Logout</a>
     </nav>
-    
   </header>
 );
 
@@ -70,19 +69,14 @@ const ApplyJob = () => {
 
         <form className="apply-form" onSubmit={handleSubmit}>
         
-        {step === 1 && (
-  <>
-    <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
-    <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
-    <input type="tel" name="phone" placeholder="Your Phone Number" value={formData.phone} onChange={handleChange} required />
-
-    
-    <div className="button-container">
-      <button type="button" onClick={nextStep}>Next</button>
-    </div>
-  </>
-)}
-
+          {step === 1 && (
+            <>
+              <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
+              <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
+              <input type="tel" name="phone" placeholder="Your Phone Number" value={formData.phone} onChange={handleChange} required />
+              <button type="button" onClick={nextStep}>Next</button>
+            </>
+          )}
 
         
           {step === 2 && (
@@ -94,11 +88,10 @@ const ApplyJob = () => {
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
-              <div className="button-row">
-  <button type="button" onClick={prevStep}>Back</button>
-  <button type="button" onClick={nextStep}>Next</button>
-</div>
-
+              <div>
+                <button type="button" onClick={prevStep}>Back</button>{' '}
+                <button type="button" onClick={nextStep}>Next</button>
+              </div>
             </>
           )}
 
@@ -109,11 +102,10 @@ const ApplyJob = () => {
                           
               <textarea name="reason" placeholder="Why should we hire you?" value={formData.reason} onChange={handleChange} required />
               
-              <div className="button-row">
-  <button type="button" onClick={prevStep}>Back</button>
-  <button type="button" onClick={nextStep}>Submit</button>
-</div>
-
+              <div>
+                <button type="button" onClick={prevStep}>Back</button>{' '}
+                <button type="submit">Submit Application</button>
+              </div>
             </>
           )}
         </form>

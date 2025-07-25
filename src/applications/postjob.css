@@ -130,8 +130,9 @@
   background: #da1738;
 }
 .cancel-btn:hover {
-  background: #c8cfd5;
+  background: #e1e5e8 !important;
 }
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }

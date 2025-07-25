@@ -52,7 +52,7 @@ export default function PostJob() {
       <div className="sidebar">
         <h2 className="sidebar-title">Job Portal</h2>
         <ul className="sidebar-menu">
-          <li><Link to="/postjob"> Jobs</Link></li>
+          <li><Link to="/find-jobs"> Jobs</Link></li>
           <li><Link to="/createjob">Applications</Link></li>
           
         </ul>
@@ -108,8 +108,9 @@ export default function PostJob() {
             <h3>Confirm Delete</h3>
             <p>Are you sure you want to delete this job?</p>
             <div className="modal-buttons">
-              <button className="confirm-btn" onClick={confirmDelete}> Delete </button>
               <button className="cancel-btn" onClick={cancelDelete}>Cancel</button>
+              <button className="confirm-btn" onClick={confirmDelete}> Delete </button>
+              
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ const Header = () => (
     <nav>
       <a href="/home"><AiFillHome /> Home</a>
       <a href="/find-jobs"><FaSearch /> Find Jobs</a>
-      <a href="/recruiter"><MdPostAdd /> Post Jobs</a>
+      <a href="/postjob"><MdPostAdd /> Post Jobs</a>
       <a href="/login"><FiLogOut /> Logout</a>
     </nav>
   </header>

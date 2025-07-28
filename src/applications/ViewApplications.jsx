@@ -70,8 +70,9 @@ export default function ViewApplications() {
           <h2>{job.title} – Applications</h2>
 
           {!editMode && (
-            <button className="edit-btn" onClick={handleEditClick}>Edit</button>
+          <button className="edit-btn" onClick={handleEditClick}>Edit</button>
           )}
+          
         </div>
 
         {/* Job Details */}

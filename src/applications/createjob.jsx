@@ -54,17 +54,17 @@ export default function CreateJob() {
             
             <div className="form-group">
               <label>Job Title</label>
-              <input type="text" name="title" value={job.title} onChange={handleChange} required />
+              <input type="text" name="title" value={job.title} onChange={handleChange} placeholder="Eg: Frontend Developer" required />
             </div>
 
             <div className="form-group">
               <label>Company</label>
-              <input type="text" name="company" value={job.company} onChange={handleChange} required />
+              <input type="text" name="company" value={job.company} onChange={handleChange} placeholder="Eg: IBM" required />
             </div>
 
             <div className="form-group">
               <label>Location</label>
-              <input type="text" name="location" value={job.location} onChange={handleChange} required />
+              <input type="text" name="location" value={job.location} onChange={handleChange} placeholder="Eg: Remote/New York"required />
             </div>
 
             <div className="form-group">
@@ -85,7 +85,7 @@ export default function CreateJob() {
 
             <div className="form-group">
               <label>Job Description</label>
-              <textarea name="description" value={job.description} onChange={handleChange} rows="4" required />
+              <textarea name="description" value={job.description} onChange={handleChange} rows="4" placeholder="Enter your description" required />
             </div>
 
             <button type="submit" className="submit-btn">Create Job</button>

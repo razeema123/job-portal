@@ -127,7 +127,7 @@
   background: #218838;
 }
 
-/* ✅ Responsive */
+
 @media (max-width: 768px) {
   .layout {
     flex-direction: column;
@@ -143,4 +143,11 @@
     margin-left: 0;
     width: 100%;
   }
+}.form-group input,
+.form-group select,
+.form-group textarea {
+
+  background-color: #faf7f7;
+ 
+ 
 }

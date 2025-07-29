@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./postjob.css";
+import Sidebar from "../components/recruiter/SideBar";
 
 export default function PostJob() {
   const [jobs, setJobs] = useState([]);
@@ -20,7 +21,7 @@ export default function PostJob() {
   };
 
   const openDeleteModal = (e, index) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     setJobToDelete(index);
     setShowModal(true);
   };
@@ -31,7 +32,6 @@ export default function PostJob() {
       updatedJobs.splice(jobToDelete, 1);
       setJobs(updatedJobs);
       localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-
       toast.info("Job deleted successfully!");
     }
     setShowModal(false);
@@ -44,30 +44,28 @@ export default function PostJob() {
   };
 
   return (
+      
+      
     <div className="layout">
-      {}
       <ToastContainer position="top-right" autoClose={2000} />
 
-          {/* Header */}
-    <header className="header">
-      <h5></h5>
-    </header>
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <Sidebar />
+      </aside>
 
-      {}
-      <div className="sidebar">
-        <h2 className="sidebar-title">Job Portal</h2>
-        <ul className="sidebar-menu">
-          <li><Link to="/postjob"> Jobs</Link></li>
-          <li><Link to="/user-applications">Applications</Link></li>
-          
-        </ul>
-      </div>
+      {/* Header
+      <header className="header">
+        <h5></h5>
+      </header> */}
 
-      {}
+      {/* Main Content */}
       <div className="content">
         <div className="post-job-header">
           <h2 id="post-job">All Posted Jobs</h2>
-          <Link to="/createjob" className="create-job-btn">+ Create Job</Link>
+          <Link to="/createjob" className="create-job-btn">
+            + Create Job
+          </Link>
         </div>
 
         {jobs.length === 0 ? (
@@ -96,7 +94,7 @@ export default function PostJob() {
                   <td onClick={() => handleRowClick(index)}>{job.description}</td>
                   <td>
                     <button className="delete-btn" onClick={(e) => openDeleteModal(e, index)}>
-                       Delete
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -106,25 +104,29 @@ export default function PostJob() {
         )}
       </div>
 
-      {}
-    <footer className="footer">
-      <p>&copy; 2025 Job Portal. All rights reserved.</p>
-    </footer>
+      {/* Footer
+      <footer className="footer">
+        <p>&copy; 2025 Job Portal. All rights reserved.</p>
+      </footer> */}
 
-      {}
+      {/* Delete Modal */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Confirm Delete</h3>
             <p>Are you sure you want to delete this job?</p>
             <div className="modal-buttons">
-              <button className="cancel-btn" onClick={cancelDelete}>Cancel</button>
-              <button className="confirm-btn" onClick={confirmDelete}> Delete </button>
-              
+              <button className="cancel-btn" onClick={cancelDelete}>
+                Cancel
+              </button>
+              <button className="confirm-btn" onClick={confirmDelete}>
+                Delete
+              </button>
             </div>
           </div>
         </div>
       )}
     </div>
+     
   );
 }

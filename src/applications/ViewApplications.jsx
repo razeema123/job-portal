@@ -1,128 +1,100 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 import "./ViewApplications.css";
+import Sidebar from "../components/recruiter/SideBar";
 
 export default function ViewApplications() {
-  const { jobId } = useParams();
-  const navigate = useNavigate();
-  const [job, setJob] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [editedJob, setEditedJob] = useState({});
+  const [submittedCount, setSubmittedCount] = useState(1); // Initially 1
 
-  useEffect(() => {
-    const jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+  const [application, setApplication] = useState({
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    resume: "alice_resume.pdf",
+    status: "Pending",
+    skills: "React, Node.js",
+    experience: "2 years",
+    responsibilities: "Frontend development, bug fixing",
+  });
 
-    if (jobs[jobId]) {
-      setJob(jobs[jobId]);
-      setEditedJob(jobs[jobId]);
-    } else {
-      toast.error("❌ Job not found! Redirecting...");
-      setTimeout(() => navigate("/postjob"), 2000);
-    }
-  }, [jobId, navigate]);
+  const [originalApp, setOriginalApp] = useState({ ...application });
 
-  const handleEditClick = () => setEditMode(true);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setApplication((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleEditClick = () => {
+    setOriginalApp({ ...application }); // store current state for cancel
+    setEditMode(true);
+  };
+
   const handleCancel = () => {
+    setApplication({ ...originalApp });
     setEditMode(false);
-    setEditedJob(job);
   };
 
   const handleSave = () => {
-    const jobs = JSON.parse(localStorage.getItem("jobs")) || [];
-    jobs[jobId] = editedJob;
-    localStorage.setItem("jobs", JSON.stringify(jobs));
-    setJob(editedJob);
+    // Simple validation
+    if (!application.name || !application.email || !application.status) {
+      alert("Name, Email and Status are required.");
+      return;
+    }
+
     setEditMode(false);
-    toast.success("✅ Job updated successfully!");
+    setSubmittedCount((prev) => prev + 1);
   };
-
-  const handleChange = (e) => {
-    setEditedJob({ ...editedJob, [e.target.name]: e.target.value });
-  };
-
-  if (!job) {
-    return (
-      <>
-        <ToastContainer />
-        <div className="content"><p>Loading...</p></div>
-      </>
-    );
-  }
 
   return (
-    <div className="layout">
-      <ToastContainer position="top-right" autoClose={2000} />
-      
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2 className="sidebar-title">Job Portal</h2>
-        <ul className="sidebar-menu">
-          <li><Link to="/postjob">Jobs</Link></li>
-          <li><Link to="/createjob">Applications</Link></li>
-        </ul>
-      </div>
+    <>
+      <Sidebar />
 
-      {/* Content */}
-      <div id="view-content">
+      <div className="view-app-container">
         <div className="view-app-header">
-          <h2>{job.title} – Applications</h2>
-
-          {!editMode && (
-          <button className="edit-btn" onClick={handleEditClick}>Edit</button>
-          )}
-          
-        </div>
-
-        {/* Job Details */}
-        <div className="job-details-card">
-          {editMode ? (
-            <>
-              <label id="job-title">Job Title</label>
-              <input type="text" name="title" value={editedJob.title} onChange={handleChange} />
-
-              <label>Company</label>
-              <input type="text" name="company" value={editedJob.company} onChange={handleChange} />
-
-              <label>Location</label>
-              <input type="text" name="location" value={editedJob.location} onChange={handleChange} />
-
-              <label>Type</label>
-              <select name="type" value={editedJob.type} onChange={handleChange}>
-              <option value="Full-Time">Full-Time</option>
-              <option value="Part-Time">Part-Time</option>
-              <option value="Contract">Contract</option>
-              <option value="Internship">Internship</option>
-              </select>
-
-              <label>Salary</label>
-              <input type="text" name="salary" value={editedJob.salary} onChange={handleChange} placeholder="Enter salary"/>
-
-
-              <label>Description</label>
-              <textarea name="description" value={editedJob.description} onChange={handleChange}></textarea>
-
-              {/* Save/Cancel */}
-              <div className="edit-actions">
-                <button className="save-btn" onClick={handleSave}> Save</button>
-                <button className="cancel-btn" onClick={handleCancel}> Cancel</button>
-              </div>
-            </>
-          ) : (
-            <>
-              <p><strong>Company:</strong> {job.company}</p>
-              <p><strong>Location:</strong> {job.location}</p>
-              <p><strong>Type:</strong> {job.type}</p>
-              <p><strong>Salary:</strong> {job.salary || "N/A"}</p>
-              <p><strong>Description:</strong> {job.description}</p>
-            </>
-          )}
-          
-        </div>
-
-       
+        <h2>Application Details</h2>
+        {!editMode && (
+          <button className="edit-btn" onClick={handleEditClick}>
+            Edit
+          </button>
+        )}
       </div>
+
+      <div className="submitted-count">
+        Submitted Applications: <strong>{submittedCount}</strong>
+      </div>
+
+      <form className="form-grid" onSubmit={(e) => e.preventDefault()}>
+        {["name", "email", "status", "skills", "experience", "responsibilities"].map((field) => (
+          <div className="form-field" key={field}>
+            <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+            {editMode ? (
+              <input
+                type="text"
+                name={field}
+                value={application[field]}
+                onChange={handleChange}
+                required={["name", "email", "status"].includes(field)}
+              />
+            ) : (
+              <p className="view-value">{application[field]}</p>
+            )}
+          </div>
+        ))}
+      </form>
+
+      {editMode && (
+        <div className="action-buttons">
+          <button className="save-btn" onClick={handleSave}>
+            Save
+          </button>
+          <button className="cancel-btn" onClick={handleCancel}>
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
+    </>
   );
 }

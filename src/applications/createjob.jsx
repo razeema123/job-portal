@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Sidebar from "../components/recruiter/SideBar";
 import "./createjob.css";
 
 export default function CreateJob() {
@@ -34,42 +35,50 @@ export default function CreateJob() {
 
   return (
     <div className="layout">
-      {/* Toast Container */}
       <ToastContainer position="top" autoClose={2000} />
-      
-          {/* Header */}
-    <header className="header">
-      <h5></h5>
-    </header>
 
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2 className="sidebar-title">Job Portal</h2>
-        <ul className="sidebar-menu">
-          <li><Link to="/postjob">Jobs</Link></li>
-          <li><Link to="/user-applications">Applications</Link></li>
-        </ul>
-      </div>
+      {/* ✅ Reusable Sidebar */}
+      <Sidebar />
 
-      {/* Content */}
+      {/* Page Content */}
       <div className="content">
         <div className="create-job-container">
           <h2>Create a New Job</h2>
           <form className="create-job-form" onSubmit={handleSubmit}>
-            
             <div className="form-group">
               <label>Job Title</label>
-              <input type="text" name="title" value={job.title} onChange={handleChange} placeholder="Eg: Frontend Developer" required />
+              <input
+                type="text"
+                name="title"
+                value={job.title}
+                onChange={handleChange}
+                placeholder="Eg: Frontend Developer"
+                required
+              />
             </div>
 
             <div className="form-group">
               <label>Company</label>
-              <input type="text" name="company" value={job.company} onChange={handleChange} placeholder="Eg: IBM" required />
+              <input
+                type="text"
+                name="company"
+                value={job.company}
+                onChange={handleChange}
+                placeholder="Eg: IBM"
+                required
+              />
             </div>
 
             <div className="form-group">
               <label>Location</label>
-              <input type="text" name="location" value={job.location} onChange={handleChange} placeholder="Eg: Remote/New York"required />
+              <input
+                type="text"
+                name="location"
+                value={job.location}
+                onChange={handleChange}
+                placeholder="Eg: Remote/New York"
+                required
+              />
             </div>
 
             <div className="form-group">
@@ -85,22 +94,37 @@ export default function CreateJob() {
 
             <div className="form-group">
               <label>Salary</label>
-              <input type="text" name="salary" value={job.salary} onChange={handleChange} placeholder="Optional" />
+              <input
+                type="text"
+                name="salary"
+                value={job.salary}
+                onChange={handleChange}
+                placeholder="Optional"
+              />
             </div>
 
             <div className="form-group">
               <label>Job Description</label>
-              <textarea name="description" value={job.description} onChange={handleChange} rows="4" placeholder="Enter your description" required />
+              <textarea
+                name="description"
+                value={job.description}
+                onChange={handleChange}
+                rows="4"
+                placeholder="Enter your description"
+                required
+              />
             </div>
 
-            <button type="submit" className="submit-btn">Create Job</button>
+            <button type="submit" className="submit-btn">
+              Create Job
+            </button>
           </form>
         </div>
+
+        {/* <footer className="footer">
+          <p>&copy; 2025 Job Portal. All rights reserved.</p>
+        </footer> */}
       </div>
-      {}
-    <footer className="footer">
-      <p>&copy; 2025 Job Portal. All rights reserved.</p>
-    </footer>
     </div>
   );
 }

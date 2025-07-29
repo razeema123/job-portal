@@ -1,19 +1,9 @@
-.header {
-background-color: #1a237e;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    font-size: 24px;
-    position: fixed;
-}
-  
-
 .post-job-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
+  margin-top: -55px;
 }
 
 #post-job{
@@ -34,7 +24,6 @@ background-color: #1a237e;
   background: #218838;
 }
 
-/* ✅ Jobs Table */
 .jobs-table {
   width: 100%;
   border-collapse: collapse;
@@ -155,28 +144,18 @@ background-color: #1a237e;
   to { opacity: 1; transform: scale(1); }
 }
 
-.footer {
-  background-color: #1a237e;
-  color: white;
-  padding: 20px 20px;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  margin-top: 30px;
-}
 
-/* ✅ Tablet View (≤ 992px) */
+
 @media (max-width: 992px) {
   .post-job-header {
-    flex-direction: column; /* Stack title & button */
+    flex-direction: column; 
     align-items: flex-start;
     gap: 10px;
   }
 
   
   .create-job-btn {
-    width: 100%; /* Full-width button for better touch */
+    width: 100%; 
     text-align: center;
   }
 

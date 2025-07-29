@@ -33,13 +33,13 @@ const Header = () => {
     <header className="site-header">
       <FaBriefcase className="logo-icon" />
       <nav>
-        <a href="/"><AiFillHome /> Home</a>
-        <a href="/find-jobs"><FaSearch /> Find Jobs</a>
-        <a href="/postjob"><MdPostAdd /> Post Jobs</a>
+        <a href="/"><AiFillHome /> <span>Home </span></a>
+        <a href="/find-jobs"><FaSearch /> <span>Find Jobs </span></a>
+        <a href="/postjob"><MdPostAdd /> <span>Post Jobs </span></a>
 
         <div className="profile-menu-wrapper" ref={profileRef}>
           <button className="profile-btn" onClick={() => setShowProfileMenu(!showProfileMenu)}>
-            <FaUserCircle /> Profile
+            <FaUserCircle /> <span>Profile</span>
           </button>
 
           {showProfileMenu && (

@@ -6,7 +6,7 @@ import { MdPostAdd } from 'react-icons/md';
 import { FaBriefcase, FaSearch } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 
-// Header Component
+
 const Header = () => (
   <header className="site-header">
     <FaBriefcase className="logo-icon" />
@@ -19,7 +19,7 @@ const Header = () => (
   </header>
 );
 
-// Footer Component
+
 const Footer = () => (
   <footer className="site-footer">
     <p>&copy; 2025 Job Portal. All rights reserved.</p>

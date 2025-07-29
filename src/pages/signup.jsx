@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './signup.css'; 
 
 const Signup = () => {
@@ -10,8 +12,10 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     localStorage.setItem('user', JSON.stringify({ email, password }));
-    alert('Signup successful!');
-    navigate('/login');
+    toast.success('Account created successfully! Please login to continue.');
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000); // wait 2 seconds before navigating
   };
 
   return (
@@ -41,6 +45,7 @@ const Signup = () => {
             <Link to="/login">Already have an account? Login</Link>
           </div>
         </form>
+        <ToastContainer position="top-center" autoClose={2000} />
       </div>
     </div>
   );

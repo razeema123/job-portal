@@ -11,10 +11,10 @@ const Header = () => (
   <header className="site-header">
     <FaBriefcase className="logo-icon" />
     <nav>
-      <a href="/home"><AiFillHome /> Home</a>
-      <a href="/find-jobs"><FaSearch /> Find Jobs</a>
-      <a href="/postjob"><MdPostAdd /> Post Jobs</a>
-      <a href="/login"><FiLogOut /> Logout</a>
+      <a href="/home"><AiFillHome /> <span>Home</span></a>
+      <a href="/find-jobs"><FaSearch /> <span>Find Jobs</span></a>
+      <a href="/postjob"><MdPostAdd /><span> Post Jobs</span></a>
+      <a href="/login"><FiLogOut /> <span>Logout</span></a>
     </nav>
   </header>
 );
@@ -85,7 +85,7 @@ const FindJobs = () => {
   const [sortOption, setSortOption] = useState('');
   const navigate = useNavigate();
 
-  // ➕ Filter based on search and job type
+  
   const filteredJobs = jobsData
     .filter((job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -128,7 +128,7 @@ const FindJobs = () => {
           />
         </div>
 
-        {/* ➕ Filters */}
+       
         <div className="filter-sort-container">
           <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
             <option value="All">All Job Types</option>

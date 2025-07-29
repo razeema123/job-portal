@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/recruiter/SideBar";
 import "./UserApplications.css";
 
 export default function UserApplications() {
@@ -12,12 +13,12 @@ export default function UserApplications() {
       resume: "alice_resume.pdf",
       phone: "9876543210",
     //   address: "123 Main Street, Delhi",
-      jobTitle: "Frontend Developer",
-      company: "TechCorp",
-      location: "Delhi",
       status: "Pending",
+      jobTitle: "Frontend Developer",
+      company: "Tech Corp",
+      location: "Delhi",
     },
-    {
+   {
       id: 2,
       name: "Bob Smith",
       email: "bob@example.com",
@@ -42,33 +43,28 @@ export default function UserApplications() {
       status: "Shortlisted",
     },
   ];
+const handleRowClick = (id) => {
+  navigate(`/view-user/${id}`);
+}
 
   return (
     <div className="layout">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2 className="sidebar-title">Job Portal</h2>
-        <ul className="sidebar-menu">
-          <li onClick={() => navigate("/postjob")}>Jobs</li>
-          {/* <li onClick={() => navigate("/viewapplications")}>View Applications</li> */}
-        </ul>
-      </div>
+      <Sidebar />
 
-      {/* Main Content */}
-      <div className="content">
+      <div className="content" style={{ marginLeft: "220px", padding: "20px" }}>
         <header className="header">
-          <h4 id="user-applications">User Applications</h4>
+          <h2>User Applications</h2>
           <button className="back-btn" onClick={() => navigate(-1)}>← Back to Jobs</button>
         </header>
 
-        <div className="applications-table-container">
+        <div className="applications-container">
           {applications.length === 0 ? (
             <p>No applications submitted yet.</p>
           ) : (
             <table className="applications-table">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Candidate</th>
                   <th>Email</th>
                   <th>Phone</th>
                   {/* <th>Address</th> */}
@@ -81,18 +77,17 @@ export default function UserApplications() {
               </thead>
               <tbody>
                 {applications.map(app => (
-                  <tr key={app.id}>
+                 <tr key={app.id} onClick={() => handleRowClick(app.id)}>
                     <td>{app.name}</td>
                     <td>{app.email}</td>
                     <td>{app.phone}</td>
-                    {/* <td>{app.address}</td>               */}
+                    {/* <td>{app.address}</td> */}
                     <td>{app.jobTitle}</td>
                     <td>{app.company}</td>
                     <td>{app.location}</td>
-                    <td>
-                      <a href="#!" className="resume-link">{app.resume}</a>
-                    </td>
-                    <td>{app.status}</td>
+                   
+                    <td><a href="#!" className="resume-link">{app.resume}</a></td>
+                     <td>{app.status}</td>
                   </tr>
                 ))}
               </tbody>
@@ -100,9 +95,9 @@ export default function UserApplications() {
           )}
         </div>
 
-        <footer className="footer">
+        {/* <footer className="footer">
           <p>&copy; 2025 Job Portal. All rights reserved.</p>
-        </footer>
+        </footer> */}
       </div>
     </div>
   );

@@ -64,8 +64,8 @@ background-color: #1a237e;
 .create-job-container {
   max-width: 100%;
   margin: 0px;
-  margin-top: 16px;
-  margin-bottom: 40px;
+  margin-top: 0px;
+  margin-bottom: 50px;
   padding: 50px;
   background: #ffffff;
   border-radius: 12px;
@@ -137,7 +137,7 @@ background-color: #1a237e;
 .submit-btn:hover {
   background: #218838;
 }
-.footer {
+/* .footer {
   background-color: #1a237e;
   color: white;
   padding: 20px 20px;
@@ -146,7 +146,7 @@ background-color: #1a237e;
   bottom: 0;
   width: 100%;
   margin-top: 30px;
-}
+} */
 
 @media (max-width: 768px) {
   .layout {

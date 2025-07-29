@@ -1,3 +1,12 @@
+.header {
+background-color: #1a237e;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    position: fixed;
+}
 .layout {
   display: flex;
 }
@@ -54,8 +63,10 @@
 
 .create-job-container {
   max-width: 100%;
-  margin: 0 auto;
-  padding: 30px;
+  margin: 0px;
+  margin-top: 16px;
+  margin-bottom: 40px;
+  padding: 50px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
@@ -126,7 +137,16 @@
 .submit-btn:hover {
   background: #218838;
 }
-
+.footer {
+  background-color: #1a237e;
+  color: white;
+  padding: 20px 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-top: 30px;
+}
 
 @media (max-width: 768px) {
   .layout {

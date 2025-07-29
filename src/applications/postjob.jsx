@@ -48,12 +48,17 @@ export default function PostJob() {
       {}
       <ToastContainer position="top-right" autoClose={2000} />
 
+          {/* Header */}
+    <header className="header">
+      <h5></h5>
+    </header>
+
       {}
       <div className="sidebar">
         <h2 className="sidebar-title">Job Portal</h2>
         <ul className="sidebar-menu">
-          <li><Link to="/find-jobs"> Jobs</Link></li>
-          <li><Link to="/createjob">Applications</Link></li>
+          <li><Link to="/postjob"> Jobs</Link></li>
+          <li><Link to="/user-applications">Applications</Link></li>
           
         </ul>
       </div>
@@ -61,7 +66,7 @@ export default function PostJob() {
       {}
       <div className="content">
         <div className="post-job-header">
-          <h2>All Posted Jobs</h2>
+          <h2 id="post-job">All Posted Jobs</h2>
           <Link to="/createjob" className="create-job-btn">+ Create Job</Link>
         </div>
 
@@ -100,6 +105,11 @@ export default function PostJob() {
           </table>
         )}
       </div>
+
+      {}
+    <footer className="footer">
+      <p>&copy; 2025 Job Portal. All rights reserved.</p>
+    </footer>
 
       {}
       {showModal && (

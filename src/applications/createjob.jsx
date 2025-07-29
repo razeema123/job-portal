@@ -36,13 +36,18 @@ export default function CreateJob() {
     <div className="layout">
       {/* Toast Container */}
       <ToastContainer position="top" autoClose={2000} />
+      
+          {/* Header */}
+    <header className="header">
+      <h5></h5>
+    </header>
 
       {/* Sidebar */}
       <div className="sidebar">
         <h2 className="sidebar-title">Job Portal</h2>
         <ul className="sidebar-menu">
-          <li><Link to="/find-jobs">Jobs</Link></li>
-          <li><Link to="/postjob">Posted Job</Link></li>
+          <li><Link to="/postjob">Jobs</Link></li>
+          <li><Link to="/user-applications">Applications</Link></li>
         </ul>
       </div>
 
@@ -92,6 +97,10 @@ export default function CreateJob() {
           </form>
         </div>
       </div>
+      {}
+    <footer className="footer">
+      <p>&copy; 2025 Job Portal. All rights reserved.</p>
+    </footer>
     </div>
   );
 }

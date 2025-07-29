@@ -65,7 +65,7 @@ export default function ViewApplications() {
       </div>
 
       {/* Content */}
-      <div className="content">
+      <div id="view-content">
         <div className="view-app-header">
           <h2>{job.title} – Applications</h2>
 
@@ -79,7 +79,7 @@ export default function ViewApplications() {
         <div className="job-details-card">
           {editMode ? (
             <>
-              <label>Job Title</label>
+              <label id="job-title">Job Title</label>
               <input type="text" name="title" value={editedJob.title} onChange={handleChange} />
 
               <label>Company</label>

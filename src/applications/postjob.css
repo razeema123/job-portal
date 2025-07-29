@@ -1,3 +1,14 @@
+.header {
+background-color: #1a237e;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    position: fixed;
+}
+  
+
 .post-job-header {
   display: flex;
   justify-content: space-between;
@@ -5,14 +16,18 @@
   margin-bottom: 20px;
 }
 
+#post-job{
+  color: #1a237e;
+}
 .create-job-btn {
-  background: #28a745;
+  background: #1a237e;
   color: white;
   padding: 10px 15px;
   text-decoration: none;
   border-radius: 6px;
   font-weight: bold;
   transition: 0.3s ease;
+  margin: 50px;
 }
 
 .create-job-btn:hover {
@@ -25,6 +40,7 @@
   border-collapse: collapse;
   background: white;
   border-radius: 8px;
+  margin-bottom: 800px;
   overflow: hidden;
   box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
@@ -118,7 +134,7 @@
 }
 
 .cancel-btn {
-  background: #c5c0c0;
+  background: #ccc;
   color: rgb(121, 117, 117);
   border: none;
   padding: 8px 14px;
@@ -137,6 +153,17 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+.footer {
+  background-color: #1a237e;
+  color: white;
+  padding: 20px 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-top: 30px;
 }
 
 /* ✅ Tablet View (≤ 992px) */

@@ -23,6 +23,7 @@ import ViewApplications from './applications/ViewApplications.jsx';
 
 import ViewProfile from './pages/viewprofile.jsx';
 import JobDetail from './jobdetails.jsx';
+import UserApplications from './applications/UserApplications.jsx';
 
 
 
@@ -53,6 +54,8 @@ function App() {
         <Route path="/createjob" element={<CreateJob/>}/>
         <Route path="/viewapplications" element={<ViewApplications/>}/>
         <Route path="/viewapplications/:jobId" element={<ViewApplications />} />
+        <Route path="/user-applications" element={<UserApplications />} />
+        <Route path="/user-appliations/:jobId" element={<UserApplications />} />
 
 
         <Route path="/view-profile" element={<ViewProfile />} />

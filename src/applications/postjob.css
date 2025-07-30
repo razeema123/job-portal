@@ -44,11 +44,12 @@
   white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis; 
+  color: #333;
 }
 
 
 .jobs-table th {
-  background: #1a237e;
+  background: #0a3871;
   color: white;
 }
 

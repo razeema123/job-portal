@@ -65,6 +65,8 @@
   padding: 12px 16px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  color: #333;
+  /* Change this hex code to any color you prefer */
 }
 
 .applications-table th {

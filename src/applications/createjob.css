@@ -104,6 +104,7 @@ background-color: #1a237e;
   border-radius: 8px;
   font-size: 15px;
   transition: 0.3s ease;
+  color: #333;
 }
 
 .form-group input:focus,

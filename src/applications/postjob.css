@@ -1,5 +1,5 @@
 .header {
-background-color: #1a237e;
+background-color: #0a3871;
     color: white;
     padding: 20px;
     text-align: center;
@@ -17,10 +17,10 @@ background-color: #1a237e;
 }
 
 #post-job{
-  color: #1a237e;
+  color: #0a3871;
 }
 .create-job-btn {
-  background: #1a237e;
+  background: #0a3871;
   color: white;
   padding: 10px 15px;
   text-decoration: none;
@@ -156,7 +156,7 @@ background-color: #1a237e;
 }
 
 .footer {
-  background-color: #1a237e;
+  background-color: #0a3871;
   color: white;
   padding: 20px 20px;
   text-align: center;
@@ -166,10 +166,10 @@ background-color: #1a237e;
   margin-top: 30px;
 }
 
-/* ✅ Tablet View (≤ 992px) */
+
 @media (max-width: 992px) {
   .post-job-header {
-    flex-direction: column; /* Stack title & button */
+    flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }

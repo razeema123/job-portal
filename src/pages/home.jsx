@@ -6,12 +6,13 @@ import { FaSearch, FaBriefcase, FaUserCircle } from 'react-icons/fa';
 import { MdPostAdd } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 import { BsPersonLinesFill } from 'react-icons/bs';
+import { BsSun, BsMoon } from 'react-icons/bs'; 
 
-const Header = () => {
+const Header = ({ toggleTheme, theme }) => {
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileRef = useRef();
-
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -19,12 +20,12 @@ const Header = () => {
         setShowProfileMenu(false);
       }
     };
+    
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleLogout = () => {
-   
     localStorage.clear();
     navigate('/login');
   };
@@ -53,6 +54,10 @@ const Header = () => {
             </div>
           )}
         </div>
+
+        <button className="theme-toggle-btn" onClick={toggleTheme}>
+          {theme === 'dark' ? <BsSun /> : <BsMoon />}
+        </button>
       </nav>
     </header>
   );
@@ -67,9 +72,21 @@ const Footer = () => (
 const Home = () => {
   const navigate = useNavigate();
 
+ 
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+    localStorage.setItem('theme', theme); 
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
     <>
-      <Header />
+      <Header toggleTheme={toggleTheme} theme={theme} />
 
       <div className="hero-container">
         <div className="hero-text">

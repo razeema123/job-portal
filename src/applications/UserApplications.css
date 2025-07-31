@@ -111,8 +111,6 @@
 .applications-table td {
   padding: 12px 20px;
   text-align: left;
-  border-bottom: 1px solid #eee;
-}
 
 .applications-table tbody tr:hover {
   background-color: #f9f9f9;

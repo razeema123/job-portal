@@ -1,12 +1,7 @@
 .view-app-container {
-  max-width: 850px;
-  margin: 40px auto;
+  margin-left: 220px;
   padding: 30px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", sans-serif;
-  color: #333;
+  max-width: 800px;
 }
 
 .view-app-header {
@@ -16,119 +11,79 @@
   margin-bottom: 20px;
 }
 
-.view-app-header h2 {
-  font-size: 24px;
-}
-
 .edit-btn {
-  padding: 10px 16px;
-  background-color: #6c47ff;
+  background-color: #1a237e;
   color: white;
   border: none;
-  border-radius: 8px;
+  padding: 8px 14px;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s;
 }
 
 .edit-btn:hover {
-  background-color: #4c28e3;
+  background-color: #303f9f;
 }
 
 .submitted-count {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-size: 16px;
   font-weight: 500;
 }
 
 .form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.form-field {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .form-field label {
-  font-weight: 600;
+  font-weight: bold;
+  display: block;
   margin-bottom: 6px;
 }
 
 .form-field input {
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 8px;
+  width: 100%;
+  padding: 8px;
   border: 1px solid #ccc;
-  transition: border-color 0.2s;
-}
-
-.form-field input:focus {
-  border-color: #6c47ff;
-  outline: none;
+  border-radius: 4px;
 }
 
 .view-value {
-  background-color: #f8f8f8;
   padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  font-size: 15px;
 }
 
 .action-buttons {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
-  gap: 20px;
-  justify-content: flex-end;
-}
-
-.save-btn,
-.cancel-btn {
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
+  gap: 10px;
 }
 
 .save-btn {
-  background-color: #28a745;
+  background-color: #388e3c;
   color: white;
-}
-
-.save-btn:hover {
-  background-color: #218838;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .cancel-btn {
-  background-color: #dc3545;
+  background-color: #d32f2f;
   color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #2e7d32;
 }
 
 .cancel-btn:hover {
-  background-color: #c82333;
-}
-
-/* Responsive layout */
-@media (max-width: 768px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .view-app-container {
-    padding: 20px;
-  }
-
-  .edit-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-
-  .save-btn,
-  .cancel-btn {
-    padding: 8px 12px;
-  }
+  background-color: #c62828;
 }

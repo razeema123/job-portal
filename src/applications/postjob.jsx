@@ -4,11 +4,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./postjob.css";
 import Sidebar from "../components/recruiter/SideBar";
+import { FaEllipsisV, FaTrash, FaEdit } from "react-icons/fa";
 
 export default function PostJob() {
   const [jobs, setJobs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [jobToDelete, setJobToDelete] = useState(null);
+  const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function PostJob() {
     e.stopPropagation();
     setJobToDelete(index);
     setShowModal(true);
+    setOpenMenuIndex(null);
   };
 
   const confirmDelete = () => {
@@ -43,23 +46,23 @@ export default function PostJob() {
     setJobToDelete(null);
   };
 
+  const handleEdit = (e, index) => {
+    e.stopPropagation();
+    navigate(`/ViewApplications/${index}?editMode=true`);
+  };
+
+  const toggleMenu = (e, index) => {
+    e.stopPropagation();
+    setOpenMenuIndex(openMenuIndex === index ? null : index);
+  };
+
   return (
-      
-      
     <div className="layout">
       <ToastContainer position="top-right" autoClose={2000} />
-
-      {/* Sidebar */}
       <aside className="sidebar">
         <Sidebar />
       </aside>
 
-      {/* Header
-      <header className="header">
-        <h5></h5>
-      </header> */}
-
-      {/* Main Content */}
       <div className="content">
         <div className="post-job-header">
           <h2 id="post-job">All Posted Jobs</h2>
@@ -92,10 +95,21 @@ export default function PostJob() {
                   <td onClick={() => handleRowClick(index)}>{job.type}</td>
                   <td onClick={() => handleRowClick(index)}>{job.salary || "N/A"}</td>
                   <td onClick={() => handleRowClick(index)}>{job.description}</td>
-                  <td>
-                    <button className="delete-btn" onClick={(e) => openDeleteModal(e, index)}>
-                      Delete
-                    </button>
+                  <td className="action-cell">
+                    <FaEllipsisV
+                      className="menu-icon"
+                      onClick={(e) => toggleMenu(e, index)}
+                    />
+                    {openMenuIndex === index && (
+                      <div className="action-dropdown">
+                        <button onClick={(e) => handleEdit(e, index)} title="Edit">Edit
+                          {/* <FaEdit /> */}
+                        </button>
+                        <button onClick={(e) => openDeleteModal(e, index)} title="Delete">Delete
+                          {/* <FaTrash /> */}
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -104,12 +118,6 @@ export default function PostJob() {
         )}
       </div>
 
-      {/* Footer
-      <footer className="footer">
-        <p>&copy; 2025 Job Portal. All rights reserved.</p>
-      </footer> */}
-
-      {/* Delete Modal */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -127,6 +135,5 @@ export default function PostJob() {
         </div>
       )}
     </div>
-     
   );
 }

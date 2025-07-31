@@ -1,0 +1,108 @@
+.recruiter-profile-page {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: #1a237e;
+  color: white;
+  padding: 15px 30px;
+  align-items: center;
+}
+
+.top-nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.top-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.top-nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.top-nav ul li a.active,
+.top-nav ul li a:hover {
+  background-color: #303f9f;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.profile-card {
+  background: white;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+  border: 3px solid #1a237e;
+}
+
+.profile-card h2 {
+  margin: 10px 0 5px;
+}
+
+.position {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #444;
+  margin: 8px 0;
+}
+
+.bio {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.bio h4 {
+  color: #1a237e;
+  margin-bottom: 8px;
+}
+
+.edit-btn {
+  margin-top: 20px;
+  background-color: #1a237e;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-btn:hover {
+  background-color: #303f9f;
+}

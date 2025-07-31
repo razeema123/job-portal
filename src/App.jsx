@@ -25,6 +25,7 @@ import ViewProfile from './pages/viewprofile.jsx';
 import JobDetail from './jobdetails.jsx';
 import UserApplications from './applications/UserApplications.jsx';
 import ViewUser from './applications/ViewUser.jsx';
+import RecruiterProfile from './applications/RecruiterProfile.jsx';
 
 
 
@@ -59,6 +60,7 @@ function App() {
         <Route path="/user-appliations/:jobId" element={<UserApplications />} />
         <Route path="/view-user" element={<ViewUser />} />
         <Route path="/view-user/:id" element={<ViewUser />} />
+        <Route path="/recruiter-profile" element={<RecruiterProfile/>} />
 
 
         <Route path="/view-profile" element={<ViewProfile />} />

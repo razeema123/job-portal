@@ -57,7 +57,7 @@ export default function ViewUser() {
           <h2>Application Details</h2>
           {!editMode && (
             <button className="edit-btn" onClick={handleEditClick}>
-              ✏️ 
+              Edit 
             </button>
           )}
     </div>

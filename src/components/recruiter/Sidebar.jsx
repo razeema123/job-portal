@@ -1,18 +1,29 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Use startsWith for accurate path highlighting (includes can be risky)
+  const isActive = (path) => location.pathname.startsWith(path);
 
   return (
     <div className="sidebar">
-        <h2 className="sidebar-title" onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>
-          Job Portal
-        </h2>
-        <ul className="sidebar-menu">
-          <li onClick={() => navigate("/postjob")}>Jobs</li>
-          <li onClick={() => navigate("/user-applications")}>Applications</li>
-
+      <h2
+        className="sidebar-title"
+        onClick={() => navigate("/home")}
+        style={{ cursor: "pointer" }}
+      >
+        Job Portal
+      </h2>
+      <ul className="sidebar-menu">
+        <li className={isActive("/postjob") ? "active-link" : ""}>
+          <span onClick={() => navigate("/postjob")}>Jobs</span>
+        </li>
+        <li className={isActive("/user-applications") ? "active-link" : ""}>
+          <span onClick={() => navigate("/user-applications")}>Applications</span>
+        </li>
       </ul>
     </div>
   );

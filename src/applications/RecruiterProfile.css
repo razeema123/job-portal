@@ -1,0 +1,169 @@
+.recruiter-profile-page {
+  font-family: 'Segoe UI', sans-serif;
+  height: 100%;
+  width: 100%;
+  background-color: #f7f9fc;
+}
+
+.profile-layout {
+  display: flex;
+  gap: 20px;
+  padding: 30px;
+}
+
+.profile-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profile-card {
+  background: white;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  text-align: center;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1a237e;
+  margin-bottom: 15px;
+}
+
+.position {
+  font-size: 16px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.info {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.info p {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+.bio {
+  margin-top: 25px;
+  text-align: left;
+}
+
+.bio h4 {
+  color: #1a237e;
+  margin-bottom: 5px;
+}
+
+.profile-actions {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: white;
+  border: 1px solid #ccc;
+  min-width: 100px;
+  z-index: 10;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content button {
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-content button:hover {
+  background-color: #f0f0f0;
+}
+
+.edit-btn {
+  background-color: #1a237e;
+  color: white;
+  margin-top: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.edit-profile-form {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.edit-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  background: #f9f9f9;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #1a237e;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}

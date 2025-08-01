@@ -1,0 +1,41 @@
+.sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.sheet-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 420px;
+  background: white;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+.translate-x-0 {
+  transform: translateX(0%);
+}
+
+.sheet-close {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}

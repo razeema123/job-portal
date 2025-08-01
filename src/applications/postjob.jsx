@@ -4,6 +4,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./postjob.css";
 import Sidebar from "../components/recruiter/SideBar";
+import Navbar from "../components/recruiter/Navbar"; 
+import { FaTrash, FaEdit } from "react-icons/fa";
+
 
 export default function PostJob() {
   const [jobs, setJobs] = useState([]);
@@ -28,11 +31,11 @@ export default function PostJob() {
 
   const confirmDelete = () => {
     if (jobToDelete !== null) {
-      let updatedJobs = [...jobs];
+      const updatedJobs = [...jobs];
       updatedJobs.splice(jobToDelete, 1);
       setJobs(updatedJobs);
       localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-      toast.info("Job deleted successfully!");
+      toast.success("Job deleted successfully!");
     }
     setShowModal(false);
     setJobToDelete(null);
@@ -43,9 +46,12 @@ export default function PostJob() {
     setJobToDelete(null);
   };
 
+  const handleEdit = (e, index) => {
+    e.stopPropagation();
+    navigate(`/ViewApplications/${index}?editMode=true`);
+  };
+
   return (
-      
-      
     <div className="layout">
       <ToastContainer position="top-right" autoClose={2000} />
 
@@ -54,20 +60,19 @@ export default function PostJob() {
         <Sidebar />
       </aside>
 
-      {/* Header
-      <header className="header">
-        <h5></h5>
-      </header> */}
-
       {/* Main Content */}
       <div className="content">
+        {/* Reusable Top Navbar */}
+        <Navbar />
+
+        {/* Header with Create Job Button */}
         <div className="post-job-header">
-          <h2 id="post-job">All Posted Jobs</h2>
           <Link to="/createjob" className="create-job-btn">
             + Create Job
           </Link>
         </div>
 
+        {/* Job Table */}
         {jobs.length === 0 ? (
           <p className="no-jobs">No jobs posted yet.</p>
         ) : (
@@ -92,9 +97,12 @@ export default function PostJob() {
                   <td onClick={() => handleRowClick(index)}>{job.type}</td>
                   <td onClick={() => handleRowClick(index)}>{job.salary || "N/A"}</td>
                   <td onClick={() => handleRowClick(index)}>{job.description}</td>
-                  <td>
-                    <button className="delete-btn" onClick={(e) => openDeleteModal(e, index)}>
-                      Delete
+                  <td className="action-cell">
+                    <button onClick={(e) => handleEdit(e, index)} title="Edit">
+                      <FaEdit />
+                    </button>
+                    <button onClick={(e) => openDeleteModal(e, index)} title="Delete">
+                      <FaTrash />
                     </button>
                   </td>
                 </tr>
@@ -104,29 +112,19 @@ export default function PostJob() {
         )}
       </div>
 
-      {/* Footer
-      <footer className="footer">
-        <p>&copy; 2025 Job Portal. All rights reserved.</p>
-      </footer> */}
-
-      {/* Delete Modal */}
+      {/* Modal for Delete Confirmation */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Confirm Delete</h3>
             <p>Are you sure you want to delete this job?</p>
             <div className="modal-buttons">
-              <button className="cancel-btn" onClick={cancelDelete}>
-                Cancel
-              </button>
-              <button className="confirm-btn" onClick={confirmDelete}>
-                Delete
-              </button>
+              <button className="cancel-btn" onClick={cancelDelete}>Cancel</button>
+              <button className="confirm-btn" onClick={confirmDelete}>Delete</button>
             </div>
           </div>
         </div>
       )}
     </div>
-     
   );
 }

@@ -5,7 +5,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Use startsWith for accurate path highlighting (includes can be risky)
+  
   const isActive = (path) => location.pathname.startsWith(path);
 
   return (

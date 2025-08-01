@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from "../components/recruiter/SideBar";
+import Navbar from "../components/recruiter/Navbar"; 
 import "./UserApplications.css";
 
 export default function UserApplications() {
@@ -29,22 +30,9 @@ export default function UserApplications() {
     <div className="layout">
       <Sidebar />
       <div className="content">
+        <Navbar /> {}
 
-        {/* Top Navbar */}
-        <div className="top-navbar">
-          <h2>User Applications</h2>
-          <div className="nav-links">
-            <span onClick={() => navigate("/home")}>Home</span>
-            <span onClick={() => navigate("/find-jobs")}>Find Job</span>
-            <span onClick={() => navigate("/recruiter-profile")}>Profile</span>
-          </div>
-        </div>
-
-        {/* <div className="header">
-          <h2>User Applications</h2>
-        </div> */}
-
-        {/* Filter Cards */}
+        {}
         <div className="status-analytics">
           {["All", "Pending", "Reviewed", "Shortlisted"].map((status) => (
             <div
@@ -62,7 +50,7 @@ export default function UserApplications() {
           ))}
         </div>
 
-        {/* Applications Table */}
+        {}
         <div className="applications-table-container">
           <table className="applications-table">
             <thead>

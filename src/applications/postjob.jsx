@@ -4,13 +4,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./postjob.css";
 import Sidebar from "../components/recruiter/SideBar";
-import { FaEllipsisV, FaTrash, FaEdit } from "react-icons/fa";
+import Navbar from "../components/recruiter/Navbar"; 
+import { FaTrash, FaEdit } from "react-icons/fa";
+
 
 export default function PostJob() {
   const [jobs, setJobs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [jobToDelete, setJobToDelete] = useState(null);
-  const [openMenuIndex, setOpenMenuIndex] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,16 +27,15 @@ export default function PostJob() {
     e.stopPropagation();
     setJobToDelete(index);
     setShowModal(true);
-    setOpenMenuIndex(null);
   };
 
   const confirmDelete = () => {
     if (jobToDelete !== null) {
-      let updatedJobs = [...jobs];
+      const updatedJobs = [...jobs];
       updatedJobs.splice(jobToDelete, 1);
       setJobs(updatedJobs);
       localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-      toast.info("Job deleted successfully!");
+      toast.success("Job deleted successfully!");
     }
     setShowModal(false);
     setJobToDelete(null);
@@ -51,26 +51,28 @@ export default function PostJob() {
     navigate(`/ViewApplications/${index}?editMode=true`);
   };
 
-  const toggleMenu = (e, index) => {
-    e.stopPropagation();
-    setOpenMenuIndex(openMenuIndex === index ? null : index);
-  };
-
   return (
     <div className="layout">
       <ToastContainer position="top-right" autoClose={2000} />
+
+      {/* Sidebar */}
       <aside className="sidebar">
         <Sidebar />
       </aside>
 
+      {/* Main Content */}
       <div className="content">
+        {/* Reusable Top Navbar */}
+        <Navbar />
+
+        {/* Header with Create Job Button */}
         <div className="post-job-header">
-          <h2 id="post-job">All Posted Jobs</h2>
           <Link to="/createjob" className="create-job-btn">
             + Create Job
           </Link>
         </div>
 
+        {/* Job Table */}
         {jobs.length === 0 ? (
           <p className="no-jobs">No jobs posted yet.</p>
         ) : (
@@ -96,20 +98,12 @@ export default function PostJob() {
                   <td onClick={() => handleRowClick(index)}>{job.salary || "N/A"}</td>
                   <td onClick={() => handleRowClick(index)}>{job.description}</td>
                   <td className="action-cell">
-                    <FaEllipsisV
-                      className="menu-icon"
-                      onClick={(e) => toggleMenu(e, index)}
-                    />
-                    {openMenuIndex === index && (
-                      <div className="action-dropdown">
-                        <button onClick={(e) => handleEdit(e, index)} title="Edit">Edit
-                          {/* <FaEdit /> */}
-                        </button>
-                        <button onClick={(e) => openDeleteModal(e, index)} title="Delete">Delete
-                          {/* <FaTrash /> */}
-                        </button>
-                      </div>
-                    )}
+                    <button onClick={(e) => handleEdit(e, index)} title="Edit">
+                      <FaEdit />
+                    </button>
+                    <button onClick={(e) => openDeleteModal(e, index)} title="Delete">
+                      <FaTrash />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -118,18 +112,15 @@ export default function PostJob() {
         )}
       </div>
 
+      {/* Modal for Delete Confirmation */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Confirm Delete</h3>
             <p>Are you sure you want to delete this job?</p>
             <div className="modal-buttons">
-              <button className="cancel-btn" onClick={cancelDelete}>
-                Cancel
-              </button>
-              <button className="confirm-btn" onClick={confirmDelete}>
-                Delete
-              </button>
+              <button className="cancel-btn" onClick={cancelDelete}>Cancel</button>
+              <button className="confirm-btn" onClick={confirmDelete}>Delete</button>
             </div>
           </div>
         </div>

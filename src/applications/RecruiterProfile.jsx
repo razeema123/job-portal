@@ -1,136 +1,116 @@
-// RecruiterProfile.jsx
 import React, { useState } from "react";
-import Sidebar from "../components/recruiter/Sidebar";
-import Navbar from "../components/recruiter/Navbar";
-import { FaEnvelope, FaPhone, FaBuilding, FaEllipsisV } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import "./RecruiterProfile.css";
+import { FaEnvelope, FaPhone, FaBuilding, FaEdit, FaEye } from "react-icons/fa";
 
-export default function RecruiterProfile({ showNavbar = true, showSidebar = true }) {
-  const navigate = useNavigate();
-
-  const [recruiter, setRecruiter] = useState({
+export default function RecruiterProfile({ setOpen }) {
+  const initialData = {
     name: "Aiswarya Lakshmi",
+    role: "Senior Talent Acquisition",
     email: "aiswarya@example.com",
     phone: "+91 7909171194",
     company: "TechRecruit Solutions",
-    position: "Senior Talent Acquisition",
-    bio: "Experienced recruiter passionate about connecting talent with opportunity. Specializing in tech and product roles.",
-    image: "https://i.pravatar.cc/150?img=32",
-  });
+    about: "Experienced recruiter passionate about connecting talent with opportunity. Specializing in tech and product roles.",
+  };
 
-  const [formData, setFormData] = useState({ ...recruiter });
-  const [viewMode, setViewMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [profile, setProfile] = useState(initialData);
+  const [tempData, setTempData] = useState(initialData);
 
-  const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTempData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSave = () => {
-    setRecruiter(formData);
-    setViewMode(true);
+    setProfile(tempData);
+    setEditMode(false);
+   if (setOpen) setOpen(false);
   };
 
-  const handleView = () => {
-    setViewMode(true);
-  };
-
-  const handleEditClick = () => {
-    setViewMode(false);
-    document.getElementById("editTrigger")?.click();
+  const handleCancel = () => {
+    setTempData(profile);
+    setEditMode(false);
   };
 
   return (
-    <div className="recruiter-profile-page">
-      {showNavbar && <Navbar />}
-
-      <div className="profile-layout">
-        {showSidebar && <Sidebar />}
-
-        <div className="profile-container">
-          <div className="profile-card">
-            <div className="profile-actions">
-              <div className="dropdown">
-                <button className="menu-btn"><FaEllipsisV /></button>
-                <div className="dropdown-content">
-                  <button onClick={handleView}>View</button>
-                  <button onClick={handleEditClick}>Edit</button>
-                </div>
-              </div>
-            </div>
-
-            <img src={recruiter.image} alt="Recruiter" className="profile-img" />
-            <h2>{recruiter.name}</h2>
-            <p className="position">{recruiter.position}</p>
-
-            <div className="info">
-              <p><FaEnvelope /> {recruiter.email}</p>
-              <p><FaPhone /> {recruiter.phone}</p>
-              <p><FaBuilding /> {recruiter.company}</p>
-            </div>
-
-            <div className="bio">
-              <h4>About</h4>
-              <p>{recruiter.bio}</p>
-            </div>
-
-            {!viewMode && (
-              <Select>
-                <SelectTrigger asChild>
-                  <Button className="edit-btn" id="editTrigger">Edit Profile</Button>
-                </SelectTrigger>
-
-                <SelectContent side="right" className="edit-profile-sheet">
-                  <div className="edit-profile-form">
-                    <div className="form-group">
-                      <Label>Name</Label>
-                      <Input value={formData.name} onChange={(e) => handleChange("name", e.target.value)} />
-                    </div>
-
-                    <div className="form-group">
-                      <Label>Email</Label>
-                      <Input value={formData.email} onChange={(e) => handleChange("email", e.target.value)} />
-                    </div>
-
-                    <div className="form-group">
-                      <Label>Phone</Label>
-                      <Input value={formData.phone} onChange={(e) => handleChange("phone", e.target.value)} />
-                    </div>
-
-                    <div className="form-group">
-                      <Label>Company</Label>
-                      <Input value={formData.company} onChange={(e) => handleChange("company", e.target.value)} />
-                    </div>
-
-                    <div className="form-group">
-                      <Label>Position</Label>
-                      <Input value={formData.position} onChange={(e) => handleChange("position", e.target.value)} />
-                    </div>
-
-                    <div className="form-group">
-                      <Label>Bio</Label>
-                      <Input value={formData.bio} onChange={(e) => handleChange("bio", e.target.value)} />
-                    </div>
-                  </div>
-
-                  <div className="edit-footer">
-                    <button className="save-btn" onClick={handleSave}>Save</button>
-                    <button className="cancel-btn" onClick={() => setViewMode(true)}>Cancel</button>
-                  </div>
-                </SelectContent>
-              </Select>
-            )}
-          </div>
+    <div className="profile-container">
+      <div className="profile-card">
+        <div className="profile-header">
+          <img
+            src="https://randomuser.me/api/portraits/women/68.jpg"
+            alt="Profile"
+            className="profile-image"
+          />
+          <button
+            className="dropdown-btn"
+            onClick={() => setEditMode((prev) => !prev)}
+            title={editMode ? "View Mode" : "Edit Profile"}
+          >
+            {editMode ? <FaEye /> : <FaEdit />}
+          </button>
         </div>
+
+        {/* Editable or static fields */}
+        <div className="profile-fields">
+          {editMode ? (
+            <>
+              <input
+                name="name"
+                value={tempData.name}
+                onChange={handleChange}
+                className="input-field"
+              />
+              <input
+                name="role"
+                value={tempData.role}
+                onChange={handleChange}
+                className="input-field"
+              />
+              <input
+                name="email"
+                value={tempData.email}
+                onChange={handleChange}
+                className="input-field"
+              />
+              <input
+                name="phone"
+                value={tempData.phone}
+                onChange={handleChange}
+                className="input-field"
+              />
+              <input
+                name="company"
+                value={tempData.company}
+                onChange={handleChange}
+                className="input-field"
+              />
+              <textarea
+                name="about"
+                value={tempData.about}
+                onChange={handleChange}
+                className="textarea-field"
+              />
+            </>
+          ) : (
+            <>
+              <h2 className="profile-name">{profile.name}</h2>
+              <p className="profile-role">{profile.role}</p>
+              <p><FaEnvelope /> {profile.email}</p>
+              <p><FaPhone /> {profile.phone}</p>
+              <p><FaBuilding /> {profile.company}</p>
+              <h3>About</h3>
+              <p>{profile.about}</p>
+            </>
+          )}
+        </div>
+
+        {/* Buttons */}
+        {editMode && (
+          <div className="edit-buttons">
+            <button className="save-btn" onClick={handleSave}>Save</button>
+            <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+          </div>
+        )}
       </div>
     </div>
   );

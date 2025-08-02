@@ -1,37 +1,48 @@
 .navbar {
-  background-color: #1a237e;
-  color: white;
-  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 32px;
+  background-color: #1a237e;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.navbar-logo {
-  font-size: 22px;
+.logo {
+  font-size: 24px;
   font-weight: bold;
+  color: white;
 }
 
-.navbar-links {
-  list-style: none;
+.navbar-right {
   display: flex;
-  gap: 25px;
-  margin: 0;
-  padding: 0;
+  gap: 20px;
 }
 
 .nav-link {
   color: white;
   text-decoration: none;
   font-size: 16px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease-in-out;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
+
 
 .nav-link:hover {
-  color: #ffcc80;
+  color: hsl(43, 33%, 96%); /* amber/yellow */
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.nav-link.active {
+  color: hsl(43, 33%, 96%);
+  border-bottom: 2px solid hsl(43, 33%, 96%);
 }
 
+
 .logout-link {
-  color: #ffcdd2;
+  color: hsl(43, 33%, 96%);
 }

@@ -1,16 +1,1 @@
- .admin-container {
-  display: flex;
-  height: 100mvh;
-}
-
-.sidebar {
-  flex: 0 0 250px; /* fixed width of sidebar (example) */
-}
-
-.graph-container {
-  flex: 1; /* takes remaining space */
-  padding: 40px;
-  background-color: #050505;
-  box-sizing: border-box;
-  width: 1250px;
-}
+ 

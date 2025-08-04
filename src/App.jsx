@@ -7,7 +7,6 @@ import Sidebar from './components/sidebar.jsx';
 import ProgressGraph from './components/progressgraph.jsx';
 import AdminLayout from "./pages/adminlayout.jsx";
  
-
 import CreateJob from './applications/createjob.jsx'; 
 
 

@@ -41,15 +41,392 @@ import {
   Globe,
   Smartphone,
   Monitor,
-  Tablet
+  Tablet,
+  Edit,
+  Trash2,
+  Filter,
+  Download,
+  Plus,
+  MoreHorizontal,
+  UserPlus,
+  Shield,
+  ShieldCheck,
+  ShieldX
 } from 'lucide-react';
 
 const AdminApp = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [userSearchTerm, setUserSearchTerm] = useState('');
+  const [userFilter, setUserFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('name');
+  const [sortOrder, setSortOrder] = useState('asc');
+
 
   // Add these new page components inside your AdminApp component:
+const usersData = [
+    {
+      id: 1,
+      name: 'Revathy R',
+      email: 'revathy.r@example.com',
+      role: 'Frontend Developer',
+      status: 'active',
+      lastLogin: '2024-01-15',
+      joinDate: '2023-05-12',
+      avatar: 'RR',
+      location: 'Kottayam, Kerala',
+      phone: '+91 9876543210',
+      projects: 12
+    },
+    {
+      id: 2,
+      name: 'Darshana P',
+      email: 'darshana.p@example.com',
+      role: 'Backend Developer',
+      status: 'active',
+      lastLogin: '2024-01-14',
+      joinDate: '2023-03-08',
+      avatar: 'DP',
+      location: 'Ernakulam, Kerala',
+      phone: '+91 9876543211',
+      projects: 8
+    },
+    {
+      id: 3,
+      name: 'Reghuvaran',
+      email: 'reghuvaran@example.com',
+      role: 'Full Stack Developer',
+      status: 'inactive',
+      lastLogin: '2024-01-10',
+      joinDate: '2023-01-15',
+      avatar: 'RG',
+      location: 'Thrissur, Kerala',
+      phone: '+91 9876543212',
+      projects: 15
+    },
+    {
+      id: 4,
+      name: 'Tinu',
+      email: 'tinu@example.com',
+      role: 'Software Tester',
+      status: 'active',
+      lastLogin: '2024-01-15',
+      joinDate: '2023-07-20',
+      avatar: 'TN',
+      location: 'Kochi, Kerala',
+      phone: '+91 9876543213',
+      projects: 6
+    },
+    {
+      id: 5,
+      name: 'Praseeda',
+      email: 'praseeda@example.com',
+      role: 'UI/UX Designer',
+      status: 'active',
+      lastLogin: '2024-01-13',
+      joinDate: '2023-09-05',
+      avatar: 'PR',
+      location: 'Calicut, Kerala',
+      phone: '+91 9876543214',
+      projects: 9
+    },
+    {
+      id: 6,
+      name: 'Ashwin',
+      email: 'ashwin@example.com',
+      role: 'DevOps Engineer',
+      status: 'pending',
+      lastLogin: '2024-01-12',
+      joinDate: '2023-11-18',
+      avatar: 'AS',
+      location: 'Trivandrum, Kerala',
+      phone: '+91 9876543215',
+      projects: 4
+    }
+  ];
+
+ 
+  const filteredUsers = usersData
+    .filter(user => {
+      const matchesSearch = user.name.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                           user.email.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                           user.role.toLowerCase().includes(userSearchTerm.toLowerCase());
+      const matchesFilter = userFilter === 'all' || user.status === userFilter;
+      return matchesSearch && matchesFilter;
+    })
+    .sort((a, b) => {
+      let aValue = a[sortBy];
+      let bValue = b[sortBy];
+      
+      if (sortBy === 'joinDate' || sortBy === 'lastLogin') {
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
+      }
+      
+      if (sortOrder === 'asc') {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'active':
+        return 'bg-green-100 text-green-800';
+      case 'inactive':
+        return 'bg-red-100 text-red-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'active':
+        return <ShieldCheck size={16} className="text-green-600" />;
+      case 'inactive':
+        return <ShieldX size={16} className="text-red-600" />;
+      case 'pending':
+        return <Shield size={16} className="text-yellow-600" />;
+      default:
+        return <Shield size={16} className="text-gray-600" />;
+    }
+  };
+
+const UsersPage = () => (
+    <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+      {/* Users Page Header */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Users Management</h2>
+            <p className="text-gray-600">Manage and monitor all registered users</p>
+          </div>
+          <div className="flex space-x-3">
+            <button className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center space-x-2">
+              <Download size={20} />
+              <span>Export</span>
+            </button>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2">
+              <UserPlus size={20} />
+              <span>Add User</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Total Users</p>
+                <p className="text-2xl font-bold text-gray-900">{usersData.length}</p>
+              </div>
+              <Users size={24} className="text-blue-500" />
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Active Users</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {usersData.filter(u => u.status === 'active').length}
+                </p>
+              </div>
+              <ShieldCheck size={24} className="text-green-500" />
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Pending</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {usersData.filter(u => u.status === 'pending').length}
+                </p>
+              </div>
+              <Shield size={24} className="text-yellow-500" />
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Inactive</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {usersData.filter(u => u.status === 'inactive').length}
+                </p>
+              </div>
+              <ShieldX size={24} className="text-red-500" />
+            </div>
+          </div>
+        </div>
+
+        {/* Filters and Search */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search users by name, email, or role..."
+                value={userSearchTerm}
+                onChange={(e) => setUserSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 w-full lg:w-80 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex space-x-4">
+              {/* Status Filter */}
+              <div className="flex items-center space-x-2">
+                <Filter size={20} className="text-gray-500" />
+                <select
+                  value={userFilter}
+                  onChange={(e) => setUserFilter(e.target.value)}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="pending">Pending</option>
+                </select>
+              </div>
+
+              {/* Sort */}
+              <select
+                value={`${sortBy}-${sortOrder}`}
+                onChange={(e) => {
+                  const [field, order] = e.target.value.split('-');
+                  setSortBy(field);
+                  setSortOrder(order);
+                }}
+                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="joinDate-desc">Newest First</option>
+                <option value="joinDate-asc">Oldest First</option>
+                <option value="lastLogin-desc">Last Login (Recent)</option>
+                <option value="projects-desc">Most Projects</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Users Table */}
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  User
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Role
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Location
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Projects
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Last Login
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredUsers.map((user) => (
+                <tr key={user.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white text-sm font-medium">{user.avatar}</span>
+                      </div>
+                      <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                        <div className="text-sm text-gray-500">{user.email}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{user.role}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center space-x-2">
+                      {getStatusIcon(user.status)}
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(user.status)}`}>
+                        {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{user.location}</div>
+                    <div className="text-sm text-gray-500">{user.phone}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900">{user.projects}</div>
+                    <div className="text-xs text-gray-500">projects</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {new Date(user.lastLogin).toLocaleDateString()}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      Joined {new Date(user.joinDate).toLocaleDateString()}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div className="flex items-center space-x-2">
+                      <button className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50">
+                        <Edit size={16} />
+                      </button>
+                      <button className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50">
+                        <Trash2 size={16} />
+                      </button>
+                      <button className="text-gray-600 hover:text-gray-900 p-1 rounded hover:bg-gray-50">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Table Footer */}
+        <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+          <div className="text-sm text-gray-700">
+            Showing {filteredUsers.length} of {usersData.length} users
+          </div>
+          <div className="flex space-x-2">
+            <button className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50">
+              Previous
+            </button>
+            <button className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700">
+              1
+            </button>
+            <button className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50">
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+
 
 const SettingsPage = () => (
   <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
@@ -58,21 +435,9 @@ const SettingsPage = () => (
   </main>
 );
 
-const UsersPage = () => (
-  <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
-    <h2 className="text-2xl font-bold mb-4">Users</h2>
-    <p className="text-gray-600">This page shows a list of registered users and their activity.</p>
-  </main>
-);
+ 
 
-const OrdersPage = () => (
-  <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
-    <h2 className="text-2xl font-bold mb-4">jobrequests</h2>
-    <p className="text-gray-600">View and manage all jobrequests from this section.</p>
-  </main>
-);
-
-
+ 
   // Dashboard Data
   const salesData = [
     { name: 'Jan', sales: 4000, revenue: 2400 },
@@ -126,7 +491,6 @@ const OrdersPage = () => (
 
   const topPages = [
     { page: '/dashboard', views: 15420, percentage: 28.5 },
-     
     { page: '/analytics', views: 9650, percentage: 17.8 },
     { page: '/users', views: 7230, percentage: 13.4 },
     { page: '/settings', views: 4890, percentage: 9.0 },
@@ -600,7 +964,7 @@ const OrdersPage = () => (
          {currentPage === 'dashboard' && <DashboardPage />}
 {currentPage === 'analytics' && <AnalyticsPage />}
 {currentPage === 'users' && <UsersPage />}
-{currentPage === 'orders' && <OrdersPage />}
+ 
 {currentPage === 'settings' && <SettingsPage />}
 
       </div>

@@ -35,11 +35,11 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
+      
  
         <Route path="/admin" element={<Sidebar />} />
         <Route path="admin/dashboard" element={<h2>Welcome to Job Portal Dashboard</h2>} />
-        <Route path="/admin/progressgraph" element={<ProgressGraph />} />
+        
         <Route path="/admin/adminlayout" element={<AdminLayout />} />
        
 

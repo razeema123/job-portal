@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './login.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import './login.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.email === email && storedUser.password === password) {
-      toast.success('Login successful');
-      setTimeout(() => navigate('/home'), 1500);
-    } else {
-      toast.error('Invalid credentials');
+
+    try {
+      const res = await axios.post('http://localhost:5002/api/auth/login', {
+        email,
+        password
+      });
+
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+
+      toast.success('Login successful!');
+      setTimeout(() => {
+        navigate('/home'); 
+      }, 1500);
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.msg || err.response?.data?.error || 'Login failed.';
+      toast.error(errorMsg);
     }
-  };
+  }
 
   return (
     <div className="auth-page">
@@ -51,7 +64,7 @@ const Login = () => {
           <div className="auth-links">
             <Link to="/forgot-password">Forgot Password?</Link>
             <span className="separator"></span>
-            <Link to="/signup">Signup</Link>
+            <Link to="/signup">Don't have an account? Signup</Link>
           </div>
         </form>
       </div>

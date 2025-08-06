@@ -2,20 +2,32 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './signup.css'; 
+import axios from 'axios';
+import './signup.css';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    localStorage.setItem('user', JSON.stringify({ email, password }));
-    toast.success('Account created successfully! Please login to continue.');
-    setTimeout(() => {
-      navigate('/login');
-    }, 2000); // wait 2 seconds before navigating
+
+    try {
+      const res = await axios.post('http://localhost:5002/api/auth/signup', {
+        name,
+        email,
+        password,
+      });
+
+      toast.success('Account created successfully! Please login to continue.');
+      setTimeout(() => navigate('/login'), 2000);
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.msg || err.response?.data?.error || 'Signup failed.';
+      toast.error(errorMsg);
+    }
   };
 
   return (
@@ -26,6 +38,13 @@ const Signup = () => {
       <div className="auth-form">
         <h2>Signup</h2>
         <form onSubmit={handleSignup}>
+          <input
+            type="text"
+            placeholder="Name"
+            required
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
           <input
             type="email"
             placeholder="Email"

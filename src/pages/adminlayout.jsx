@@ -1,4 +1,5 @@
  import React, { useState } from 'react';
+  
 import { 
   BarChart, 
   Bar, 
@@ -52,6 +53,7 @@ import {
   Shield,
   ShieldCheck,
   ShieldX
+  
 } from 'lucide-react';
 
 const AdminApp = () => {
@@ -62,22 +64,18 @@ const AdminApp = () => {
   const [userFilter, setUserFilter] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
-
-
-  // Add these new page components inside your AdminApp component:
-const usersData = [
+ 
+  const usersData = [
     {
       id: 1,
       name: 'Revathy R',
       email: 'revathy.r@example.com',
       role: 'Frontend Developer',
       status: 'active',
-      lastLogin: '2024-01-15',
       joinDate: '2023-05-12',
       avatar: 'RR',
-      location: 'Kottayam, Kerala',
       phone: '+91 9876543210',
-      projects: 12
+    
     },
     {
       id: 2,
@@ -85,12 +83,10 @@ const usersData = [
       email: 'darshana.p@example.com',
       role: 'Backend Developer',
       status: 'active',
-      lastLogin: '2024-01-14',
       joinDate: '2023-03-08',
       avatar: 'DP',
-      location: 'Ernakulam, Kerala',
       phone: '+91 9876543211',
-      projects: 8
+       
     },
     {
       id: 3,
@@ -98,12 +94,10 @@ const usersData = [
       email: 'reghuvaran@example.com',
       role: 'Full Stack Developer',
       status: 'inactive',
-      lastLogin: '2024-01-10',
       joinDate: '2023-01-15',
       avatar: 'RG',
-      location: 'Thrissur, Kerala',
       phone: '+91 9876543212',
-      projects: 15
+      
     },
     {
       id: 4,
@@ -111,12 +105,10 @@ const usersData = [
       email: 'tinu@example.com',
       role: 'Software Tester',
       status: 'active',
-      lastLogin: '2024-01-15',
       joinDate: '2023-07-20',
       avatar: 'TN',
-      location: 'Kochi, Kerala',
       phone: '+91 9876543213',
-      projects: 6
+     
     },
     {
       id: 5,
@@ -124,29 +116,24 @@ const usersData = [
       email: 'praseeda@example.com',
       role: 'UI/UX Designer',
       status: 'active',
-      lastLogin: '2024-01-13',
       joinDate: '2023-09-05',
       avatar: 'PR',
-      location: 'Calicut, Kerala',
       phone: '+91 9876543214',
-      projects: 9
-    },
+     },
     {
       id: 6,
       name: 'Ashwin',
       email: 'ashwin@example.com',
       role: 'DevOps Engineer',
       status: 'pending',
-      lastLogin: '2024-01-12',
       joinDate: '2023-11-18',
       avatar: 'AS',
-      location: 'Trivandrum, Kerala',
       phone: '+91 9876543215',
-      projects: 4
+       
     }
   ];
 
- 
+  
   const filteredUsers = usersData
     .filter(user => {
       const matchesSearch = user.name.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
@@ -197,7 +184,259 @@ const usersData = [
     }
   };
 
-const UsersPage = () => (
+  const AddUserPage = () => {
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      role: 'Frontend Developer',
+      phone: '',
+      status: 'active'
+    });
+
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+      // Clear error when user starts typing
+      if (errors[name]) {
+        setErrors(prev => ({
+          ...prev,
+          [name]: ''
+        }));
+      }
+    };
+
+    const validateForm = () => {
+      const newErrors = {};
+      
+      if (!formData.name.trim()) {
+        newErrors.name = 'Name is required';
+      }
+      
+      if (!formData.email.trim()) {
+        newErrors.email = 'Email is required';
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email';
+      }
+      
+      if (!formData.phone.trim()) {
+        newErrors.phone = 'Phone number is required';
+      } else if (!/^\+91\s\d{10}$/.test(formData.phone)) {
+        newErrors.phone = 'Please enter a valid phone number (+91 xxxxxxxxxx)';
+      }
+      
+      return newErrors;
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const newErrors = validateForm();
+      
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+
+      setIsSubmitting(true);
+      
+      // Simulate API call
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Create new user object
+        const newUser = {
+          ...formData,
+          id: Date.now(), // Simple ID generation
+          avatar: formData.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2),
+          joinDate: new Date().toISOString().split('T')[0]
+        };
+        
+        // Add user to the users data
+        setUsersData(prevUsers => [...prevUsers, newUser]);
+        
+        // Reset form and go back to users page
+        setFormData({
+          name: '',
+          email: '',
+          role: 'Frontend Developer',
+          phone: '',
+          status: 'active'
+        });
+        setCurrentPage('users');
+        setShowAddUserForm(false);
+        
+      } catch (error) {
+        console.error('Error creating user:', error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+
+    return (
+      <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center space-x-4 mb-4">
+              <button 
+                onClick={() => {
+                  setCurrentPage('users');
+                  setShowAddUserForm(false);
+                }}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Add New User</h2>
+                <p className="text-gray-600">Create a new user account</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name Field */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.name ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter full name"
+                />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              </div>
+
+              {/* Email Field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Enter email address"
+                />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              </div>
+
+              {/* Role Field */}
+              <div>
+                <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
+                  Role *
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="Frontend Developer">Frontend Developer</option>
+                  <option value="Backend Developer">Backend Developer</option>
+                  <option value="Full Stack Developer">Full Stack Developer</option>
+                  <option value="Software Tester">Software Tester</option>
+                  <option value="UI/UX Designer">UI/UX Designer</option>
+                  <option value="DevOps Engineer">DevOps Engineer</option>
+                </select>
+              </div>
+
+              {/* Phone Field */}
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number *
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.phone ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="+91 9876543210"
+                />
+                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+              </div>
+
+              {/* Status Field */}
+              <div>
+                <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
+                  Status
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  value={formData.status}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="pending">Pending</option>
+                </select>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex space-x-4 pt-6">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentPage('users');
+                    setShowAddUserForm(true);
+                  }}
+                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                      <span>Creating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus size={20} />
+                      <span>Create User</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    );
+  };
+
+
+const UsersPage = () => ( 
     <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
       {/* Users Page Header */}
       <div className="mb-8">
@@ -211,9 +450,11 @@ const UsersPage = () => (
               <Download size={20} />
               <span>Export</span>
             </button>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2">
+            <button onclick="/add-user" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2">
               <UserPlus size={20} />
-              <span>Add User</span>
+              
+              <span>Add User</span> 
+
             </button>
           </div>
         </div>
@@ -309,8 +550,8 @@ const UsersPage = () => (
                 <option value="name-desc">Name (Z-A)</option>
                 <option value="joinDate-desc">Newest First</option>
                 <option value="joinDate-asc">Oldest First</option>
-                <option value="lastLogin-desc">Last Login (Recent)</option>
-                <option value="projects-desc">Most Projects</option>
+                
+                
               </select>
             </div>
           </div>
@@ -332,19 +573,7 @@ const UsersPage = () => (
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Location
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Projects
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Last Login
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
+                </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredUsers.map((user) => (
@@ -372,21 +601,16 @@ const UsersPage = () => (
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{user.location}</div>
-                    <div className="text-sm text-gray-500">{user.phone}</div>
-                  </td>
+                     
+                    </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{user.projects}</div>
-                    <div className="text-xs text-gray-500">projects</div>
-                  </td>
+              
+                    </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
                       {new Date(user.lastLogin).toLocaleDateString()}
                     </div>
-                    <div className="text-xs text-gray-500">
-                      Joined {new Date(user.joinDate).toLocaleDateString()}
-                    </div>
-                  </td>
+                    </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center space-x-2">
                       <button className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50">

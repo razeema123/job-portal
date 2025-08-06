@@ -6,7 +6,7 @@ import Sidebar from './components/sidebar.jsx';
  
 import ProgressGraph from './components/progressgraph.jsx';
 import AdminLayout from "./pages/adminlayout.jsx";
- 
+ import AddUserForm from './pages/AddUserForm'; 
 import CreateJob from './applications/createjob.jsx'; 
 
 
@@ -38,8 +38,7 @@ function App() {
       
  
         <Route path="/admin" element={<Sidebar />} />
-        <Route path="admin/dashboard" element={<h2>Welcome to Job Portal Dashboard</h2>} />
-        
+         <Route path="/add-user" element={<AddUserForm />} />
         <Route path="/admin/adminlayout" element={<AdminLayout />} />
        
 

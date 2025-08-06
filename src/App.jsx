@@ -61,6 +61,7 @@ function App() {
         <Route path="/view-user" element={<ViewUser />} />
         <Route path="/view-user/:id" element={<ViewUser />} />
         <Route path="/recruiter-profile" element={<RecruiterProfile/>} />
+        {/* <Route path='/recruiter' element={<RecruiterProfile />} /> */}
 
 
         <Route path="/view-profile" element={<ViewProfile />} />

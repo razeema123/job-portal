@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../components/recruiter/SideBar";
 import "./createjob.css";
+import axios from "axios";
 
 export default function CreateJob() {
   const navigate = useNavigate();
@@ -21,26 +22,36 @@ export default function CreateJob() {
     setJob({ ...job, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const existingJobs = JSON.parse(localStorage.getItem("jobs")) || [];
-    const updatedJobs = [...existingJobs, job];
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
+    try {
+      // 👇 Send job data to backend API
+      const res = await axios.post("http://localhost:5002/api/jobs/create", {
+        title: job.title,
+        company: job.company,
+        location: job.location,
+        jobType: job.type, // 👈 must match backend field name
+        salary: Number(job.salary) || 0, // 👈 convert salary to number
+        description: job.description,
+      });
+      console.log("✅ Backend Response:", res.data);
 
-    toast.success("✅ Job Created Successfully!", { autoClose: 2000 });
+      toast.success("✅ Job Created Successfully!", { autoClose: 2000 });
 
-    setTimeout(() => navigate("/postjob"), 2000);
+      setTimeout(() => navigate("/postjob"), 2000);
+    } catch (err) {
+      const msg = err.response?.data?.error || "Something went wrong";
+      toast.error("❌ " + msg, { autoClose: 3000 });
+      console.error("Job creation error:", err);
+    }
   };
 
   return (
     <div className="layout">
       <ToastContainer position="top" autoClose={2000} />
-
-      {/* ✅ Reusable Sidebar */}
       <Sidebar />
 
-      {/* Page Content */}
       <div className="content">
         <div className="create-job-container">
           <h2>Create a New Job</h2>
@@ -87,7 +98,7 @@ export default function CreateJob() {
                 <option value="">Select Job Type</option>
                 <option value="Full-Time">Full-Time</option>
                 <option value="Part-Time">Part-Time</option>
-                <option value="Contract">Contract</option>
+                <option value="Remote">Remote</option>
                 <option value="Internship">Internship</option>
               </select>
             </div>
@@ -120,10 +131,6 @@ export default function CreateJob() {
             </button>
           </form>
         </div>
-
-        {/* <footer className="footer">
-          <p>&copy; 2025 Job Portal. All rights reserved.</p>
-        </footer> */}
       </div>
     </div>
   );

@@ -1,0 +1,80 @@
+.edit-job-form {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.edit-job-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #333;
+}
+
+.edit-job-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit-job-form input,
+.edit-job-form select,
+.edit-job-form textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: border 0.2s;
+}
+
+.edit-job-form input:focus,
+.edit-job-form select:focus,
+.edit-job-form textarea:focus {
+    border-color: #0a3872;
+    outline: none;
+}
+
+.edit-job-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.edit-job-form button {
+    background-color: #0a3872;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-job-form button:hover {
+    background-color: #0a3872;
+}
+@media (max-width: 768px) {
+    .edit-job-form {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .edit-job-form h2 {
+        font-size: 20px;
+    }
+}.edit-job-form input,
+.edit-job-form select,
+.edit-job-form textarea {
+    background-color: #f9f9f9;
+    /* 🔸 light grey background */
+    color: #333;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: border 0.2s;
+}

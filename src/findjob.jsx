@@ -140,7 +140,8 @@ const FindJobs = () => {
                       className="apply"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate('/apply', { state: { job } });
+                        navigate(`/apply?jobId=${job._id}`);
+
                       }}
                     >
                       📩 <strong>Easily apply</strong>

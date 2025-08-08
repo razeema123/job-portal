@@ -78,9 +78,10 @@ const FindJobs = () => {
     })
     
 
-  const handleViewDetails = (job) => {
-    navigate(`/job/${job._id}`, { state: { job } });
-  };
+    const handleViewDetails = (job) => {
+      navigate(`/job/${job._id}`);
+    };
+    
 
   return (
     <div className="layout">

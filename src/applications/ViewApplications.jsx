@@ -5,12 +5,13 @@ import Sidebar from "../components/recruiter/SideBar";
 import "./ViewApplications.css";
 
 export default function ViewApplications() {
-  const { id } = useParams(); // Grab ID from URL
+  const { id } = useParams();
   const [application, setApplication] = useState(null);
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:5002/api/applications/${id}`)
+      axios
+        .get(`http://localhost:5002/api/applications/${id}`)
         .then((res) => setApplication(res.data))
         .catch((err) => console.error("Failed to load application:", err));
     }
@@ -38,13 +39,21 @@ export default function ViewApplications() {
             <p className="view-value">{application.email}</p>
           </div>
           <div className="form-field">
+            <label>Company:</label>
+            <p className="view-value">{application.jobId?.company || "N/A"}</p>
+          </div>
+          <div className="form-field">
+            <label>Post Title:</label>
+            <p className="view-value">{application.jobId?.title || "N/A"}</p>
+          </div>
+          <div className="form-field">
             <label>Status:</label>
             <p className="view-value">{application.status}</p>
           </div>
           <div className="form-field">
             <label>Resume:</label>
             <a
-              href={`http://localhost:5002/${application.resumePath || application.resumeLink}`}
+              href={`http://localhost:5002/${application.resumePath}`}
               target="_blank"
               rel="noreferrer"
               className="resume-link"
@@ -52,14 +61,9 @@ export default function ViewApplications() {
               Download
             </a>
           </div>
-          {/* Optional Fields */}
           <div className="form-field">
             <label>Phone:</label>
             <p className="view-value">{application.phone || "N/A"}</p>
-          </div>
-          <div className="form-field">
-            <label>Job ID:</label>
-            <p className="view-value">{application.jobId}</p>
           </div>
         </form>
       </div>

@@ -74,6 +74,8 @@ function App() {
         <Route path="/recruiter-profile" element={<RecruiterProfile />} />
         <Route path="/viewapplications/:id" element={<ViewApplications />} />
         <Route path="/view-applications/:id" element={<ViewApplications />} />
+        <Route path="/job/:id" element={<JobDetail />} />
+
 
 
         {/* <Route path='/recruiter' element={<RecruiterProfile />} /> */}

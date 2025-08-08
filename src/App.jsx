@@ -28,6 +28,8 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Unauthorized from './components/recruiter/Unauthorized.jsx';
 
 
+
+
 function App() {
   return (
     <Router>
@@ -65,6 +67,18 @@ function App() {
         <Route path="/dashboard" element={<h2>Welcome to Job Portal Dashboard</h2>} />
         <Route path="/viewapplications/:jobId" element={<ViewApplications />} />
         <Route path="/user-appliations/:jobId" element={<UserApplications />} />
+
+
+        <Route path="/view-user" element={<ViewUser />} />
+        <Route path="/view-user/:id" element={<ViewUser />} />
+        <Route path="/recruiter-profile" element={<RecruiterProfile />} />
+        <Route path="/viewapplications/:id" element={<ViewApplications />} />
+        <Route path="/view-applications/:id" element={<ViewApplications />} />
+
+
+        {/* <Route path='/recruiter' element={<RecruiterProfile />} /> */}
+
+
 
        <Route path='/protected' element={<ProtectedRoute/>} />
 

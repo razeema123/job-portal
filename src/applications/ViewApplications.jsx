@@ -1,105 +1,67 @@
-import { useState } from "react";
-import "./ViewApplications.css";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import Sidebar from "../components/recruiter/SideBar";
+import "./ViewApplications.css";
 
 export default function ViewApplications() {
-  const [editMode, setEditMode] = useState(false);
-  const [submittedCount, setSubmittedCount] = useState(1);
+  const { id } = useParams(); // Grab ID from URL
+  const [application, setApplication] = useState(null);
 
-  const [application, setApplication] = useState({
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    resume: "alice_resume.pdf",
-    status: "Pending",
-    skills: "React, Node.js",
-    experience: "2 years",
-    responsibilities: "Frontend development, bug fixing",
-  });
-
-  const [originalApp, setOriginalApp] = useState({ ...application });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setApplication((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleEditClick = () => {
-    setOriginalApp({ ...application });
-    setEditMode(true);
-  };
-
-  const handleCancel = () => {
-    setApplication({ ...originalApp });
-    setEditMode(false);
-  };
-
-  const handleSave = () => {
-    if (!application.name || !application.email || !application.status) {
-      alert("Name, Email and Status are required.");
-      return;
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:5002/api/applications/${id}`)
+        .then((res) => setApplication(res.data))
+        .catch((err) => console.error("Failed to load application:", err));
     }
+  }, [id]);
 
-    setEditMode(false);
-    setSubmittedCount((prev) => prev + 1);
-  };
+  if (!application) {
+    return <div style={{ padding: "2rem" }}>Loading application data...</div>;
+  }
 
   return (
     <>
       <Sidebar />
-
       <div className="view-app-container">
         <div className="view-app-header">
           <h2>Application Details</h2>
-          {!editMode && (
-            <button className="edit-btn" onClick={handleEditClick}>
-              Edit
-            </button>
-          )}
         </div>
 
-        <div className="submitted-count">
-          Submitted Applications: <strong>{submittedCount}</strong>
-        </div>
-
-        <form className="form-grid" onSubmit={(e) => e.preventDefault()}>
-          {[
-            { label: "Name", name: "name", required: true },
-            { label: "Email", name: "email", required: true },
-            { label: "Status", name: "status", required: true },
-            { label: "Skills", name: "skills" },
-            { label: "Experience", name: "experience" },
-            { label: "Responsibilities", name: "responsibilities" },
-          ].map((field) => (
-            <div className="form-field" key={field.name}>
-              <label>{field.label}:</label>
-              {editMode ? (
-                <input
-                  type="text"
-                  name={field.name}
-                  value={application[field.name]}
-                  onChange={handleChange}
-                  required={field.required}
-                />
-              ) : (
-                <p className="view-value">{application[field.name]}</p>
-              )}
-            </div>
-          ))}
-        </form>
-
-        {editMode && (
-          <div className="action-buttons">
-            <button className="save-btn" onClick={handleSave}>
-              Save
-            </button>
-            <button className="cancel-btn" onClick={handleCancel}>
-              Cancel
-            </button>
+        <form className="form-grid">
+          <div className="form-field">
+            <label>Name:</label>
+            <p className="view-value">{application.name}</p>
           </div>
-        )}
+          <div className="form-field">
+            <label>Email:</label>
+            <p className="view-value">{application.email}</p>
+          </div>
+          <div className="form-field">
+            <label>Status:</label>
+            <p className="view-value">{application.status}</p>
+          </div>
+          <div className="form-field">
+            <label>Resume:</label>
+            <a
+              href={`http://localhost:5002/${application.resumePath || application.resumeLink}`}
+              target="_blank"
+              rel="noreferrer"
+              className="resume-link"
+            >
+              Download
+            </a>
+          </div>
+          {/* Optional Fields */}
+          <div className="form-field">
+            <label>Phone:</label>
+            <p className="view-value">{application.phone || "N/A"}</p>
+          </div>
+          <div className="form-field">
+            <label>Job ID:</label>
+            <p className="view-value">{application.jobId}</p>
+          </div>
+        </form>
       </div>
     </>
   );

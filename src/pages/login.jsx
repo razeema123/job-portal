@@ -22,6 +22,12 @@ const Login = () => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user.role === "admin") navigate("/admin-dashboard");
+      else if (user.role === "recruiter") navigate("/recruiter-dashboard");
+      else navigate("/user-dashboard");
+
       toast.success('Login successful!');
       setTimeout(() => {
         navigate('/home'); 

@@ -28,6 +28,7 @@ import RecruiterProfile from './applications/RecruiterProfile.jsx';
 
 
 
+
 function App() {
   return (
     <Router>

@@ -161,7 +161,14 @@ export default function PostJob() {
                   <td onClick={() => handleRowClick(job._id)}>{job.location}</td>
                   <td onClick={() => handleRowClick(job._id)}>{job.jobType}</td>
                   <td onClick={() => handleRowClick(job._id)}>₹{job.salary}</td>
-                  <td onClick={() => handleRowClick(job._id)}>{job.description}</td>
+                  <td
+  className="description-cell"
+  title={job.description} // Tooltip to see full text on hover
+  onClick={() => handleRowClick(job._id)}
+>
+  {job.description}
+</td>
+
                   <td className="action-cell">
                     <button onClick={(e) => handleEdit(e, job._id)} title="Edit">
                       <FaEdit />

@@ -222,3 +222,10 @@ input[type="checkbox"] {
   accent-color: #0a3871;
 
 }
+.jobs-table td.description-cell {
+  max-width: 200px; /* You can adjust this width */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

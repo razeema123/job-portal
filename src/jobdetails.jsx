@@ -1,11 +1,11 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Jobdetails.css';
 import { AiFillHome } from 'react-icons/ai';
 import { MdPostAdd } from 'react-icons/md';
 import { FaBriefcase, FaSearch } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
-
 
 const Header = () => (
   <header className="site-header">
@@ -19,7 +19,6 @@ const Header = () => (
   </header>
 );
 
-
 const Footer = () => (
   <footer className="site-footer">
     <p>&copy; 2025 Job Portal. All rights reserved.</p>
@@ -27,9 +26,36 @@ const Footer = () => (
 );
 
 const JobDetail = () => {
-  const location = useLocation();
+  const { jobId } = useParams(); // ✅ match route param name
   const navigate = useNavigate();
-  const { job } = location.state || {};
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch job from backend
+  useEffect(() => {
+    if (jobId) {
+      axios.get(`http://localhost:5002/api/jobs/${jobId}`)
+        .then((res) => {
+          // ✅ handle both possible response formats
+          setJob(res.data.job || res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("❌ Failed to fetch job:", err);
+          setLoading(false);
+        });
+    }
+  }, [jobId]);
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div style={{ padding: '2rem' }}>Loading job details...</div>
+        <Footer />
+      </>
+    );
+  }
 
   if (!job) {
     return (
@@ -52,13 +78,21 @@ const JobDetail = () => {
           <h2>{job.title}</h2>
           <p><strong>Company:</strong> {job.company}</p>
           <p><strong>Location:</strong> {job.location}</p>
-          <p><strong>Salary:</strong> {job.salary}</p>
-          <p><strong>Type:</strong> {job.type.join(', ')}</p>
+          <p><strong>Salary:</strong> ₹{job.salary}</p>
+          <p><strong>Type:</strong> {Array.isArray(job.jobType) ? job.jobType.join(', ') : job.jobType}</p>
           <p><strong>Bond:</strong> {job.bond || "Not specified"}</p>
-          <p><strong>Description:</strong></p>
-          <p>{job.description || "No description provided. This is a great opportunity to grow with the company, work in a collaborative environment, and contribute to innovative products.We are looking for a passionate and detail-oriented individual to join our growing team as a key contributor to our organization. In this role, you will be responsible for managing day-to-day tasks, collaborating with cross-functional teams, and driving forward innovative solutions that enhance productivity and business outcomes. You’ll work in a fast-paced environment where initiative, critical thinking, and problem-solving skills are highly valued.The ideal candidate is self-motivated, eager to learn, and capable of handling multiple responsibilities while maintaining high-quality standards. This position offers ample opportunities for growth, learning, and career advancement, as you will be encouraged to take ownership of your work and contribute to meaningful projects.You will be part of a supportive and inclusive team that values collaboration, creativity, and continuous improvement.Whether you're attending strategy meetings, coordinating with clients, or contributing to hands-on project work, your input will directly impact our company’s success and client satisfaction. "}</p>
+          <p><strong>Description:</strong> {job.description || "No description provided."}</p>
+          
+          {job.image && (
+            <div className="job-image">
+              <img src={`http://localhost:5002/uploads/${job.image}`} alt="Job" />
+            </div>
+          )}
 
-          <button className="apply-btn" onClick={() => navigate('/apply', { state: { job } })}>
+          <button 
+            className="apply-btn" 
+            onClick={() => navigate(`/apply?jobId=${job._id}`)}
+          >
             Apply Now
           </button>
         </div>

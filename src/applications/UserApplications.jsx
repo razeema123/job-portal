@@ -72,9 +72,13 @@ export default function UserApplications() {
               <tr>
                 <th>Name</th>
                 <th>Email</th>
+             
+                <th>Company</th>
+                <th>Role</th>
                 <th>Resume</th>
                 <th>Status</th>
-                <th>Action</th>
+              
+<th>Post</th>
               </tr>
             </thead>
             <tbody>
@@ -87,6 +91,8 @@ export default function UserApplications() {
                   <tr key={app._id}>
                     <td onClick={() => handleRowClick(app._id)}>{app.name}</td>
                     <td onClick={() => handleRowClick(app._id)}>{app.email}</td>
+                    <td>{app.jobId?.company || "N/A"}</td>
+<td>{app.jobId?.title || "N/A"}</td>
                     <td>
                     <a href={`http://localhost:5002/${app.resumePath}`} target="_blank" rel="noreferrer" className="resume-link">
 

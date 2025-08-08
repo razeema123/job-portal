@@ -1,14 +1,38 @@
  import React from "react";
+import Sidebar from "../components/sidebar";
 import ProgressGraph from "../components/progressgraph";
+import "./AdminLayout.css";  
 
-function Dashboard() {
+
+
+ 
+
+
+
+function AdminLayout() {
   return (
-    <div>
-      <ProgressGraph />
-         <h1>Admin Dashboard</h1>
-      <p>Welcome, admin! You have full access to the system.</p>
+    <div className="admin-container">
+      <Sidebar />
+      <div className="graph-container">  
+        <h1>Dashboard Overview</h1>
+        <div className="dashboard-boxes">
+          <div className="dashboard-box">
+            <h3>Views</h3>
+            <p>1,024</p>
+          </div>
+          <div className="dashboard-box">
+            <h3>Job Applications</h3>
+            <p>256</p>
+          </div>
+          <div className="dashboard-box">
+            <h3>Accepted Proposals</h3>
+            <p>87</p>
+          </div>
+        </div>
+        <ProgressGraph />
+      </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default AdminLayout;

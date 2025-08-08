@@ -57,7 +57,7 @@ function App() {
      
 
         <Route path="/admin" element={<Sidebar />} />
-        <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admindashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
         <Route path="/admin/progressgraph" element={<ProtectedRoute role="admin"><ProgressGraph /></ProtectedRoute>} />
         <Route path="/admin/progressgraph" element={<ProtectedRoute role="admin"><ProgressGraph /></ProtectedRoute>} />
         <Route path="/view-user" element={ <ProtectedRoute role="admin"> <ViewUser /></ProtectedRoute>}/>  

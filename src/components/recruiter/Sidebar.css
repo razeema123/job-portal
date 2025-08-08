@@ -1,7 +1,7 @@
 .sidebar {
   width: 220px;
   height: 100vh;
-  background-color: #1a24a9;
+  background-color: #0a3871;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -32,7 +32,7 @@
 }
 
 .active-link {
-  background-color: #404ca0;
-  color: rgb(46, 41, 204);
+  background-color: #0a3871;
+  color: #0a3871;
   font-weight: bold;
 }

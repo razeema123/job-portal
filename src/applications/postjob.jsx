@@ -4,41 +4,55 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./postjob.css";
 import Sidebar from "../components/recruiter/SideBar";
-import Navbar from "../components/recruiter/Navbar"; 
+import Navbar from "../components/recruiter/Navbar";
 import { FaTrash, FaEdit } from "react-icons/fa";
-
+import axios from "axios";
 
 export default function PostJob() {
   const [jobs, setJobs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [jobToDelete, setJobToDelete] = useState(null);
+  const [selectedJobs, setSelectedJobs] = useState([]);
   const navigate = useNavigate();
 
+  // ✅ Fetch jobs from backend
   useEffect(() => {
-    const storedJobs = JSON.parse(localStorage.getItem("jobs")) || [];
-    setJobs(storedJobs);
+    axios
+      .get("http://localhost:5002/api/jobs")
+      .then((response) => {
+        setJobs(response.data.jobs);
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+        toast.error("Failed to load jobs");
+      });
   }, []);
 
-  const handleRowClick = (index) => {
-    navigate(`/ViewApplications/${index}`);
+  const handleRowClick = (id) => {
+    navigate(`/ViewApplications/${id}`);
   };
 
-  const openDeleteModal = (e, index) => {
+  const openDeleteModal = (e, id) => {
     e.stopPropagation();
-    setJobToDelete(index);
+    setJobToDelete(id);
     setShowModal(true);
   };
 
   const confirmDelete = () => {
-    if (jobToDelete !== null) {
-      const updatedJobs = [...jobs];
-      updatedJobs.splice(jobToDelete, 1);
-      setJobs(updatedJobs);
-      localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-      toast.success("Job deleted successfully!");
+    if (jobToDelete) {
+      axios
+        .delete(`http://localhost:5002/api/jobs/delete/${jobToDelete}`)
+        .then(() => {
+          setJobs(jobs.filter((job) => job._id !== jobToDelete));
+          toast.success("Job deleted successfully!");
+        })
+        .catch(() => {
+          toast.error("Failed to delete job");
+        });
+
+      setShowModal(false);
+      setJobToDelete(null);
     }
-    setShowModal(false);
-    setJobToDelete(null);
   };
 
   const cancelDelete = () => {
@@ -46,9 +60,38 @@ export default function PostJob() {
     setJobToDelete(null);
   };
 
-  const handleEdit = (e, index) => {
+  const handleEdit = (e, id) => {
     e.stopPropagation();
-    navigate(`/ViewApplications/${index}?editMode=true`);
+    navigate(`/editjob/${id}`);
+  };
+
+  // ✅ Toggle individual selection
+  const toggleJobSelection = (jobId) => {
+    setSelectedJobs((prev) =>
+      prev.includes(jobId)
+        ? prev.filter((id) => id !== jobId)
+        : [...prev, jobId]
+    );
+  };
+
+  // ✅ Delete selected jobs
+  const handleDeleteSelected = async () => {
+    if (selectedJobs.length === 0) {
+      toast.warning("No jobs selected for deletion");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:5002/api/jobs/delete-multiple", {
+        ids: selectedJobs,
+      });
+      toast.success(`${selectedJobs.length} jobs deleted`);
+      setJobs(jobs.filter((job) => !selectedJobs.includes(job._id)));
+      setSelectedJobs([]);
+    } catch (err) {
+      toast.error("Failed to delete selected jobs");
+      console.error(err);
+    }
   };
 
   return (
@@ -62,23 +105,38 @@ export default function PostJob() {
 
       {/* Main Content */}
       <div className="content">
-        {/* Reusable Top Navbar */}
         <Navbar />
 
-        {/* Header with Create Job Button */}
         <div className="post-job-header">
           <Link to="/createjob" className="create-job-btn">
             + Create Job
           </Link>
+          {selectedJobs.length > 0 && (
+            <button className="delete-selected-btn" onClick={handleDeleteSelected}>
+              Delete Selected ({selectedJobs.length})
+            </button>
+          )}
         </div>
 
-        {/* Job Table */}
         {jobs.length === 0 ? (
           <p className="no-jobs">No jobs posted yet.</p>
         ) : (
           <table className="jobs-table">
             <thead>
               <tr>
+                <th>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedJobs(jobs.map((job) => job._id));
+                      } else {
+                        setSelectedJobs([]);
+                      }
+                    }}
+                    checked={selectedJobs.length === jobs.length && jobs.length > 0}
+                  />
+                </th>
                 <th>Job Title</th>
                 <th>Company</th>
                 <th>Location</th>
@@ -89,19 +147,26 @@ export default function PostJob() {
               </tr>
             </thead>
             <tbody>
-              {jobs.map((job, index) => (
-                <tr key={index} className="clickable-row">
-                  <td onClick={() => handleRowClick(index)}>{job.title}</td>
-                  <td onClick={() => handleRowClick(index)}>{job.company}</td>
-                  <td onClick={() => handleRowClick(index)}>{job.location}</td>
-                  <td onClick={() => handleRowClick(index)}>{job.type}</td>
-                  <td onClick={() => handleRowClick(index)}>{job.salary || "N/A"}</td>
-                  <td onClick={() => handleRowClick(index)}>{job.description}</td>
+              {jobs.map((job) => (
+                <tr key={job._id} className="clickable-row">
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedJobs.includes(job._id)}
+                      onChange={() => toggleJobSelection(job._id)}
+                    />
+                  </td>
+                  <td onClick={() => handleRowClick(job._id)}>{job.title}</td>
+                  <td onClick={() => handleRowClick(job._id)}>{job.company}</td>
+                  <td onClick={() => handleRowClick(job._id)}>{job.location}</td>
+                  <td onClick={() => handleRowClick(job._id)}>{job.jobType}</td>
+                  <td onClick={() => handleRowClick(job._id)}>₹{job.salary}</td>
+                  <td onClick={() => handleRowClick(job._id)}>{job.description}</td>
                   <td className="action-cell">
-                    <button onClick={(e) => handleEdit(e, index)} title="Edit">
+                    <button onClick={(e) => handleEdit(e, job._id)} title="Edit">
                       <FaEdit />
                     </button>
-                    <button onClick={(e) => openDeleteModal(e, index)} title="Delete">
+                    <button onClick={(e) => openDeleteModal(e, job._id)} title="Delete">
                       <FaTrash />
                     </button>
                   </td>

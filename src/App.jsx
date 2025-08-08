@@ -30,6 +30,8 @@ import EditJob from './applications/EditJob.jsx';
 
 
 
+
+
 function App() {
   return (
     <Router>
@@ -60,7 +62,11 @@ function App() {
         <Route path="/user-appliations/:jobId" element={<UserApplications />} />
         <Route path="/view-user" element={<ViewUser />} />
         <Route path="/view-user/:id" element={<ViewUser />} />
-        <Route path="/recruiter-profile" element={<RecruiterProfile/>} />
+        <Route path="/recruiter-profile" element={<RecruiterProfile />} />
+        <Route path="/viewapplications/:id" element={<ViewApplications />} />
+        <Route path="/view-applications/:id" element={<ViewApplications />} />
+
+
         {/* <Route path='/recruiter' element={<RecruiterProfile />} /> */}
 
 

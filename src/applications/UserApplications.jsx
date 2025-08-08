@@ -1,40 +1,55 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/recruiter/SideBar";
 import Navbar from "../components/recruiter/Navbar"; 
 import "./UserApplications.css";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function UserApplications() {
   const navigate = useNavigate();
+  const [applications, setApplications] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("All");
 
-  const applications = [
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", resume: "alice_resume.pdf", status: "Pending" },
-    { id: 2, name: "Bob Smith", email: "bob@example.com", resume: "bob_resume.pdf", status: "Reviewed" },
-    { id: 3, name: "Carol Davis", email: "carol@example.com", resume: "carol_resume.pdf", status: "Shortlisted" },
-    { id: 4, name: "David Miller", email: "david@example.com", resume: "david_resume.pdf", status: "Pending" },
-    { id: 5, name: "Anitha Sharma", email: "anitha@example.com", resume: "anitha_resume.pdf", status: "Shortlisted" },
-    { id: 6, name: "Ethan Brown", email: "ethan@example.com", resume: "ethan_resume.pdf", status: "Pending" },
-  ];
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = () => {
+    axios.get("http://localhost:5002/api/applications")
+      .then((res) => setApplications(res.data))
+      .catch(() => toast.error("Failed to load applications"));
+  };
+
+  const handleRowClick = (id) => {
+    navigate(`/view-applications/${id}`);
+  };
+
+  const updateStatus = (id, status) => {
+    axios.patch(`http://localhost:5002/api/applications/status/${id}`, { status })
+      .then(() => {
+        toast.success(`Updated to ${status}`);
+        fetchApplications(); // refresh
+      })
+      .catch(() => toast.error("Failed to update status"));
+  };
 
   const filteredApplications =
     selectedStatus === "All"
       ? applications
       : applications.filter((app) => app.status === selectedStatus);
 
-  const handleRowClick = (id) => {
-    navigate(`/view-user/${id}`);
-  };
-
   return (
     <div className="layout">
+      <ToastContainer position="top-right" autoClose={2000} />
       <Sidebar />
       <div className="content">
-        <Navbar /> {}
+        <Navbar />
 
-        {}
+        {/* Analytics */}
         <div className="status-analytics">
-          {["All", "Pending", "Reviewed", "Shortlisted"].map((status) => (
+          {["All", "applied", "shortlisted", "rejected"].map((status) => (
             <div
               key={status}
               className={`status-card ${status.toLowerCase()} ${selectedStatus === status ? "active" : ""}`}
@@ -50,7 +65,7 @@ export default function UserApplications() {
           ))}
         </div>
 
-        {}
+        {/* Table */}
         <div className="applications-table-container">
           <table className="applications-table">
             <thead>
@@ -59,23 +74,31 @@ export default function UserApplications() {
                 <th>Email</th>
                 <th>Resume</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {filteredApplications.length === 0 ? (
                 <tr>
-                  <td colSpan="4" className="no-data">No applications found.</td>
+                  <td colSpan="5" className="no-data">No applications found.</td>
                 </tr>
               ) : (
                 filteredApplications.map((app) => (
-                  <tr key={app.id} onClick={() => handleRowClick(app.id)}>
-                    <td>{app.name}</td>
-                    <td>{app.email}</td>
+                  <tr key={app._id}>
+                    <td onClick={() => handleRowClick(app._id)}>{app.name}</td>
+                    <td onClick={() => handleRowClick(app._id)}>{app.email}</td>
                     <td>
-                      <a href={`/${app.resume}`} download className="resume-link">Download</a>
+                    <a href={`http://localhost:5002/${app.resumePath}`} target="_blank" rel="noreferrer" className="resume-link">
+
+                        Download
+                      </a>
                     </td>
                     <td>
                       <span className={`status-badge ${app.status.toLowerCase()}`}>{app.status}</span>
+                    </td>
+                    <td>
+                      <button className="btn btn-approve" onClick={() => updateStatus(app._id, "shortlisted")}>Shortlist</button>
+                      <button className="btn btn-reject" onClick={() => updateStatus(app._id, "rejected")}>Reject</button>
                     </td>
                   </tr>
                 ))

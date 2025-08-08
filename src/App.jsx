@@ -7,6 +7,10 @@ import Sidebar from './components/sidebar.jsx';
 import ProgressGraph from './components/progressgraph.jsx';
 import AdminLayout from "./pages/adminlayout.jsx";
  
+ import AddUserForm from './pages/AddUserForm'; 
+ 
+ 
+ 
 import CreateJob from './applications/createjob.jsx'; 
 import Home from './pages/home.jsx';  
 import FindJobs from './findjob.jsx';
@@ -30,6 +34,7 @@ import Unauthorized from './components/recruiter/Unauthorized.jsx';
 
 
 
+
 function App() {
   return (
     <Router>
@@ -37,6 +42,14 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+ 
+      
+ 
+        <Route path="/admin" element={<Sidebar />} />
+         <Route path="/add-user" element={<AddUserForm />} />
+        <Route path="/admin/adminlayout" element={<AdminLayout />} />
+       
+ 
         <Route path="/forgot-password" element={<ForgotPassword />} />
          <Route path="/unauthorized" element={<Unauthorized />} />
 
@@ -62,6 +75,7 @@ function App() {
         <Route path="/admin/progressgraph" element={<ProtectedRoute role="admin"><ProgressGraph /></ProtectedRoute>} />
         <Route path="/view-user" element={ <ProtectedRoute role="admin"> <ViewUser /></ProtectedRoute>}/>  
         <Route path="/view-user/:id" element={ <ProtectedRoute role="admin"> <ViewUser /></ProtectedRoute>} />
+ 
 
        <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/dashboard" element={<h2>Welcome to Job Portal Dashboard</h2>} />

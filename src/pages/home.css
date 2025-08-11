@@ -3,13 +3,15 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 html,
 body {
     height: 100%;
     overflow-x: hidden;
     background-color: #fff;
-   
+
 }
+
 .hero-container {
     display: flex;
     align-items: center;
@@ -59,7 +61,7 @@ body {
 .post-btn {
     background-color: transparent;
     color: #0a3871;
-    padding: 14px 28px;
+    padding: 15px 28px;
     border: 2px solid #0a3871;
     border-radius: 50px;
     font-size: 16px;
@@ -106,7 +108,7 @@ body {
 
 .site-footer {
     background-color: #0a3871;
-   
+    margin-top: 76px;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -116,6 +118,7 @@ body {
     position: relative;
     z-index: 1;
 }
+
 .profile-menu-wrapper {
     position: relative;
     display: inline-block;
@@ -129,7 +132,7 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
 }
 
 .profile-popup {
@@ -162,6 +165,7 @@ body {
     background-color: #f0f0f0;
 
 }
+
 .hero-container {
     display: flex;
     align-items: center;
@@ -207,26 +211,28 @@ body {
     }
 }
 
-nav a, .profile-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 16px;
-  text-decoration: none;
-  color: #fbf7f7;
+nav a,
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #fbf7f7;
 }
 
 @media screen and (max-width: 768px) {
-  nav a span,
-  .profile-btn span {
-    display: none;
-  }
 
-  nav a,
-  .profile-btn {
-    justify-content: center;
-    font-size: 17px;
-  }
+    nav a span,
+    .profile-btn span {
+        display: none;
+    }
+
+    nav a,
+    .profile-btn {
+        justify-content: center;
+        font-size: 17px;
+    }
 }
 
 
@@ -251,7 +257,7 @@ body.dark-theme {
 
 .dark-theme .hero-text h1 span {
     color: #ffa726;
-    
+
 }
 
 .dark-theme .hero-text h1,
@@ -293,4 +299,32 @@ body.dark-theme .theme-toggle-btn {
 
 body.dark-theme .theme-toggle-btn:hover {
     background-color: #333;
+}
+.site-header {
+    background-color: #0a3871;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.site-header nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    /* this controls spacing evenly */
+    margin-left: auto;
+    /* pushes nav to the right of logo */
+}
+
+.site-header nav a {
+    text-decoration: none;
+    color: #fefcfc;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    /* space between icon and text */
+    margin-left: 0;
+    /* remove old spacing */
 }

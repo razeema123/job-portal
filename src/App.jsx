@@ -23,6 +23,8 @@ import RecruiterProfile from './applications/RecruiterProfile.jsx';
 import EditJob from './applications/EditJob.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Unauthorized from './components/recruiter/Unauthorized.jsx';
+import ProgressGraph from "./components/progressgraph.jsx";
+import Jobrequests from "./pages/admin/jobrequests.jsx"
 
 function App() {
   return (
@@ -34,14 +36,14 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* User Protected Routes */}
+ 
       <Route path="/home" element={<ProtectedRoute role="user"><Home /></ProtectedRoute>} />
       <Route path="/find-jobs" element={<ProtectedRoute role="user"><FindJobs /></ProtectedRoute>} />
       <Route path="/apply" element={<ProtectedRoute role="user"><ApplyJob /></ProtectedRoute>} />
       <Route path="/job/:jobId" element={<ProtectedRoute role="user"><JobDetail /></ProtectedRoute>} />
       <Route path="/view-profile" element={<ProtectedRoute role="user"><ViewProfile /></ProtectedRoute>} />
 
-      {/* Recruiter Protected Routes */}
+ 
       <Route path="/postjob" element={<ProtectedRoute role="recruiter"><PostJob /></ProtectedRoute>} />
       <Route path="/createjob" element={<ProtectedRoute role="recruiter"><CreateJob /></ProtectedRoute>} />
       <Route path="/user-applications" element={<ProtectedRoute role="recruiter"><UserApplications /></ProtectedRoute>} />
@@ -51,12 +53,24 @@ function App() {
       <Route path="/viewapplications/:jobId" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
       <Route path="/recruiter-profile" element={<ProtectedRoute role="recruiter"><RecruiterProfile /></ProtectedRoute>} />
 
-      {/* Admin Protected Routes */}
+ 
       <Route path="/admin" element={<Sidebar />} />
       <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
       <Route path="/view-user" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
       <Route path="/view-user/:id" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
 
+ 
+      {/* General */}
+      <Route path="/sidebar" element={<Sidebar />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/analytics" element={<Analytics />} />
+      <Route path="/users" element={<Users/>} />
+      <Route path="/adminlayout" element={<AdminLayout/>} />
+      <Route path="/progressgraph" element={<ProgressGraph/>} />
+      <Route path="/jobrequests" element={<Jobrequests/>} />
+
+      <Route path="/viewapplications/:id" element={<ViewApplications />} />
+ 
       {/* Admin Pages */}
       <Route path="/admin/adminlayout" element={<AdminLayout />} />
       <Route path="/dashboard" element={<Dashboard />} />
@@ -71,6 +85,7 @@ function App() {
 
       {/* Protected test route */}
       <Route path='/protected' element={<ProtectedRoute/>} />
+ 
     </Routes>
   );
 }

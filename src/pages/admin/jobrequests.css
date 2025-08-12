@@ -1,0 +1,52 @@
+.jobrequests-container {
+  padding: 20px;
+  background: #f4f6f8;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sort-section select {
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.jobrequests-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.jobrequests-table th, .jobrequests-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.jobrequests-table th {
+  background: #2c3e50;
+  color: white;
+}
+
+.status.pending { color: orange; font-weight: bold; }
+.status.accepted { color: green; font-weight: bold; }
+.status.rejected { color: red; font-weight: bold; }
+
+button {
+  padding: 5px 10px;
+  margin: 0 3px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.view-btn { background: #3498db; color: white; }
+.accept-btn { background: #27ae60; color: white; }
+.reject-btn { background: #e74c3c; color: white; }

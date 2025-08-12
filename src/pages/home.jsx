@@ -99,7 +99,7 @@ const Home = () => {
 
       <div className="hero-container">
         <div className="hero-text">
-          <h1><span>Welcome</span> {name || 'Guest'}!</h1>
+          <h1><span>Unlock</span> {name || 'Ambitions'}!</h1>
           <p>Apply to a plethora of hiring opportunities & work with your dream companies!</p>
           <div className="hero-buttons">
             <button className="find-btn" onClick={() => navigate('/find-jobs')}>Find Jobs</button>

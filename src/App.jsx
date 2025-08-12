@@ -1,7 +1,7 @@
- import React from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login.jsx";
-import Signup from "./pages/signup.jsx"; // assuming you have this file
+import Signup from "./pages/signup.jsx";
 import AdminLayout from './pages/admin/AdminLayout.jsx';
 import Dashboard from "./pages/admin/Dashboard.jsx";
 import Analytics from "./pages/admin/Analytics.jsx";
@@ -22,114 +22,26 @@ import RecruiterProfile from './applications/RecruiterProfile.jsx';
 import EditJob from './applications/EditJob.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Unauthorized from './components/recruiter/Unauthorized.jsx';
+import ProgressGraph from "./components/progressgraph.jsx";
+import Jobrequests from "./pages/admin/jobrequests.jsx"
 
 function App() {
   return (
-login-page-created
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-         <Route path="/unauthorized" element={<Unauthorized />} />
-
-        <Route path="/home" element={<ProtectedRoute role="user"><Home /></ProtectedRoute>} />
-        <Route path="/find-jobs" element={<ProtectedRoute role="user"><FindJobs /></ProtectedRoute>} />
-        <Route path="/apply" element={<ProtectedRoute role="user"><ApplyJob /></ProtectedRoute>} />
-        <Route path="/job/:jobId" element={<ProtectedRoute role="user"><JobDetail /></ProtectedRoute>} />
-        <Route path="/view-profile" element={<ProtectedRoute role="user"><ViewProfile /></ProtectedRoute>} />
-
-       <Route path="/postjob" element={<ProtectedRoute role="recruiter"><PostJob /></ProtectedRoute>} />
-        <Route path="/createjob" element={<ProtectedRoute role="recruiter"><CreateJob /></ProtectedRoute>} />
-        <Route path="/user-applications" element={<ProtectedRoute role="recruiter"><UserApplications /></ProtectedRoute>} />
-        <Route path="/user-applications/:jobId" element={<ProtectedRoute role="recruiter"><UserApplications /></ProtectedRoute>} />
-        <Route path="/editjob/:id" element={<ProtectedRoute role="recruiter"><EditJob /></ProtectedRoute>} />
-        <Route path="/viewapplications" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
-        <Route path="/viewapplications/:jobId" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
-        <Route path="/recruiter-profile" element={<ProtectedRoute role="recruiter"><RecruiterProfile /></ProtectedRoute>} />
-     
-
-        <Route path="/admin" element={<Sidebar />} />
-        <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
-        <Route path="/admin/progressgraph" element={<ProtectedRoute role="admin"><ProgressGraph /></ProtectedRoute>} />
-        <Route path="/admin/progressgraph" element={<ProtectedRoute role="admin"><ProgressGraph /></ProtectedRoute>} />
-        <Route path="/view-user" element={ <ProtectedRoute role="admin"> <ViewUser /></ProtectedRoute>}/>  
-        <Route path="/view-user/:id" element={ <ProtectedRoute role="admin"> <ViewUser /></ProtectedRoute>} />
-
-       <Route path="/sidebar" element={<Sidebar />} />
-        <Route path="/dashboard" element={<h2>Welcome to Job Portal Dashboard</h2>} />
-        <Route path="/viewapplications/:jobId" element={<ViewApplications />} />
-        <Route path="/user-appliations/:jobId" element={<UserApplications />} />
-
-
-        <Route path="/view-user" element={<ViewUser />} />
-        <Route path="/view-user/:id" element={<ViewUser />} />
-        <Route path="/recruiter-profile" element={<RecruiterProfile />} />
-        <Route path="/viewapplications/:id" element={<ViewApplications />} />
-        <Route path="/view-applications/:id" element={<ViewApplications />} />
-        <Route path="/job/:id" element={<JobDetail />} />
-
-
-
-        {/* <Route path='/recruiter' element={<RecruiterProfile />} /> */}
-
-
-
-       <Route path='/protected' element={<ProtectedRoute/>} />
-
-
-
-                {/* Protected Routes */}
-            {/* <Route
-        path="/user-dashboard"
-        element={
-          <ProtectedRoute role="user">
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/recruiter-dashboard"
-        element={
-          <ProtectedRoute role="recruiter">
-            <PostJob />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin-dashboard"
-        element={
-          <ProtectedRoute role="admin">
-            <AdminLayout />
-          </ProtectedRoute>
-        }
-      /> */}
-
-
-      </Routes>
-    </Router>
-=======
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-
-      <Route path="/admin" element={<Sidebar />} />
-      <Route path="/admin/adminlayout" element={<AdminLayout />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/analytics" element={<Analytics />} />
-      <Route path="/users" element={<Users />} />
-
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
+      {/* User routes */}
       <Route path="/home" element={<ProtectedRoute role="user"><Home /></ProtectedRoute>} />
       <Route path="/find-jobs" element={<ProtectedRoute role="user"><FindJobs /></ProtectedRoute>} />
       <Route path="/apply" element={<ProtectedRoute role="user"><ApplyJob /></ProtectedRoute>} />
       <Route path="/job/:jobId" element={<ProtectedRoute role="user"><JobDetail /></ProtectedRoute>} />
       <Route path="/view-profile" element={<ProtectedRoute role="user"><ViewProfile /></ProtectedRoute>} />
 
+      {/* Recruiter routes */}
       <Route path="/postjob" element={<ProtectedRoute role="recruiter"><PostJob /></ProtectedRoute>} />
       <Route path="/createjob" element={<ProtectedRoute role="recruiter"><CreateJob /></ProtectedRoute>} />
       <Route path="/user-applications" element={<ProtectedRoute role="recruiter"><UserApplications /></ProtectedRoute>} />
@@ -139,14 +51,23 @@ login-page-created
       <Route path="/viewapplications/:jobId" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
       <Route path="/recruiter-profile" element={<ProtectedRoute role="recruiter"><RecruiterProfile /></ProtectedRoute>} />
 
-      <Route path="/view-user" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>}/>  
+      {/* Admin routes */}
+      <Route path="/admin" element={<Sidebar />} />
+      <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
+      <Route path="/view-user" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
       <Route path="/view-user/:id" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
 
+      {/* General */}
       <Route path="/sidebar" element={<Sidebar />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/analytics" element={<Analytics />} />
+      <Route path="/users" element={<Users/>} />
+      <Route path="/adminlayout" element={<AdminLayout/>} />
+      <Route path="/progressgraph" element={<ProgressGraph/>} />
+      <Route path="/jobrequests" element={<Jobrequests/>} />
 
-      {/* Duplicate cleanup: only keep necessary paths */}
+      <Route path="/viewapplications/:id" element={<ViewApplications />} />
     </Routes>
-
   );
 }
 

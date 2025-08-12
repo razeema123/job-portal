@@ -11,7 +11,7 @@ import {
 } from "recharts";
 
  
-function Sidebar() {
+export function Sidebar() {
   return (
     <aside
       style={{
@@ -24,10 +24,10 @@ function Sidebar() {
     >
       <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
       <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-        <a href="/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
-        <a href="/analytics" style={{ color: "white", textDecoration: "none" }}>Analytics</a>
-        <a href="/jobrequests" style={{ color: "white", textDecoration: "none" }}>Jobs</a>
-        <a href="#" style={{ color: "white", textDecoration: "none" }}>Settings</a>
+        <a href="/admin/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
+        <a href="/admin/users" style={{ color: "white", textDecoration: "none" }}>Users</a>
+        <a href="/admin/jobrequests" style={{ color: "white", textDecoration: "none" }}>Jobs</a>
+ 
       </nav>
     </aside>
   );

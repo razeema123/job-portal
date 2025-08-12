@@ -60,28 +60,26 @@ function App() {
       <Route path="/recruiter-profile" element={<ProtectedRoute role="recruiter"><RecruiterProfile /></ProtectedRoute>} />
 
  
-      <Route path="/admin" element={<Sidebar />} />
+       
       <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
       <Route path="/view-user" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
       <Route path="/view-user/:id" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
 
  
       {/* General */}
-      <Route path="/sidebar" element={<Sidebar />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+       
+      <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/analytics" element={<Analytics />} />
-      <Route path="/users" element={<Users/>} />
-      <Route path="/adminlayout" element={<AdminLayout/>} />
-      <Route path="/progressgraph" element={<ProgressGraph/>} />
-      <Route path="/jobrequests" element={<Jobrequests/>} />
+      <Route path="/admin/users" element={<Users/>} />
+       
+      <Route path="/admin" element={<ProgressGraph/>} />
+      <Route path="/admin/jobrequests" element={<Jobrequests/>} />
 
       <Route path="/viewapplications/:id" element={<ViewApplications />} />
  
       {/* Admin Pages */}
-      <Route path="/admin/adminlayout" element={<AdminLayout />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/analytics" element={<Analytics />} />
-      <Route path="/users" element={<Users />} />
+       
+       
 
       {/* Misc Routes */}
       <Route path="/sidebar" element={<Sidebar />} />

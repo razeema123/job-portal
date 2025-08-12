@@ -1,6 +1,6 @@
 import React, { useState } from "react";
  import "./jobrequests.css";  // Optional CSS file for styling
-
+ 
 export default function JobRequests() {
   // Sample job requests data
   const [requests, setRequests] = useState([

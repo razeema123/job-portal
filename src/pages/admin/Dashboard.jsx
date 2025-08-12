@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressGraph from "../../components/ProgressGraph";
 import "./Dashboard.css";
- 
+
 
 export default function Dashboard() {
    
@@ -28,9 +28,9 @@ export default function Dashboard() {
       <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
       <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
         <a href="/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
-        <a href="/analytics" style={{ color: "white", textDecoration: "none" }}>Analytics</a>
+        <a href="/users" style={{ color: "white", textDecoration: "none" }}>Users</a>
         <a href="#" style={{ color: "white", textDecoration: "none" }}>Jobs</a>
-        <a href="#" style={{ color: "white", textDecoration: "none" }}>Settings</a>
+         
       </nav>
     </aside>
   );

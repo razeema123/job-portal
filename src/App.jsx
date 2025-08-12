@@ -11,7 +11,7 @@ import Sidebar from "./components/Sidebar.jsx";
 import CreateJob from './applications/createjob.jsx'; 
 import Home from './pages/home.jsx';  
 import FindJobs from './findjob.jsx';
-import ForgotPassword from './forgott.jsx';
+import ForgotPassword from './ForgotPassword.jsx';
 import ApplyJob from './applyjob.jsx';
 import PostJob from './applications/postjob.jsx';
 import ViewApplications from './applications/ViewApplications.jsx';
@@ -23,8 +23,12 @@ import RecruiterProfile from './applications/RecruiterProfile.jsx';
 import EditJob from './applications/EditJob.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Unauthorized from './components/recruiter/Unauthorized.jsx';
+import ResetPassword from "./ResetPassword.jsx";
+import VerifyOtp from "./VerifyOtp.jsx";
+
 import ProgressGraph from "./components/progressgraph.jsx";
 import Jobrequests from "./pages/admin/jobrequests.jsx"
+
 
 function App() {
   return (
@@ -34,6 +38,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/verify-otp" element={<VerifyOtp />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
  

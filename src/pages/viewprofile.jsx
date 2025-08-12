@@ -1,55 +1,115 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './profile.css';
 import {
   FaEnvelope, FaPhone, FaUserGraduate, FaBriefcase, FaCode, FaEdit, FaFileUpload
 } from 'react-icons/fa';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const ViewProfile = () => {
   const [editing, setEditing] = useState(false);
   const [resumeFile, setResumeFile] = useState(null);
+  const [user, setUser] = useState(null); // initially null until API fetch
 
-  const [user, setUser] = useState({
-    name: "Nikhil Jayan",
-    title: "Frontend Developer",
-    email: "nikhil@example.com",
-    phone: "+91 9876543210",
-    education: "BACHELOR OF COMPUTER APPLICATIONS (BCA) | 2024 | University of Kerala",
-    experience: "Fresher | Open to work",
-    skills: ["React", "JavaScript", "HTML", "CSS", "Git"],
-    about: "Hello! I'm a software testing enthusiast with a keen eye for detail and a passion for delivering seamless user experiences. I have hands-on experience with testing web applications, writing test cases, identifying bugs, and collaborating with developers to enhance product quality. Whether it's through manual testing or exploring automation, I take pride in ensuring that products meet both functional and user expectations.",
-  });
+  // 🔹 Fetch profile on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return toast.error("Please login first.");
+
+        const res = await axios.get('http://localhost:5002/api/users/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        setUser(res.data);
+      } catch (err) {
+        console.error(err);
+        toast.error(err.response?.data?.error || "Failed to load profile.");
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleResumeUpload = (e) => {
-    const file = e.target.files[0];
-    setResumeFile(file);
+  // 🔹 Save updated profile
+  const saveProfile = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(
+        'http://localhost:5002/api/users/profile',
+        user,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success("Profile updated successfully!");
+      setEditing(false);
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Failed to update profile.");
+    }
   };
 
-  const toggleEdit = () => setEditing(!editing);
+  // 🔹 Handle resume upload
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setResumeFile(file);
+
+    const formData = new FormData();
+    formData.append('resume', file);
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        'http://localhost:5002/api/users/profile/upload-resume',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      toast.success("Resume uploaded successfully!");
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Failed to upload resume.");
+    }
+  };
+
+  const toggleEdit = () => {
+    if (editing) saveProfile();
+    else setEditing(true);
+  };
+
+  if (!user) return <p>Loading profile...</p>;
 
   return (
     <div className="profile-container">
       <div className="profile-sidebar">
-        <img src="/src/smiling-young-man-illustration_1308-174669.avif" alt="Profile" className="profile-avatar" />
+        <img
+          src="/src/smiling-young-man-illustration_1308-174669.avif"
+          alt="Profile"
+          className="profile-avatar"
+        />
         {!editing ? (
           <>
             <h2>{user.name}</h2>
-            <p>{user.title}</p>
+            <p>{user.title || "No title"}</p>
             <div className="contact-info">
               <p><FaEnvelope /> {user.email}</p>
-              <p><FaPhone /> {user.phone}</p>
+              <p><FaPhone /> {user.phone || "No phone"}</p>
             </div>
           </>
         ) : (
           <>
-            <input type="text" name="name" value={user.name} onChange={handleChange} />
-            <input type="text" name="title" value={user.title} onChange={handleChange} />
-            <input type="email" name="email" value={user.email} onChange={handleChange} />
-            <input type="tel" name="phone" value={user.phone} onChange={handleChange} />
+            <input type="text" name="name" value={user.name || ""} onChange={handleChange} />
+            <input type="text" name="title" value={user.title || ""} onChange={handleChange} />
+            <input type="email" name="email" value={user.email || ""} onChange={handleChange} />
+            <input type="tel" name="phone" value={user.phone || ""} onChange={handleChange} />
           </>
         )}
 
@@ -67,17 +127,17 @@ const ViewProfile = () => {
         <section>
           <h3><FaUserGraduate /> Education</h3>
           {editing ? (
-            <textarea name="education" value={user.education} onChange={handleChange} />
+            <textarea name="education" value={user.education || ""} onChange={handleChange} />
           ) : (
-            <p>{user.education}</p>
+            <p>{user.education || "No education info"}</p>
           )}
         </section>
         <section>
           <h3><FaBriefcase /> Experience</h3>
           {editing ? (
-            <textarea name="experience" value={user.experience} onChange={handleChange} />
+            <textarea name="experience" value={user.experience || ""} onChange={handleChange} />
           ) : (
-            <p>{user.experience}</p>
+            <p>{user.experience || "No experience"}</p>
           )}
         </section>
         <section>
@@ -86,23 +146,23 @@ const ViewProfile = () => {
             <input
               type="text"
               name="skills"
-              value={user.skills.join(', ')}
+              value={user.skills?.join(', ') || ""}
               onChange={(e) =>
                 setUser({ ...user, skills: e.target.value.split(',').map(s => s.trim()) })
               }
             />
           ) : (
             <ul className="skill-list">
-              {user.skills.map((skill, idx) => <li key={idx}>{skill}</li>)}
+              {user.skills?.map((skill, idx) => <li key={idx}>{skill}</li>) || <li>No skills</li>}
             </ul>
           )}
         </section>
         <section>
           <h3>About Me</h3>
           {editing ? (
-            <textarea name="about" value={user.about} onChange={handleChange} />
+            <textarea name="about" value={user.about || ""} onChange={handleChange} />
           ) : (
-            <p>{user.about}</p>
+            <p>{user.about || "No about info"}</p>
           )}
         </section>
       </div>

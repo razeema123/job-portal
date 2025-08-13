@@ -1,7 +1,8 @@
  import React, { useState } from "react";
 import "./Users.css";
+import { useNavigate } from "react-router-dom";
 
-// Sidebar Component
+ 
 export function Sidebar() {
   return (
     <aside
@@ -32,24 +33,13 @@ export default function Users() {
 
   const [sortKey, setSortKey] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigate = useNavigate();
 
-  const handleAddUser = () => {
-    const name = prompt("Enter name:");
-    const email = prompt("Enter email:");
-    const role = prompt("Enter role (Admin, Editor, Viewer):");
-    const status = "Pending";
 
-    if (name && email && role) {
-      const newUser = {
-        id: users.length + 1,
-        name,
-        email,
-        role,
-        status,
-      };
-      setUsers([...users, newUser]);
-    }
-  };
+   const handleAddUser = () => {
+  navigate("/admin/adduser");  
+};
+
 
   const handleSort = (key) => {
     setSortKey(key);
@@ -86,6 +76,7 @@ export default function Users() {
 
         <div className="users-controls">
           <button className="add-btn" onClick={handleAddUser}>➕ Add User</button>
+           
           <select
             className="sort-select"
             value={sortKey}

@@ -25,7 +25,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Unauthorized from './components/recruiter/Unauthorized.jsx';
 import ResetPassword from "./ResetPassword.jsx";
 import VerifyOtp from "./VerifyOtp.jsx";
-
+import AddUser from "./pages/admin/addusers.jsx";
 import ProgressGraph from "./components/progressgraph.jsx";
 import Jobrequests from "./pages/admin/jobrequests.jsx"
 
@@ -60,7 +60,8 @@ function App() {
       <Route path="/recruiter-profile" element={<ProtectedRoute role="recruiter"><RecruiterProfile /></ProtectedRoute>} />
 
  
-       
+       <Route path="/admin/adduser" element={<AddUser />} />
+
       <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
       <Route path="/view-user" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
       <Route path="/view-user/:id" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />

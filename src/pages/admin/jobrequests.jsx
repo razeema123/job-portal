@@ -1,6 +1,28 @@
-import React, { useState } from "react";
- import "./jobrequests.css";  // Optional CSS file for styling
- 
+ import React, { useState } from "react";
+import "./jobrequests.css";
+
+// Sidebar Component
+export function Sidebar() {
+  return (
+    <aside
+      style={{
+        width: "220px",
+        background: "#0a1725ff",
+        color: "white",
+        padding: "20px",
+        height: "100vh",
+      }}
+    >
+      <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
+      <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+        <a href="/admin/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
+        <a href="/admin/users" style={{ color: "white", textDecoration: "none" }}>Users</a>
+        <a href="/admin/jobrequests" style={{ color: "white", textDecoration: "none" }}>Jobs</a>
+      </nav>
+    </aside>
+  );
+}
+
 export default function JobRequests() {
   // Sample job requests data
   const [requests, setRequests] = useState([
@@ -45,45 +67,51 @@ export default function JobRequests() {
   };
 
   return (
-    <div className="jobrequests-container">
-      <div className="header">
-        <h2>Job Requests</h2>
-        <div className="sort-section">
-          <label>Sort By: </label>
-          <select value={sortBy} onChange={(e) => sortRequests(e.target.value)}>
-            <option value="date">Date</option>
-            <option value="name">Name</option>
-            <option value="status">Status</option>
-          </select>
-        </div>
-      </div>
+    <div style={{ display: "flex" }}>
+      {/* Sidebar on the left */}
+      <Sidebar />
 
-      <table className="jobrequests-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Job Title</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requests.map((req) => (
-            <tr key={req.id}>
-              <td>{req.name}</td>
-              <td>{req.jobTitle}</td>
-              <td>{req.date}</td>
-              <td className={`status ${req.status.toLowerCase()}`}>{req.status}</td>
-              <td>
-                <button className="view-btn" onClick={() => viewRequest(req)}>View</button>
-                <button className="accept-btn" onClick={() => acceptRequest(req.id)}>Accept</button>
-                <button className="reject-btn" onClick={() => rejectRequest(req.id)}>Reject</button>
-              </td>
+      {/* Main content area */}
+      <div style={{ flex: 1, padding: "20px" }}>
+        <div className="header">
+          <h2>Job Requests</h2>
+          <div className="sort-section">
+            <label>Sort By: </label>
+            <select value={sortBy} onChange={(e) => sortRequests(e.target.value)}>
+              <option value="date">Date</option>
+              <option value="name">Name</option>
+              <option value="status">Status</option>
+            </select>
+          </div>
+        </div>
+
+        <table className="jobrequests-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Job Title</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {requests.map((req) => (
+              <tr key={req.id}>
+                <td>{req.name}</td>
+                <td>{req.jobTitle}</td>
+                <td>{req.date}</td>
+                <td className={`status ${req.status.toLowerCase()}`}>{req.status}</td>
+                <td>
+                  <button className="view-btn" onClick={() => viewRequest(req)}>View</button>
+                  <button className="accept-btn" onClick={() => acceptRequest(req.id)}>Accept</button>
+                  <button className="reject-btn" onClick={() => rejectRequest(req.id)}>Reject</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

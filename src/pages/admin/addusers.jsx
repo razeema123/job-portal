@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./adduser.css";
 export function Sidebar() {
   return (
     <aside
@@ -54,7 +54,7 @@ return (
           <select>
             <option>Admin</option>
             <option>Editor</option>
-            <option>Viewer</option>
+            <option>Viewer</option> 
           </select>
         </div>
         <button type="submit">Save User</button>

@@ -35,9 +35,9 @@
   color: white;
 }
 
-.status.pending { color: orange; font-weight: bold; }
-.status.accepted { color: green; font-weight: bold; }
-.status.rejected { color: red; font-weight: bold; }
+.status.pending { color: rgb(253, 251, 249); font-weight: bold; }
+.status.accepted { color: rgb(244, 250, 244); font-weight: bold; }
+.status.rejected { color: rgb(251, 248, 248); font-weight: bold; }
 
 button {
   padding: 5px 10px;
@@ -47,6 +47,6 @@ button {
   cursor: pointer;
 }
 
-.view-btn { background: #3498db; color: white; }
-.accept-btn { background: #27ae60; color: white; }
-.reject-btn { background: #e74c3c; color: white; }
+.view-btn { background: #f8fafc; color: rgb(6, 0, 0); }
+.accept-btn { background: #fbfcfb; color: rgb(15, 10, 10); }
+.reject-btn { background: #fdfbfb; color: rgb(12, 10, 10); }

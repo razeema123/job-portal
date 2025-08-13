@@ -14,13 +14,30 @@ h1 {
 }
 
 .add-btn {
+  width: 10%;
   background: #4cafef;
   border: none;
-  padding: 8px 14px;
+  padding: 4px 10px;
   color: white;
   cursor: pointer;
   border-radius: 6px;
   font-size: 14px;
+  float: right;
+}
+
+.view-btn {
+  width: 20%;
+  
+}
+
+.accept-btn {
+  width: 20%;
+  
+
+}
+
+.reject-btn {
+  width: 20%;
 }
 
 .add-btn:hover {

@@ -74,20 +74,21 @@ export default function Users() {
       <div style={{ flex: 1, padding: "20px" }}>
         <h1>Manage Users</h1>
 
-        <div className="users-controls">
-          <button className="add-btn" onClick={handleAddUser}>➕ Add User</button>
-           
-          <select
-            className="sort-select"
-            value={sortKey}
-            onChange={(e) => handleSort(e.target.value)}
-          >
-            <option value="">Sort By</option>
-            <option value="name">Name</option>
-            <option value="role">Role</option>
-            <option value="status">Status</option>
-          </select>
-        </div>
+         <div className="users-controls">
+  <button className="add-btn" onClick={handleAddUser}>Add User</button>
+  
+  <select
+    className="sort-select"
+    value={sortKey}
+    onChange={(e) => handleSort(e.target.value)}
+  >
+    <option value="">Sort By</option>
+    <option value="name">Name</option>
+    <option value="role">Role</option>
+    <option value="status">Status</option>
+  </select>
+</div>
+
 
         <table className="users-table">
           <thead>

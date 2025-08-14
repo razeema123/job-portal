@@ -27,13 +27,29 @@ export default function UserApplications() {
   };
 
   const updateStatus = (id, status) => {
-    axios.patch(`http://localhost:5002/api/applications/status/${id}`, { status })
+    const token = localStorage.getItem("token"); // get token from localStorage
+    if (!token) {
+      toast.error("You are not logged in");
+      return;
+    }
+  
+    axios.patch(
+      `http://localhost:5002/api/applications/status/${id}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }
+    )
       .then(() => {
         toast.success(`Updated to ${status}`);
         fetchApplications(); // refresh
       })
       .catch(() => toast.error("Failed to update status"));
   };
+  
 
   const filteredApplications =
     selectedStatus === "All"

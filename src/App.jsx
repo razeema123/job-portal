@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Userdetails from "./pages/admin/id.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
 import AdminLayout from './pages/admin/AdminLayout.jsx';
@@ -72,7 +73,7 @@ function App() {
       <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/admin/users" element={<Users/>} />
-       
+       <Route path="/admin/users/:id" element={<Userdetails/>} />
       <Route path="/admin" element={<ProgressGraph/>} />
       <Route path="/admin/jobrequests" element={<Jobrequests/>} />
 

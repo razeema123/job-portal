@@ -1,22 +1,15 @@
-import React from "react";
+ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./adduser.css";
+
 export function Sidebar() {
   return (
-    <aside
-      style={{
-        width: "220px",
-        background: "#0a1725ff",
-        color: "white",
-        padding: "20px",
-        height: "100vh",
-      }}
-    >
-      <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
-      <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-        <a href="/admin/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
-        <a href="/admin/users" style={{ color: "white", textDecoration: "none" }}>Users</a>
-        <a href="/admin/jobrequests" style={{ color: "white", textDecoration: "none" }}>Jobs</a>
+    <aside className="sidebar">
+      <h2 className="sidebar-title">Admin Panel</h2>
+      <nav className="sidebar-nav">
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/jobrequests">Jobs</a>
       </nav>
     </aside>
   );
@@ -27,39 +20,39 @@ export default function AddUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    navigate("/admin/users");  
-
+    navigate("/admin/users");
   };
-  
-return (
-      <div style={{ display: "flex" }}>
-        {/* Sidebar */}
-        <Sidebar />
-  
- 
-    <div style={{ padding: "20px" }}>
-      <h2>Add New User</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" required />
+
+  return (
+    <div className="add-user-page">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Centered form container */}
+      <div className="form-wrapper">
+        <div className="add-user-form">
+          <h2>Add New User</h2>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>Name:</label>
+              <input type="text" required />
+            </div>
+            <div>
+              <label>Email:</label>
+              <input type="email" required />
+            </div>
+            <div>
+              <label>Role:</label>
+              <select>
+                <option>Admin</option>
+                <option>Editor</option>
+                <option>Viewer</option>
+              </select>
+            </div>
+            <button type="submit">Save User</button>
+          </form>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" required />
-        </div>
-        <div>
-          <label>Role:</label>
-          <select>
-            <option>Admin</option>
-            <option>Editor</option>
-            <option>Viewer</option> 
-          </select>
-        </div>
-        <button type="submit">Save User</button>
-      </form>
-    </div>
+      </div>
     </div>
   );
 }

@@ -60,11 +60,9 @@ export default function Users() {
       user.id === id ? { ...user, status: "Rejected" } : user
     ));
   };
-
-  const handleView = (user) => {
-    setSelectedUser(user);
-  };
-
+ const handleView = (user) => {
+  navigate(`/admin/users/${user.id}`, { state: user });
+};
   return (
     <div style={{ display: "flex" }}>
       {/* Sidebar */}
@@ -115,9 +113,10 @@ export default function Users() {
                     </span>
                   </td>
                   <td>
-                    <button className="view-btn" onClick={() => handleView(user)}>👁 View</button>
-                    <button className="accept-btn" onClick={() => handleAccept(user.id)}>✅ Accept</button>
-                    <button className="reject-btn" onClick={() => handleReject(user.id)}>❌ Reject</button>
+                     <button className="view-btn" onClick={() => handleView(user)}>👁 View</button>
+
+                    <button className="accept-btn" onClick={() => handleAccept(user.id)}>block</button>
+                    <button className="reject-btn" onClick={() => handleReject(user.id)}>unblock</button>
                   </td>
                 </tr>
               ))

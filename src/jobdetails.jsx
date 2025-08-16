@@ -7,13 +7,22 @@ import { MdPostAdd } from 'react-icons/md';
 import { FaBriefcase, FaSearch } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 
-const Header = () => (
+const Header = ({ role }) => (
   <header className="site-header">
-    <FaBriefcase className="logo-icon" />
+    <FaBriefcase
+      className="logo-icon"
+      style={{ cursor: 'pointer' }}
+      onClick={() => (window.location.href = '/home')}
+    />
     <nav>
       <a href="/home"><AiFillHome /> <span>Home</span></a>
       <a href="/find-jobs"><FaSearch /> <span>Find Jobs</span></a>
-      <a href="/postjob"><MdPostAdd /> <span>Post Jobs</span></a>
+
+      {/* ✅ Show Post Job only for Recruiter or Admin */}
+      {(role === 'recruiter' || role === 'admin') && (
+        <a href="/postjob"><MdPostAdd /> <span>Post Jobs</span></a>
+      )}
+
       <a href="/login"><FiLogOut /> <span>Logout</span></a>
     </nav>
   </header>
@@ -26,22 +35,36 @@ const Footer = () => (
 );
 
 const JobDetail = () => {
-  const { jobId } = useParams(); // ✅ match route param name
+  const { jobId } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState('');
 
-  // Fetch job from backend
+  // ✅ Get logged-in user's role
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = JSON.parse(atob(token.split('.')[1])); // decode JWT payload
+        setRole(decoded.role || '');
+      } catch (err) {
+        console.error('Error decoding token:', err);
+      }
+    }
+  }, []);
+
+  // ✅ Fetch job details
   useEffect(() => {
     if (jobId) {
-      axios.get(`http://localhost:5002/api/jobs/${jobId}`)
+      axios
+        .get(`http://localhost:5002/api/jobs/${jobId}`)
         .then((res) => {
-          // ✅ handle both possible response formats
           setJob(res.data.job || res.data);
           setLoading(false);
         })
         .catch((err) => {
-          console.error("❌ Failed to fetch job:", err);
+          console.error('❌ Failed to fetch job:', err);
           setLoading(false);
         });
     }
@@ -50,7 +73,7 @@ const JobDetail = () => {
   if (loading) {
     return (
       <>
-        <Header />
+        <Header role={role} />
         <div style={{ padding: '2rem' }}>Loading job details...</div>
         <Footer />
       </>
@@ -60,7 +83,7 @@ const JobDetail = () => {
   if (!job) {
     return (
       <>
-        <Header />
+        <Header role={role} />
         <div style={{ padding: '2rem' }}>
           <h2>Job not found</h2>
           <button onClick={() => navigate(-1)}>Go Back</button>
@@ -72,7 +95,7 @@ const JobDetail = () => {
 
   return (
     <>
-      <Header />
+      <Header role={role} />
       <div className="job-detail-wrapper">
         <div className="job-detail-container">
           <h2>{job.title}</h2>
@@ -80,21 +103,24 @@ const JobDetail = () => {
           <p><strong>Location:</strong> {job.location}</p>
           <p><strong>Salary:</strong> ₹{job.salary}</p>
           <p><strong>Type:</strong> {Array.isArray(job.jobType) ? job.jobType.join(', ') : job.jobType}</p>
-          <p><strong>Bond:</strong> {job.bond || "Not specified"}</p>
-          <p><strong>Description:</strong> {job.description || "No description provided."}</p>
-          
+          <p><strong>Bond:</strong> {job.bond || 'Not specified'}</p>
+          <p><strong>Description:</strong> {job.description || 'No description provided.'}</p>
+
           {job.image && (
             <div className="job-image">
               <img src={`http://localhost:5002/uploads/${job.image}`} alt="Job" />
             </div>
           )}
 
-          <button 
-            className="apply-btn" 
-            onClick={() => navigate(`/apply?jobId=${job._id}`)}
-          >
-            Apply Now
-          </button>
+          {/* ✅ Show Apply button only for Job Seekers */}
+          {role === 'user' && (
+            <button
+              className="apply-btn"
+              onClick={() => navigate(`/apply?jobId=${job._id}`)}
+            >
+              Apply Now
+            </button>
+          )}
         </div>
       </div>
       <Footer />

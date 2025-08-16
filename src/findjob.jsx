@@ -5,17 +5,26 @@ import { MdPostAdd } from 'react-icons/md';
 import { FaBriefcase, FaSearch } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // 👈 ADD axios
+import axios from 'axios';
 
-const Header = () => {
+const Header = ({ role }) => {
   const navigate = useNavigate();
   return (
     <header className="site-header">
-      <FaBriefcase className="logo-icon" onClick={() => navigate('/home')} style={{ cursor: 'pointer' }} />
+      <FaBriefcase
+        className="logo-icon"
+        onClick={() => navigate('/home')}
+        style={{ cursor: 'pointer' }}
+      />
       <nav>
         <a href="/home"><AiFillHome /> <span>Home</span></a>
         <a href="/find-jobs"><FaSearch /> <span>Find Jobs</span></a>
-        <a href="/postjob"><MdPostAdd /><span> Post Jobs</span></a>
+
+        {/* ✅ Show Post Jobs only for recruiter or admin */}
+        {(role === 'recruiter' || role === 'admin') && (
+          <a href="/postjob"><MdPostAdd /><span> Post Jobs</span></a>
+        )}
+
         <a href="/login"><FiLogOut /> <span>Logout</span></a>
       </nav>
     </header>
@@ -33,20 +42,30 @@ const FindJobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All');
   const [sortOption, setSortOption] = useState('');
+  const [role, setRole] = useState('');
   const navigate = useNavigate();
   const searchRef = useRef(null);
 
+  // ✅ Get role from localStorage
+  useEffect(() => {
+    const storedRole = localStorage.getItem('role');
+    if (storedRole) {
+      setRole(storedRole);
+    }
+  }, []);
+
   // ✅ Fetch jobs from backend
   useEffect(() => {
-    axios.get("http://localhost:5002/api/jobs")
+    axios.get('http://localhost:5002/api/jobs')
       .then(res => {
         setJobs(res.data.jobs);
       })
       .catch(err => {
-        console.error("❌ Failed to fetch jobs:", err);
+        console.error('❌ Failed to fetch jobs:', err);
       });
   }, []);
 
+  // Focus animation for search bar
   useEffect(() => {
     if (searchRef.current) {
       searchRef.current.focus();
@@ -60,32 +79,29 @@ const FindJobs = () => {
 
   // ✅ Apply filter + sort
   const filteredJobs = jobs
-  .filter((job) => (job.title || '').toLowerCase().includes(searchTerm.toLowerCase()))
-
+    .filter((job) => (job.title || '').toLowerCase().includes(searchTerm.toLowerCase()))
     .filter((job) => selectedType === 'All' || job.jobType === selectedType)
     .sort((a, b) => {
       const companyA = a.company || '';
       const companyB = b.company || '';
       const salaryA = a.salary || 0;
       const salaryB = b.salary || 0;
-    
+
       if (sortOption === 'company-asc') return companyA.localeCompare(companyB);
       if (sortOption === 'company-desc') return companyB.localeCompare(companyA);
       if (sortOption === 'salary-asc') return salaryA - salaryB;
       if (sortOption === 'salary-desc') return salaryB - salaryA;
-    
-      return 0;
-    })
-    
 
-    const handleViewDetails = (job) => {
-      navigate(`/job/${job._id}`);
-    };
-    
+      return 0;
+    });
+
+  const handleViewDetails = (job) => {
+    navigate(`/job/${job._id}`);
+  };
 
   return (
     <div className="layout">
-      <Header />
+      <Header role={role} />
       <main className="main-content">
         <div className="jobs-page">
           <div className="search-bar">
@@ -142,7 +158,6 @@ const FindJobs = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         navigate(`/apply?jobId=${job._id}`);
-
                       }}
                     >
                       📩 <strong>Easily apply</strong>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; // ✅ correct import for v4
-import "./Notifications.css"; // optional if you have styles
+import "./notifications.css";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -49,50 +49,54 @@ const Notifications = () => {
   }, [userId]);
 
   const markAsRead = async (notificationId) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        `http://localhost:5002/api/notifications/${notificationId}/mark-read`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // 🔑 send token
-          },
-        }
-      );
-      setNotifications((prev) =>
-        prev.map((n) =>
-          n._id === notificationId ? { ...n, read: true } : n
-        )
-      );
-    } catch (err) {
-      console.error("❌ Failed to mark notification as read:", err.response?.data || err);
-    }
-  };
-  
+  try {
+    const token = localStorage.getItem("token");
+    await axios.put(
+      `http://localhost:5002/api/notifications/${notificationId}/mark-read`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // 🔑 send token
+        },
+      }
+    );
+    setNotifications((prev) =>
+      prev.map((n) =>
+        n._id === notificationId ? { ...n, read: true } : n
+      )
+    );
+  } catch (err) {
+    console.error("❌ Failed to mark notification as read:", err.response?.data || err);
+  }
+};
+
 
   if (loading) return <p>Loading notifications...</p>;
-
   return (
-    <div className="notifications-page">
-      <h2>Notifications</h2>
+    <div className="notifications-container">
+      <h2 className="notifications-title">Notifications</h2>
       {notifications.length === 0 ? (
-        <p>No notifications yet</p>
+        <p className="no-notifications">No notifications yet</p>
       ) : (
-        <ul className="notification-list">
+        <ul className="notifications-list">
           {notifications.map((n) => (
             <li
               key={n._id}
-              className={`notification-item ${n.read ? "read" : "unread"}`}
+              className={`notification-card ${n.read ? "read" : "unread"}`}
               onClick={() => !n.read && markAsRead(n._id)}
             >
-              {n.message}
+              <div className="notification-content">
+                <div className="notification-job">{n.message}</div>
+                <div className="notification-status">
+                
+                </div>
+              </div>
             </li>
           ))}
         </ul>
       )}
     </div>
   );
-};
+}
 
 export default Notifications;

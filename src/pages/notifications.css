@@ -1,58 +1,95 @@
-/* notifications.css */
+/* Notifications.css */
 
 .notifications-container {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.notifications-container h2 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #333;
+.notifications-title {
+    font-size: 28px;
+    font-weight: 700;
     margin-bottom: 20px;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 8px;
+    text-align: center;
+    color: #0a3871;
+    letter-spacing: 1px;
 }
 
-.notifications-container p {
-    color: #777;
-    font-size: 0.95rem;
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.notifications-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.notifications-container li {
-    background: #f9fafc;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    border-radius: 6px;
+.notification-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ececec;
-    transition: background 0.2s ease-in-out;
+    align-items: flex-start;
 }
 
-.notifications-container li:hover {
-    background: #eef4ff;
+.notification-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
 }
 
-.notifications-container small {
+.notification-content {
+    flex: 1;
+}
+
+.notification-job {
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+}
+
+.notification-status {
+    font-size: 15px;
+    font-weight: 500;
+    color: #ff6600;
+    margin-top: 5px;
+}
+
+.notification-meta {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #777;
+}
+
+.notification-time {
+    font-size: 13px;
     color: #999;
-    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 6px;
 }
 
+/* Empty state */
 .no-notifications {
     text-align: center;
-    padding: 20px;
-    color: #999;
+    padding: 40px;
+    font-size: 18px;
+    color: #777;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .notifications-container {
+        padding: 10px;
+    }
+
+    .notification-card {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .notification-job {
+        font-size: 16px;
+    }
 }

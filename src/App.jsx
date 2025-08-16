@@ -29,6 +29,7 @@ import VerifyOtp from "./VerifyOtp.jsx";
 import AddUser from "./pages/admin/addusers.jsx";
 import ProgressGraph from "./components/progressgraph.jsx";
 import Jobrequests from "./pages/admin/jobrequests.jsx"
+import Notifications from "./pages/Notifications.jsx";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
       <Route path="/apply" element={<ProtectedRoute role="user"><ApplyJob /></ProtectedRoute>} />
       <Route path="/job/:jobId" element={<ProtectedRoute role="user"><JobDetail /></ProtectedRoute>} />
       <Route path="/view-profile" element={<ProtectedRoute role="user"><ViewProfile /></ProtectedRoute>} />
+      <Route path="/notifications" element={<Notifications />} />
 
  
       <Route path="/postjob" element={<ProtectedRoute role="recruiter"><PostJob /></ProtectedRoute>} />
@@ -59,6 +61,7 @@ function App() {
       <Route path="/viewapplications" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
       <Route path="/viewapplications/:jobId" element={<ProtectedRoute role="recruiter"><ViewApplications /></ProtectedRoute>} />
       <Route path="/recruiter-profile" element={<ProtectedRoute role="recruiter"><RecruiterProfile /></ProtectedRoute>} />
+      
 
  
        <Route path="/admin/adduser" element={<AddUser />} />

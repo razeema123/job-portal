@@ -2,15 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import { AiFillHome } from 'react-icons/ai';
-import { FaSearch, FaBriefcase, FaUserCircle } from 'react-icons/fa';
+import { FaSearch, FaBriefcase, FaUserCircle, FaBell } from 'react-icons/fa';
 import { MdPostAdd } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 import { BsPersonLinesFill, BsSun, BsMoon } from 'react-icons/bs';
+import axios from 'axios';
 
 const Header = ({ toggleTheme, theme, role, onLogout }) => {
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileRef = useRef();
+
+  const [unreadCount, setUnreadCount] = useState(0);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,6 +26,16 @@ const Header = ({ toggleTheme, theme, role, onLogout }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Fetch unread notifications count
+  useEffect(() => {
+    if (!userId || !token) return;
+    axios.get(`http://localhost:5002/api/users/${userId}/notifications/unread-count`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => setUnreadCount(res.data.count))
+    .catch(err => console.error("❌ Failed to fetch unread count", err));
+  }, [userId, token]);
 
   return (
     <header className="site-header">
@@ -33,6 +48,27 @@ const Header = ({ toggleTheme, theme, role, onLogout }) => {
         {(role === 'recruiter' || role === 'admin') && (
           <a href="/postjob"><MdPostAdd /> <span>Post Jobs</span></a>
         )}
+
+        {/* Notification Icon */}
+        <a href="/notifications" className="notification-link" style={{ position: "relative" }}>
+          <FaBell size={18} />
+          {unreadCount > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                top: "-5px",
+                right: "-8px",
+                background: "red",
+                color: "white",
+                borderRadius: "50%",
+                padding: "2px 6px",
+                fontSize: "12px"
+              }}
+            >
+              {unreadCount}
+            </span>
+          )}
+        </a>
 
         <div className="profile-menu-wrapper" ref={profileRef}>
           <button className="profile-btn" onClick={() => setShowProfileMenu(!showProfileMenu)}>
@@ -66,14 +102,12 @@ const Footer = () => (
 
 const Home = () => {
   const navigate = useNavigate();
-
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const name = localStorage.getItem('name');
   const role = localStorage.getItem('role');
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    // Redirect to login if no token
     if (!token) {
       navigate('/login');
     }
@@ -103,8 +137,6 @@ const Home = () => {
           <p>Apply to a plethora of hiring opportunities & work with your dream companies!</p>
           <div className="hero-buttons">
             <button className="find-btn" onClick={() => navigate('/find-jobs')}>Find Jobs</button>
-
-            {/* Show 'Post Job' button only if recruiter or admin */}
             {(role === 'recruiter' || role === 'admin') && (
               <button className="post-btn" onClick={() => navigate('/postjob')}>+ Post Jobs</button>
             )}

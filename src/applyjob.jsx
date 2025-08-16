@@ -59,6 +59,14 @@ const ApplyJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("token"); // ✅ get token from localStorage
+  
+      if (!token) {
+        console.error("❌ No token found. Please login again.");
+        navigate("/login");
+        return;
+      }
+  
       const data = new FormData();
       data.append("name", formData.name);
       data.append("email", formData.email);
@@ -68,11 +76,14 @@ const ApplyJob = () => {
       data.append("relocate", formData.relocate);
       data.append("resume", formData.resume);
       data.append("reason", formData.reason);
-
+  
       await axios.post(`http://localhost:5002/api/applications/${jobId}/apply`, data, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { 
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}` // ✅ Send token
+        }
       });
-
+  
       setShowToast(true);
       setTimeout(() => {
         setShowToast(false);
@@ -82,7 +93,7 @@ const ApplyJob = () => {
       console.error("❌ Failed to submit application:", err);
     }
   };
-
+  
   const nextStep = () => setStep(prev => prev + 1);
   const prevStep = () => setStep(prev => prev - 1);
 

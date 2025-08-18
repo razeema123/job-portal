@@ -113,11 +113,28 @@ export default function Users() {
                     </span>
                   </td>
                   <td>
-                     <button className="view-btn" onClick={() => handleView(user)}>👁 View</button>
+  <button
+    className="view-btn mr-2 px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
+    onClick={() => handleView(user)}
+  >
+    👁 View
+  </button>
 
-                    <button className="accept-btn" onClick={() => handleAccept(user.id)}>block</button>
-                    <button className="reject-btn" onClick={() => handleReject(user.id)}>unblock</button>
-                  </td>
+  <button
+    className="mr-2 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+    onClick={() =>handleReject(user.id)}
+  >
+    Block
+  </button>
+
+  <button
+    className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
+    onClick={() =>handleAccept(user.id)}
+  >
+    Unblock
+  </button>
+</td>
+
                 </tr>
               ))
             ) : (

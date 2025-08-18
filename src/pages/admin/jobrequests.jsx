@@ -102,11 +102,27 @@ export default function JobRequests() {
                 <td>{req.jobTitle}</td>
                 <td>{req.date}</td>
                 <td className={`status ${req.status.toLowerCase()}`}>{req.status}</td>
-                <td>
-                  <button className="view-btn" onClick={() => viewRequest(req)}>View</button>
-                  <button className="accept-btn" onClick={() => acceptRequest(req.id)}>Accept</button>
-                  <button className="reject-btn" onClick={() => rejectRequest(req.id)}>Reject</button>
-                </td>
+                 <td className="space-x-2">
+  <button
+    className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
+    onClick={() => viewRequest(req)}
+  >
+    👁 View
+  </button>
+  <button
+    className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
+    onClick={() => acceptRequest(req.id)}
+  >
+    Accept
+  </button>
+  <button
+    className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+    onClick={() => rejectRequest(req.id)}
+  >
+    Reject
+  </button>
+</td>
+
               </tr>
             ))}
           </tbody>

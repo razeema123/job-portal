@@ -2,7 +2,6 @@
 import "./Users.css";
 import { useNavigate } from "react-router-dom";
 
- 
 export function Sidebar() {
   return (
     <aside
@@ -11,7 +10,7 @@ export function Sidebar() {
         background: "#0a1725ff",
         color: "white",
         padding: "20px",
-        height: "100vh",
+        height: "110vh",
       }}
     >
       <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
@@ -26,20 +25,25 @@ export function Sidebar() {
 
 export default function Users() {
   const [users, setUsers] = useState([
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Admin", status: "Pending" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Editor", status: "Pending" },
-    { id: 3, name: "Michael Lee", email: "michael@example.com", role: "Viewer", status: "Active" },
+    { id: 1, name: "razeema r c", email: "john@example.com", role: "Admin", status: "Pending" },
+    { id: 2, name: "shalu", email: "jane@example.com", role: "Editor", status: "Pending" },
+    { id: 3, name: "Geethu p", email: "geethu@example.com", role: "Viewer", status: "Active" },
+     { id: 4, name: "shyamala p", email: "shyam@example.com", role: "Viewer", status: "Active" },
+      { id: 5, name: "paru p", email: "paru@example.com", role: "Viewer", status: "Active" },
+      { id: 6, name: " tinu c", email: "tinuuu@example.com", role: "Admin", status: "Pending" },
+      { id: 7, name: "teena t", email: "manu@example.com", role: "editor", status: "Pending" },
+      { id: 8, name: "gopal p", email: "gopal@example.com", role: "editor", status: "Pending" },
+      { id: 9, name: "varsha t", email: "varsha@example.com", role: "viewer", status: "Pending" },
+      
   ]);
 
   const [sortKey, setSortKey] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-
-   const handleAddUser = () => {
-  navigate("/admin/adduser");  
-};
-
+  const handleAddUser = () => {
+    navigate("/admin/adduser");
+  };
 
   const handleSort = (key) => {
     setSortKey(key);
@@ -60,9 +64,21 @@ export default function Users() {
       user.id === id ? { ...user, status: "Rejected" } : user
     ));
   };
- const handleView = (user) => {
-  navigate(`/admin/users/${user.id}`, { state: user });
-};
+
+  const handleView = (user) => {
+    navigate(`/admin/users/${user.id}`, { state: user });
+  };
+
+   
+  const filteredUsers = users.filter((user) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      user.name.toLowerCase().includes(q) ||
+      user.email.toLowerCase().includes(q) ||
+      user.role.toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div style={{ display: "flex" }}>
       {/* Sidebar */}
@@ -72,21 +88,36 @@ export default function Users() {
       <div style={{ flex: 1, padding: "20px" }}>
         <h1>Manage Users</h1>
 
-         <div className="users-controls">
-  <button className="add-btn" onClick={handleAddUser}>Add User</button>
-  
-  <select
-    className="sort-select"
-    value={sortKey}
-    onChange={(e) => handleSort(e.target.value)}
-  >
-    <option value="">Sort By</option>
-    <option value="name">Name</option>
-    <option value="role">Role</option>
-    <option value="status">Status</option>
-  </select>
-</div>
+        <div className="users-controls">
+          <button className="add-btn" onClick={handleAddUser}>Add User</button>
 
+          {/* ✅ Search bar */}
+          <input
+            type="text"
+            placeholder="Search by name, email, or role"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              marginLeft: "10px",
+              padding: "8px",
+              borderRadius: "6px",
+              border: "1px solid #ccc",
+              width: "250px",
+            }}
+          />
+
+          <select
+            className="sort-select"
+            value={sortKey}
+            onChange={(e) => handleSort(e.target.value)}
+            style={{ marginLeft: "10px", padding: "8px" }}
+          >
+            <option value="">Sort By</option>
+            <option value="name">Name</option>
+            <option value="role">Role</option>
+            <option value="status">Status</option>
+          </select>
+        </div>
 
         <table className="users-table">
           <thead>
@@ -100,8 +131,8 @@ export default function Users() {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((user) => (
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user) => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
                   <td>{user.name}</td>
@@ -113,28 +144,10 @@ export default function Users() {
                     </span>
                   </td>
                   <td>
-  <button
-    className="view-btn mr-2 px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
-    onClick={() => handleView(user)}
-  >
-    👁 View
-  </button>
-
-  <button
-    className="mr-2 px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
-    onClick={() =>handleReject(user.id)}
-  >
-    Block
-  </button>
-
-  <button
-    className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
-    onClick={() =>handleAccept(user.id)}
-  >
-    Unblock
-  </button>
-</td>
-
+                   <button className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition" onClick={() => viewRequest(req)} > 👁 View </button> 
+                   <button className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition" onClick={() => acceptRequest(req.id)} > Accept </button>
+                    <button className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition" onClick={() => rejectRequest(req.id)} > Reject </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -144,20 +157,6 @@ export default function Users() {
             )}
           </tbody>
         </table>
-
-        {selectedUser && (
-          <div className="modal-overlay" onClick={() => setSelectedUser(null)}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <h2>User Details</h2>
-              <p><b>ID:</b> {selectedUser.id}</p>
-              <p><b>Name:</b> {selectedUser.name}</p>
-              <p><b>Email:</b> {selectedUser.email}</p>
-              <p><b>Role:</b> {selectedUser.role}</p>
-              <p><b>Status:</b> {selectedUser.status}</p>
-              <button onClick={() => setSelectedUser(null)}>Close</button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

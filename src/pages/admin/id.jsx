@@ -12,7 +12,7 @@ export function Sidebar() {
         padding: "20px",
         height: "100vh",
       }}
-    >
+    > 
       <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
       <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
         <a href="/admin/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
@@ -35,6 +35,7 @@ export default function UserDetails() {
     email: "No email provided",
     role: "N/A",
     status: "N/A",
+    password: "********"
   };
 
 
@@ -53,6 +54,7 @@ export default function UserDetails() {
       <p><b>Email:</b> {user.email}</p>
       <p><b>Role:</b> {user.role}</p>
       <p><b>Status:</b> {user.status}</p>
+      <p><b>Password:</b> {user.password ? "********" : "*******"}</p> {/* Masked */}
 
       <button
         onClick={() => navigate(-1)}

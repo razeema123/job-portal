@@ -58,13 +58,14 @@ h1 {
 }
 
 .users-table th, .users-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   padding: 10px;
   text-align: left;
 }
 
 .users-table th {
-  background: #f4f4f4;
+  background:  #2c3e50;
+  color: #f6f1f1;
 }
 
 .status-badge {

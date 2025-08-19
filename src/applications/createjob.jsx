@@ -13,7 +13,7 @@ export default function CreateJob() {
     title: "",
     company: "",
     location: "",
-    type: "",
+    type: "", // will map to backend's jobType
     salary: "",
     description: "",
   });
@@ -25,20 +25,40 @@ export default function CreateJob() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Prepare payload matching backend
+    const jobData = {
+      title: job.title.trim(),
+      company: job.company.trim(),
+      location: job.location.trim(),
+      jobType: job.type, // backend expects jobType
+      salary: job.salary ? Number(job.salary) : 0,
+      description: job.description.trim(),
+      recruiter: localStorage.getItem("userId"),
+    };
+
+    // Debug: check payload
+    console.log("Submitting job:", jobData);
+
+    // Check all required fields
+    if (!jobData.title || !jobData.company || !jobData.location || !jobData.jobType || !jobData.description) {
+      toast.error("All fields except salary are required");
+      return;
+    }
+
     try {
-      // 👇 Send job data to backend API
-      const res = await axios.post("http://localhost:5002/api/jobs/create", {
-        title: job.title,
-        company: job.company,
-        location: job.location,
-        jobType: job.type, // 👈 must match backend field name
-        salary: Number(job.salary) || 0, // 👈 convert salary to number
-        description: job.description,
-      });
-      console.log("✅ Backend Response:", res.data);
+      const token = localStorage.getItem("token"); // include if backend is protected
+      await axios.post(
+        "http://localhost:5002/api/jobs/create",
+        jobData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       toast.success("✅ Job Created Successfully!", { autoClose: 2000 });
-
       setTimeout(() => navigate("/postjob"), 2000);
     } catch (err) {
       const msg = err.response?.data?.error || "Something went wrong";
@@ -51,45 +71,23 @@ export default function CreateJob() {
     <div className="layout">
       <ToastContainer position="top" autoClose={2000} />
       <Sidebar />
-
       <div className="content">
         <div className="create-job-container">
           <h2>Create a New Job</h2>
           <form className="create-job-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Job Title</label>
-              <input
-                type="text"
-                name="title"
-                value={job.title}
-                onChange={handleChange}
-                placeholder="Eg: Frontend Developer"
-                required
-              />
+              <input type="text" name="title" value={job.title} onChange={handleChange} placeholder="Eg: Frontend Developer" required />
             </div>
 
             <div className="form-group">
               <label>Company</label>
-              <input
-                type="text"
-                name="company"
-                value={job.company}
-                onChange={handleChange}
-                placeholder="Eg: IBM"
-                required
-              />
+              <input type="text" name="company" value={job.company} onChange={handleChange} placeholder="Eg: IBM" required />
             </div>
 
             <div className="form-group">
               <label>Location</label>
-              <input
-                type="text"
-                name="location"
-                value={job.location}
-                onChange={handleChange}
-                placeholder="Eg: Remote/New York"
-                required
-              />
+              <input type="text" name="location" value={job.location} onChange={handleChange} placeholder="Eg: Remote/New York" required />
             </div>
 
             <div className="form-group">
@@ -105,25 +103,12 @@ export default function CreateJob() {
 
             <div className="form-group">
               <label>Salary</label>
-              <input
-                type="text"
-                name="salary"
-                value={job.salary}
-                onChange={handleChange}
-                placeholder="Optional"
-              />
+              <input type="text" name="salary" value={job.salary} onChange={handleChange} placeholder="Optional" />
             </div>
 
             <div className="form-group">
               <label>Job Description</label>
-              <textarea
-                name="description"
-                value={job.description}
-                onChange={handleChange}
-                rows="4"
-                placeholder="Enter your description"
-                required
-              />
+              <textarea name="description" value={job.description} onChange={handleChange} rows="4" placeholder="Enter your description" required />
             </div>
 
             <button type="submit" className="submit-btn">

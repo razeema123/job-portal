@@ -11,7 +11,7 @@ export default function ViewApplications() {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:5002/api/applications/${id}`)
+        .get(`https://job-portal-backend-1-wore.onrender.com/api/applications/${id}`)
         .then((res) => setApplication(res.data))
         .catch((err) => console.error("Failed to load application:", err));
     }
@@ -53,7 +53,7 @@ export default function ViewApplications() {
           <div className="form-field">
             <label>Resume:</label>
             <a
-              href={`http://localhost:5002/${application.resumePath}`}
+              href={`https://job-portal-backend-1-wore.onrender.com/${application.resumePath}`}
               target="_blank"
               rel="noreferrer"
               className="resume-link"

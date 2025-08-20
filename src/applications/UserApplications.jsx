@@ -17,7 +17,7 @@ export default function UserApplications() {
   }, []);
 
   const fetchApplications = () => {
-    axios.get("http://localhost:5002/api/applications")
+    axios.get("https://job-portal-backend-1-wore.onrender.com/api/applications")
       .then((res) => setApplications(res.data))
       .catch(() => toast.error("Failed to load applications"));
   };
@@ -34,7 +34,7 @@ export default function UserApplications() {
     }
   
     axios.patch(
-      `http://localhost:5002/api/applications/status/${id}`,
+      `https://job-portal-backend-1-wore.onrender.com/api/applications/status/${id}`,
       { status },
       {
         headers: {
@@ -110,7 +110,7 @@ export default function UserApplications() {
                     <td>{app.jobId?.company || "N/A"}</td>
 <td>{app.jobId?.title || "N/A"}</td>
                     <td>
-                    <a href={`http://localhost:5002/${app.resumePath}`} target="_blank" rel="noreferrer" className="resume-link">
+                    <a href={`https://job-portal-backend-1-wore.onrender.com/${app.resumePath}`} target="_blank" rel="noreferrer" className="resume-link">
 
                         Download
                       </a>

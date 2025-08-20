@@ -56,7 +56,7 @@ const FindJobs = () => {
 
   // ✅ Fetch jobs from backend
   useEffect(() => {
-    axios.get('http://localhost:5002/api/jobs')
+    axios.get('https://job-portal-backend-1-wore.onrender.com/api/jobs')
       .then(res => {
         setJobs(res.data.jobs);
       })

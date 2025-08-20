@@ -22,7 +22,7 @@ export default function VerifyOtp() {
 
     try {
       setLoading(true);
-      await axios.post('http://localhost:5002/api/auth/verify-otp', { email, otp });
+      await axios.post('https://job-portal-backend-1-wore.onrender.com/api/auth/verify-otp', { email, otp });
 
       toast.success("OTP Verified!");
       setTimeout(() => {

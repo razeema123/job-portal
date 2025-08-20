@@ -24,7 +24,7 @@ export default function ForgotPassword({ onOtpSent }) {
       setLoading(true);
 
       // call backend
-      await axios.post('http://localhost:5002/api/auth/forgot-password', { email });
+      await axios.post('https://job-portal-backend-1-wore.onrender.com/api/auth/forgot-password', { email });
 
       // update the SAME toast to success (no new toast)
       toast.update(toastId, {

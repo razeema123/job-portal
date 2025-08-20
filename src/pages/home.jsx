@@ -30,7 +30,7 @@ const Header = ({ toggleTheme, theme, role, onLogout }) => {
   // Fetch unread notifications count
   useEffect(() => {
     if (!userId || !token) return;
-    axios.get(`http://localhost:5002/api/users/${userId}/notifications/unread-count`, {
+    axios.get(`https://job-portal-backend-1-wore.onrender.com/api/users/${userId}/notifications/unread-count`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => setUnreadCount(res.data.count))

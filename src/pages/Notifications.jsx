@@ -28,7 +28,7 @@ const Notifications = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:5002/api/notifications/${userId}`,
+          `https://job-portal-backend-1-wore.onrender.com/api/notifications/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // 🔑 send token
@@ -52,7 +52,7 @@ const Notifications = () => {
   try {
     const token = localStorage.getItem("token");
     await axios.put(
-      `http://localhost:5002/api/notifications/${notificationId}/mark-read`,
+      `https://job-portal-backend-1-wore.onrender.com/api/notifications/${notificationId}/mark-read`,
       {},
       {
         headers: {

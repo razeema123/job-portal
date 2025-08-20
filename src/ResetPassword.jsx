@@ -22,7 +22,7 @@ export default function ResetPassword() {
 
     try {
       setLoading(true);
-      await axios.post('http://localhost:5002/api/auth/reset-password', {
+      await axios.post('https://job-portal-backend-1-wore.onrender.com/api/auth/reset-password', {
         email,
         newPassword
       });

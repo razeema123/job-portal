@@ -1,11 +1,11 @@
 import React from "react";
 import "./sheet.css";
 
-export function Sheet({ open, onOpenChange, children }) {
+export function Sheet({ children }) {
   return <>{children}</>;
 }
 
-export function SheetTrigger({ asChild, children }) {
+export function SheetTrigger({ children }) {
   return <>{children}</>;
 }
 

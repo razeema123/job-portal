@@ -18,7 +18,7 @@ export default function PostJob() {
   // ✅ Fetch jobs from backend
   useEffect(() => {
     axios
-      .get("http://localhost:5002/api/jobs")
+      .get("https://job-portal-backend-1-wore.onrender.com/api/jobs")
       .then((response) => {
         setJobs(response.data.jobs);
       })
@@ -41,7 +41,7 @@ export default function PostJob() {
   const confirmDelete = () => {
     if (jobToDelete) {
       axios
-        .delete(`http://localhost:5002/api/jobs/delete/${jobToDelete}`)
+        .delete(`https://job-portal-backend-1-wore.onrender.com/api/jobs/delete/${jobToDelete}`)
         .then(() => {
           setJobs(jobs.filter((job) => job._id !== jobToDelete));
           toast.success("Job deleted successfully!");
@@ -82,7 +82,7 @@ export default function PostJob() {
     }
 
     try {
-      await axios.post("http://localhost:5002/api/jobs/delete-multiple", {
+      await axios.post("https://job-portal-backend-1-wore.onrender.com/api/jobs/delete-multiple", {
         ids: selectedJobs,
       });
       toast.success(`${selectedJobs.length} jobs deleted`);

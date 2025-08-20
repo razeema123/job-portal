@@ -48,7 +48,7 @@ export default function CreateJob() {
     try {
       const token = localStorage.getItem("token"); // include if backend is protected
       await axios.post(
-        "http://localhost:5002/api/jobs/create",
+        "https://job-portal-backend-1-wore.onrender.com/api/jobs/create",
         jobData,
         {
           headers: {

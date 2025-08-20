@@ -15,7 +15,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:5002/api/auth/signup', {
+      await axios.post('https://job-portal-backend-1-wore.onrender.com/api/auth/signup', {
         name,
         email,
         password,

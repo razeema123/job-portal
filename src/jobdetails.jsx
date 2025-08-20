@@ -58,7 +58,7 @@ const JobDetail = () => {
   useEffect(() => {
     if (jobId) {
       axios
-        .get(`http://localhost:5002/api/jobs/${jobId}`)
+        .get(`https://job-portal-backend-1-wore.onrender.com/api/jobs/${jobId}`)
         .then((res) => {
           setJob(res.data.job || res.data);
           setLoading(false);
@@ -108,7 +108,7 @@ const JobDetail = () => {
 
           {job.image && (
             <div className="job-image">
-              <img src={`http://localhost:5002/uploads/${job.image}`} alt="Job" />
+              <img src={`https://job-portal-backend-1-wore.onrender.com/uploads/${job.image}`} alt="Job" />
             </div>
           )}
 

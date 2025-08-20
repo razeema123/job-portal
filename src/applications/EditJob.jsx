@@ -19,7 +19,7 @@ export default function EditJob() {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:5002/api/jobs/${id}`)
+    axios.get(`https://job-portal-backend-1-wore.onrender.com/api/jobs/${id}`)
       .then((res) => setJob(res.data))
       .catch(() => toast.error("Failed to load job data"));
   }, [id]);
@@ -32,7 +32,7 @@ export default function EditJob() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5002/api/jobs/update/${id}`, job);
+      await axios.put(`https://job-portal-backend-1-wore.onrender.com/api/jobs/update/${id}`, job);
       toast.success("Job updated!");
       navigate("/postjob"); // back to recruiter job list
     } catch {

@@ -66,7 +66,7 @@ const ApplyJob = () => {
   // ✅ Fetch job details
   useEffect(() => {
     if (jobId) {
-      axios.get(`http://localhost:5002/api/jobs/${jobId}`)
+      axios.get(`https://job-portal-backend-1-wore.onrender.com/api/jobs/${jobId}`)
         .then(res => setJob(res.data.job || res.data))
         .catch(err => console.error("Failed to fetch job:", err));
     }
@@ -95,7 +95,7 @@ const ApplyJob = () => {
         data.append(key, formData[key]);
       });
 
-      await axios.post(`http://localhost:5002/api/applications/${jobId}/apply`, data, {
+      await axios.post(`https://job-portal-backend-1-wore.onrender.com/api/applications/${jobId}/apply`, data, {
         headers: { 
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${token}`

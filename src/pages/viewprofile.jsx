@@ -18,7 +18,7 @@ const ViewProfile = () => {
         const token = localStorage.getItem('token');
         if (!token) return toast.error("Please login first.");
 
-        const res = await axios.get('http://localhost:5002/api/users/profile', {
+        const res = await axios.get('https://job-portal-backend-1-wore.onrender.com/api/users/profile', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -42,7 +42,7 @@ const ViewProfile = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        'http://localhost:5002/api/users/profile',
+        'https://job-portal-backend-1-wore.onrender.com/api/users/profile',
         user,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -65,7 +65,7 @@ const ViewProfile = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5002/api/users/profile/upload-resume',
+        'https://job-portal-backend-1-wore.onrender.com/api/users/profile/upload-resume',
         formData,
         {
           headers: {

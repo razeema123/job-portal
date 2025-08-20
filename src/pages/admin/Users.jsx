@@ -1,6 +1,7 @@
- import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Users.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function Sidebar() {
   return (
@@ -24,82 +25,106 @@ export function Sidebar() {
 }
 
 export default function Users() {
-  const [users, setUsers] = useState([
-    { id: 1, name: "razeema r c", email: "john@example.com", role: "Admin", status: "Pending" },
-    { id: 2, name: "shalu", email: "jane@example.com", role: "Editor", status: "Pending" },
-    { id: 3, name: "Geethu p", email: "geethu@example.com", role: "Viewer", status: "Active" },
-     { id: 4, name: "shyamala p", email: "shyam@example.com", role: "Viewer", status: "Active" },
-      { id: 5, name: "paru p", email: "paru@example.com", role: "Viewer", status: "Active" },
-      { id: 6, name: " tinu c", email: "tinuuu@example.com", role: "Admin", status: "Pending" },
-      { id: 7, name: "teena t", email: "manu@example.com", role: "editor", status: "Pending" },
-      { id: 8, name: "gopal p", email: "gopal@example.com", role: "editor", status: "Pending" },
-      { id: 9, name: "varsha t", email: "varsha@example.com", role: "viewer", status: "Pending" },
-      
-  ]);
-
+  const [users, setUsers] = useState([]);
   const [sortKey, setSortKey] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5; // show 5 users per page
   const navigate = useNavigate();
+
+  // Fetch users
+  useEffect(() => {
+    axios
+      .get("http://localhost:5002/api/users")
+      .then((res) => setUsers(res.data))
+      .catch((err) => console.error("Error fetching users:", err));
+  }, []);
 
   const handleAddUser = () => {
     navigate("/admin/adduser");
   };
 
+  // Sorting
   const handleSort = (key) => {
     setSortKey(key);
     const sortedUsers = [...users].sort((a, b) =>
-      a[key].localeCompare(b[key])
+      (a[key] || "").localeCompare(b[key] || "")
     );
     setUsers(sortedUsers);
   };
 
-  const handleAccept = (id) => {
-    setUsers(users.map(user =>
-      user.id === id ? { ...user, status: "Active" } : user
-    ));
+  // Accept / Reject
+  const handleAccept = async (id) => {
+    try {
+      await axios.put(`http://localhost:5002/api/admin/${id}/accept`);
+      setUsers(users.map((u) => (u._id === id ? { ...u, status: "Active" } : u)));
+    } catch (err) {
+      console.error("Error accepting user:", err);
+    }
   };
 
-  const handleReject = (id) => {
-    setUsers(users.map(user =>
-      user.id === id ? { ...user, status: "Rejected" } : user
-    ));
+  const handleReject = async (id) => {
+    try {
+      await axios.put(`http://localhost:5002/api/admin/${id}/reject`);
+      setUsers(users.map((u) => (u._id === id ? { ...u, status: "Rejected" } : u)));
+    } catch (err) {
+      console.error("Error rejecting user:", err);
+    }
   };
 
   const handleView = (user) => {
-    navigate(`/admin/users/${user.id}`, { state: user });
+    navigate(`/admin/users/${user._id}`, { state: user });
   };
 
-   
+  // Search filter
   const filteredUsers = users.filter((user) => {
     const q = searchQuery.toLowerCase();
     return (
-      user.name.toLowerCase().includes(q) ||
-      user.email.toLowerCase().includes(q) ||
-      user.role.toLowerCase().includes(q)
+      (user.name || "").toLowerCase().includes(q) ||
+      (user.email || "").toLowerCase().includes(q) ||
+      (user.role || "").toLowerCase().includes(q)
     );
   });
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const startIndex = (currentPage - 1) * usersPerPage;
+  const currentUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div style={{ display: "flex" }}>
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
       <div style={{ flex: 1, padding: "20px" }}>
         <h1>Manage Users</h1>
 
         <div className="users-controls">
           <button className="add-btn" onClick={handleAddUser}>Add User</button>
 
-          {/* ✅ Search bar */}
           <input
             type="text"
             placeholder="Search by name, email, or role"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // reset page on search
+            }}
             style={{
               marginLeft: "10px",
               padding: "8px",
+              marginRight: "1000px",
               borderRadius: "6px",
               border: "1px solid #ccc",
               width: "250px",
@@ -119,6 +144,7 @@ export default function Users() {
           </select>
         </div>
 
+        {/* Users Table */}
         <table className="users-table">
           <thead>
             <tr>
@@ -131,22 +157,37 @@ export default function Users() {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
+            {currentUsers.length > 0 ? (
+              currentUsers.map((user) => (
+                <tr key={user._id}>
+                  <td>{user._id}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <span className={`status-badge ${user.status.toLowerCase()}`}>
+                    <span className={`status-badge ${user.status?.toLowerCase()}`}>
                       {user.status}
                     </span>
                   </td>
                   <td>
-                   <button className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition" onClick={() => viewRequest(req)} > 👁 View </button> 
-                   <button className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition" onClick={() => acceptRequest(req.id)} > Accept </button>
-                    <button className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition" onClick={() => rejectRequest(req.id)} > Reject </button>
+                    <button
+                      className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
+                      onClick={() => handleView(user)}
+                    >
+                      👁 View
+                    </button>
+                    <button
+                      className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition ml-2"
+                      onClick={() => handleAccept(user._id)}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition ml-2"
+                      onClick={() => handleReject(user._id)}
+                    >
+                      Reject
+                    </button>
                   </td>
                 </tr>
               ))
@@ -157,6 +198,41 @@ export default function Users() {
             )}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "5px" }}>
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            style={{ padding: "5px 10px" }}
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => handlePageClick(i + 1)}
+              style={{
+                padding: "5px 10px",
+                background: currentPage === i + 1 ? "#0a1725ff" : "#f0f0f0",
+                color: currentPage === i + 1 ? "#fff" : "#000",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages || totalPages === 0}
+            style={{ padding: "5px 10px" }}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

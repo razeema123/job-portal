@@ -14,7 +14,7 @@ export function Sidebar() {
     </aside>
   );
 }
-
+  
 export default function AddUser() {
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function AddUser() {
     e.preventDefault();
     navigate("/admin/users");
   };
-
+  
   return (
     <div className="add-user-page">
       {/* Sidebar */}
@@ -41,12 +41,16 @@ export default function AddUser() {
               <label>Email:</label>
               <input type="email" required />
             </div>
+             <div>
+              <label>Password:</label>
+              <input type="password" required />
+            </div>
             <div>
               <label>Role:</label>
               <select>
                 <option>Admin</option>
-                <option>Editor</option>
-                <option>Viewer</option>
+                <option>Recruiter</option>
+                
               </select>
             </div>
             <button type="submit">Save User</button>

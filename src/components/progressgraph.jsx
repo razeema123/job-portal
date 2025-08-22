@@ -34,7 +34,7 @@ export function Sidebar() {
 }
 
 export default function ProgressGraphWithSidebar() {
-  // Example Job Portal stats
+   
   const data = [
     { name: "Jobs Posted", value: 65 },
     { name: "Applications", value: 120 },

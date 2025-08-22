@@ -26,7 +26,7 @@ export function Sidebar() {
 
 export default function Users() {
   const [users, setUsers] = useState([]);
-  const [sortKey, setSortKey] = useState("");
+  const [sortKey, setSortKey] = useState("");     
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5; // show 5 users per page
@@ -164,7 +164,7 @@ export default function Users() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  <td>
+                  <td> 
                     <span className={`status-badge ${user.status?.toLowerCase()}`}>
                       {user.status}
                     </span>
@@ -180,13 +180,13 @@ export default function Users() {
                       className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition ml-2"
                       onClick={() => handleAccept(user._id)}
                     >
-                      Accept
+                      Block
                     </button>
                     <button
                       className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition ml-2"
                       onClick={() => handleReject(user._id)}
                     >
-                      Reject
+                      Unblock
                     </button>
                   </td>
                 </tr>

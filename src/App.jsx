@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import Userdetails from "./pages/admin/id.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
-import AdminLayout from './pages/admin/AdminLayout.jsx';
 import Dashboard from "./pages/admin/Dashboard.jsx";
 import Analytics from "./pages/admin/Analytics.jsx";
 import Users from "./pages/admin/Users.jsx";
@@ -66,7 +65,7 @@ function App() {
  
        <Route path="/admin/adduser" element={<AddUser />} />
 
-      <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>} />
+       
       <Route path="/view-user" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
       <Route path="/view-user/:id" element={<ProtectedRoute role="admin"><ViewUser /></ProtectedRoute>} />
 
@@ -77,7 +76,7 @@ function App() {
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/admin/users" element={<Users/>} />
        <Route path="/admin/users/:id" element={<Userdetails/>} />
-      <Route path="/admin" element={<ProgressGraph/>} />
+      <Route path="/admin" element={<ProtectedRoute role="admin"><ProgressGraph/></ProtectedRoute>} />
       <Route path="/admin/jobrequests" element={<Jobrequests/>} />
 
       <Route path="/viewapplications/:id" element={<ViewApplications />} />

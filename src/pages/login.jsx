@@ -25,7 +25,7 @@ const Login = () => {
 
       const user = JSON.parse(localStorage.getItem('user'));
 
-      if (user.role === "admin") navigate("/admin-dashboard");
+      if (user.role === "admin") navigate("/admin");
       else if (user.role === "recruiter") navigate("/recruiter-dashboard");
       else navigate("/user-dashboard");
 

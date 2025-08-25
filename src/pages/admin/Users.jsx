@@ -11,7 +11,7 @@ export function Sidebar() {
         background: "#0a1725ff",
         color: "white",
         padding: "20px",
-        height: "110vh",
+        height: "120vh",
       }}
     >
       <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
@@ -54,27 +54,25 @@ export default function Users() {
   };
 
   // Accept / Reject
-  const handleAccept = async (id) => {
-    try {
-      await axios.put(`http://localhost:5002/api/admin/${id}/accept`);
-      setUsers(users.map((u) => (u._id === id ? { ...u, status: "Active" } : u)));
-    } catch (err) {
-      console.error("Error accepting user:", err);
-    }
-  };
+   
 
-  const handleReject = async (id) => {
-    try {
-      await axios.put(`http://localhost:5002/api/admin/${id}/reject`);
-      setUsers(users.map((u) => (u._id === id ? { ...u, status: "Rejected" } : u)));
-    } catch (err) {
-      console.error("Error rejecting user:", err);
-    }
-  };
+   
 
   const handleView = (user) => {
     navigate(`/admin/users/${user._id}`, { state: user });
   };
+
+ const handleBlockToggle = async (id) => {
+  try {
+    await axios.put(`http://localhost:5002/api/users/block/${id}`);
+    // refresh list after updating
+    const res = await axios.get("http://localhost:5002/api/users");
+    setUsers(res.data);
+  } catch (err) {
+    console.error("Error blocking/unblocking:", err);
+  }
+}
+
 
   // Search filter
   const filteredUsers = users.filter((user) => {
@@ -85,6 +83,9 @@ export default function Users() {
       (user.role || "").toLowerCase().includes(q)
     );
   });
+
+
+   
 
   // Pagination logic
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
@@ -176,18 +177,24 @@ export default function Users() {
                     >
                       👁 View
                     </button>
-                    <button
-                      className="px-3 py-1 rounded-lg bg-green-500 text-white hover:bg-green-600 transition ml-2"
-                      onClick={() => handleAccept(user._id)}
-                    >
-                      Block
-                    </button>
-                    <button
-                      className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition ml-2"
-                      onClick={() => handleReject(user._id)}
-                    >
-                      Unblock
-                    </button>
+                      
+  <button
+    className="px-3 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition ml-2"
+    onClick={() => handleBlockToggle(user._id)}
+    disabled={user.isBlocked} // disable if already blocked
+  >
+    Block
+  </button>
+  <button
+    className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-green-600 transition ml-2"
+    onClick={() => handleBlockToggle(user._id)}
+    disabled={!user.isBlocked} // disable if already active
+  >
+    Unblock
+  </button>
+ 
+
+
                   </td>
                 </tr>
               ))

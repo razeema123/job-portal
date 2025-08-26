@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,35 +19,62 @@ const Login = () => {
         password
       });
 
+      // Save user + token
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       localStorage.setItem('userId', res.data.user._id); 
 
-      const user = JSON.parse(localStorage.getItem('user'));
+      const user = res.data.user;
 
-      if (user.role === "admin") navigate("/admin");
-      else if (user.role === "recruiter") navigate("/recruiter-dashboard");
-      else navigate("/user-dashboard");
+      // ✅ Role-based navigation
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else if (user.role === "recruiter") {
+        navigate("/recruiter-dashboard");
+      } else {
+        navigate("/user-dashboard");
+      }
 
       toast.success('Login successful!');
       setTimeout(() => {
         navigate('/home'); 
       }, 1500);
+
     } catch (err) {
+      // ✅ Unified error handling, including blocked users
       const errorMsg =
-        err.response?.data?.msg || err.response?.data?.error || 'Login failed.';
+        err.response?.data?.message ||   // catches "Your account is blocked"
+        err.response?.data?.msg ||
+        err.response?.data?.error ||
+        'Login failed.';
+
       toast.error(errorMsg);
+
+      // ✅ Stay on login page if blocked
+      if (errorMsg.includes("blocked")) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userId');
+      }
     }
-  }
+  };
 
   return (
     <div className="auth-page">
       <ToastContainer position="top-right" autoClose={2000} />
       
       <div className="auth-illustration">
-        <img src="/src/rag-doll-red-word-career-Photoroom (1).png" alt="Job Logo" className="job-logo" />
+        <img
+          src="/src/rag-doll-red-word-career-Photoroom (1).png"
+          alt="Job Logo"
+          className="job-logo"
+        />
         <h1 className="auth-title">Welcome to Job Portal</h1>
-        <img src="/src/2754-Photoroom.png" alt="Login Illustration" className="illustration" />
+        <img
+          src="/src/2754-Photoroom.png"
+          alt="Login Illustration"
+          className="illustration"
+        />
       </div>
 
       <div className="auth-form">

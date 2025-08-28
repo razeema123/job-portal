@@ -229,11 +229,11 @@ export default function Users() {
         </table>
 
         {/* Pagination Controls */}
-        <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "5px" }}>
+        <div style={{ marginTop: "20px", display: "flex", alignItems: "right", gap: "5px", float: "right"}}>
           <button
             onClick={handlePrevPage}
             disabled={currentPage === 1}
-            style={{ padding: "5px 10px" }}
+            style={{ padding: "5px 10px" }} 
           >
             Prev
           </button>

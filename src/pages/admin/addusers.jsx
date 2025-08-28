@@ -2,18 +2,48 @@
 import { useNavigate } from "react-router-dom";
 import "./adduser.css";
 
-export function Sidebar() {
-  return (
-    <aside className="sidebar">
-      <h2 className="sidebar-title">Admin Panel</h2>
-      <nav className="sidebar-nav">
-        <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/users">Users</a>
-        <a href="/admin/jobrequests">Jobs</a>
-      </nav>
-    </aside>
-  );
-}
+  export function Sidebar() {
+    const menuItems = [
+      { name: "Dashboard", link: "/admin/dashboard" },
+      { name: "Users", link: "/admin/users" },
+      { name: "Jobs", link: "/admin/jobrequests" },
+    ];
+  
+    return (
+      <aside
+        style={{
+          width: "240px",
+          background: "#0a1725",
+          color: "white",
+          padding: "20px",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <h2 style={{ marginBottom: "40px", fontSize: "1.5rem" }}>⚙ Admin Panel</h2>
+        <nav style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          {menuItems.map((item, idx) => (
+            <a
+              key={idx}
+              href={item.link}
+              style={{
+                color: "white",
+                textDecoration: "none",
+                padding: "10px 15px",
+                borderRadius: "8px",
+                transition: "background 0.3s",
+              }}
+              onMouseEnter={(e) => (e.target.style.background = "#1e2a38")}
+              onMouseLeave={(e) => (e.target.style.background = "transparent")}
+            >
+              {item.name}
+            </a>
+          ))}
+        </nav>
+      </aside>
+    );
+  }
   
 export default function AddUser() {
   const navigate = useNavigate();

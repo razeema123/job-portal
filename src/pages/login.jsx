@@ -1,53 +1,79 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import './login.css'; 
+ 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+   const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await axios.post('https://job-portal-backend-1-wore.onrender.com/api/auth/login', {
-        email,
-        password
-      });
+  try {
+    const res = await axios.post(
+      "https://localhost:5002/api/auth/login",
+      { email, password }
+    );
 
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      localStorage.setItem('userId', res.data.user._id); 
+    // ✅ Only runs if login succeeded (200 OK)
+    const user = res.data.user;
 
-      const user = JSON.parse(localStorage.getItem('user'));
+    // Save valid login
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("userId", user.id);
 
-      if (user.role === "admin") navigate("/admin");
-      else if (user.role === "recruiter") navigate("/recruiter-dashboard");
-      else navigate("/user-dashboard");
+    // Navigate by role
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else if (user.role === "recruiter") {
+      navigate("/recruiter-dashboard");
+    } else {
+      navigate("/user-dashboard");
+    }
 
-      toast.success('Login successful!');
-      setTimeout(() => {
-        navigate('/home'); 
-      }, 1500);
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.msg || err.response?.data?.error || 'Login failed.';
+    toast.success("Login successful!");
+    setTimeout(() => navigate("/home"), 1500);
+
+  } catch (err) {
+    // ✅ This block runs if user is blocked, password wrong, etc.
+    const status = err.response?.status;
+    const errorMsg = err.response?.data?.message || "Login failed.";
+
+    if (status === 403 && errorMsg.toLowerCase().includes("blocked")) {
+      toast.error("Your account is blocked. Contact support.");
+    } else {
       toast.error(errorMsg);
     }
+
+    // Always clear storage on failed login
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
   }
+};
 
   return (
     <div className="auth-page">
       <ToastContainer position="top-right" autoClose={2000} />
       
       <div className="auth-illustration">
-        <img src="/src/rag-doll-red-word-career-Photoroom (1).png" alt="Job Logo" className="job-logo" />
+        <img
+          src="/src/rag-doll-red-word-career-Photoroom (1).png"
+          alt="Job Logo"
+          className="job-logo"
+        />
         <h1 className="auth-title">Welcome to Job Portal</h1>
-        <img src="/src/2754-Photoroom.png" alt="Login Illustration" className="illustration" />
+        <img
+          src="/src/2754-Photoroom.png"
+          alt="Login Illustration"
+          className="illustration"
+        />
       </div>
 
       <div className="auth-form">

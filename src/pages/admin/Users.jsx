@@ -3,27 +3,49 @@ import "./Users.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export function Sidebar() {
-  return (
-    <aside
-      style={{
-        width: "220px",
-        background: "#0a1725ff",
-        color: "white",
-        padding: "20px",
-        height: "120vh",
-      }}
-    >
-      <h2 style={{ marginBottom: "30px" }}>Admin Panel</h2>
-      <nav style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-        <a href="/admin/dashboard" style={{ color: "white", textDecoration: "none" }}>Dashboard</a>
-        <a href="/admin/users" style={{ color: "white", textDecoration: "none" }}>Users</a>
-        <a href="/admin/jobrequests" style={{ color: "white", textDecoration: "none" }}>Jobs</a>
-      </nav>
-    </aside>
-  );
-}
-
+ export function Sidebar() {
+   const menuItems = [
+     { name: "Dashboard", link: "/admin/dashboard" },
+     { name: "Users", link: "/admin/users" },
+     { name: "Jobs", link: "/admin/jobrequests" },
+   ];
+ 
+   return (
+     <aside
+       style={{
+         width: "240px",
+         background: "#0a1725",
+         color: "white",
+         padding: "20px",
+         height: "100vh",
+         display: "flex",
+         flexDirection: "column",
+       }}
+     >
+       <h2 style={{ marginBottom: "40px", fontSize: "1.5rem" }}>⚙ Admin Panel</h2>
+       <nav style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+         {menuItems.map((item, idx) => (
+           <a
+             key={idx}
+             href={item.link}
+             style={{
+               color: "white",
+               textDecoration: "none",
+               padding: "10px 15px",
+               borderRadius: "8px",
+               transition: "background 0.3s",
+             }}
+             onMouseEnter={(e) => (e.target.style.background = "#1e2a38")}
+             onMouseLeave={(e) => (e.target.style.background = "transparent")}
+           >
+             {item.name}
+           </a>
+         ))}
+       </nav>
+     </aside>
+   );
+ }
+ 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [sortKey, setSortKey] = useState("");     
@@ -207,11 +229,11 @@ export default function Users() {
         </table>
 
         {/* Pagination Controls */}
-        <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "5px" }}>
+        <div style={{ marginTop: "20px", display: "flex", alignItems: "right", gap: "5px", float: "right"}}>
           <button
             onClick={handlePrevPage}
             disabled={currentPage === 1}
-            style={{ padding: "5px 10px" }}
+            style={{ padding: "5px 10px" }} 
           >
             Prev
           </button>

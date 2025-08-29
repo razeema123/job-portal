@@ -53,7 +53,7 @@ export default function UserDetails() {
       <p><b>Name:</b> {user.name}</p>
       <p><b>Email:</b> {user.email}</p>
       <p><b>Role:</b> {user.role}</p>
-      <p><b>Status:</b> {user.status}</p>
+      <p><b>Status:</b> </p>
       <p><b>Password:</b> {user.password ? "********" : "*******"}</p> {/* Masked */}
 
       <button

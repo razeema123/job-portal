@@ -45,7 +45,7 @@
 .status-card {
   flex: 1;
   min-width: 120px;
-  background-color: #eee;
+  background-color: #38347e;
   padding: 16px;
   border-radius: 10px;
   cursor: pointer;
@@ -67,25 +67,25 @@
 /* Status card colors */
 .status-card.pending.active,
 .status-card.pending:hover {
-  background-color: #ffebee;
+  background-color: #434e70;
   color: #9d1c1c;
 }
 
 .status-card.reviewed.active,
 .status-card.reviewed:hover {
-  background-color: #e3f2fd;
+  background-color: #2d4454;
   color: #151bc0;
 }
 
 .status-card.shortlisted.active,
 .status-card.shortlisted:hover {
-  background-color: #e8f5e9;
+  background-color: #6b86b5;
   color: #17621a;
 }
 
 .status-card.all.active,
 .status-card.all:hover {
-  background-color: #fef3e3;
+  background-color: #28365c;
   color: #ff9800;
 }
 
@@ -146,7 +146,7 @@
 }
 
 .status-badge.pending {
-  background-color: #b53113;
+  background-color: #334e85;
 }
 
 .status-badge.reviewed {

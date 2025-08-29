@@ -35,9 +35,9 @@
   color: white;
 }
 
-.status.pending { color: rgb(253, 251, 249); font-weight: bold; }
-.status.accepted { color: rgb(244, 250, 244); font-weight: bold; }
-.status.rejected { color: rgb(251, 248, 248); font-weight: bold; }
+.status.pending { color: rgb(156, 31, 31); font-weight: bold; }
+.status.accepted { color: rgb(61, 119, 61); font-weight: bold; }
+.status.rejected { color: rgb(161, 38, 38); font-weight: bold; }
 
 button {
   padding: 5px 10px;

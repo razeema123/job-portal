@@ -58,7 +58,7 @@ h1 {
 }
 
 .users-table th, .users-table td {
-  border: 1px solid #dddddd;
+  border: 1px solid  #2c3e50;
   padding: 10px;
   text-align: left;
 }

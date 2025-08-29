@@ -175,7 +175,7 @@ export default function Users() {
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
-              <th>Status</th>
+              
               <th>Actions</th>
             </tr>
           </thead>
@@ -187,11 +187,7 @@ export default function Users() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  <td> 
-                    <span className={`status-badge ${user.status?.toLowerCase()}`}>
-                      {user.status}
-                    </span>
-                  </td>
+                  
                   <td>
                     <button
                       className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"

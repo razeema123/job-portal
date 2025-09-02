@@ -109,22 +109,66 @@ export default function Users() {
 
    
 
-  // Pagination logic
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
-  const startIndex = (currentPage - 1) * usersPerPage;
-  const currentUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
+ 
+   // Pagination logic
+const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+const startIndex = (currentPage - 1) * usersPerPage;
+const currentUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
 
-  const handlePrevPage = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
+const handlePrevPage = () => {
+  setCurrentPage((prev) => Math.max(prev - 1, 1));
+};
 
-  const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
+const handleNextPage = () => {
+  setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+};
 
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-  };
+const handlePageClick = (page) => {
+  setCurrentPage(page);
+};
+
+// Smart pagination display logic
+const getPageNumbers = () => {
+  const pages = [];
+  
+  if (totalPages <= 7) {
+    // If total pages is 7 or less, show all pages
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    // Always show first page
+    pages.push(1);
+    
+    if (currentPage <= 4) {
+      // If current page is in the beginning (1-4)
+      // Show: 1 2 3 4 5 ... 10
+      for (let i = 2; i <= 5; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    } else if (currentPage >= totalPages - 3) {
+      // If current page is near the end
+      // Show: 1 ... 6 7 8 9 10
+      pages.push('...');
+      for (let i = totalPages - 4; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // If current page is in the middle
+      // Show: 1 ... 4 5 6 ... 10
+      pages.push('...');
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    }
+  }
+  
+  return pages;
+};
 
   return (
     <div style={{ display: "flex" }}>
@@ -187,7 +231,7 @@ export default function Users() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  
+                 
                   <td>
                     <button
                       className="px-3 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
@@ -224,40 +268,74 @@ export default function Users() {
           </tbody>
         </table>
 
-        {/* Pagination Controls */}
-        <div style={{ marginTop: "20px", display: "flex", alignItems: "right", gap: "5px", float: "right"}}>
-          <button
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-            style={{ padding: "5px 10px" }} 
-          >
-            Prev
-          </button>
+        <div style={{ 
+  marginTop: "20px", 
+  display: "flex", 
+  alignItems: "center", 
+  justifyContent: "flex-end",
+  gap: "5px" 
+}}>
+  <button
+    onClick={handlePrevPage}
+    disabled={currentPage === 1}
+    style={{ 
+      padding: "8px 12px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      background: "#f0f0f0",
+      cursor: currentPage === 1 ? "not-allowed" : "pointer",
+      opacity: currentPage === 1 ? 0.5 : 1
+    }} 
+  >
+    Prev
+  </button>
 
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              onClick={() => handlePageClick(i + 1)}
-              style={{
-                padding: "5px 10px",
-                background: currentPage === i + 1 ? "#0a1725ff" : "#f0f0f0",
-                color: currentPage === i + 1 ? "#fff" : "#000",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            >
-              {i + 1}
-            </button>
-          ))}
+  {getPageNumbers().map((page, index) => 
+    page === '...' ? (
+      <span 
+        key={`ellipsis-${index}`}
+        style={{ 
+          padding: "8px 4px",
+          color: "#666",
+          userSelect: "none"
+        }}
+      >
+        ...
+      </span>
+    ) : (
+      <button
+        key={page}
+        onClick={() => handlePageClick(page)}
+        style={{
+          padding: "8px 12px",
+          background: currentPage === page ? "#0a1725ff" : "#f0f0f0",
+          color: currentPage === page ? "#fff" : "#000",
+          borderRadius: "4px",
+          border: "1px solid #ccc",
+          cursor: "pointer",
+          minWidth: "40px"
+        }}
+      >
+        {page}
+      </button>
+    )
+  )}
 
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages || totalPages === 0}
-            style={{ padding: "5px 10px" }}
-          >
-            Next
-          </button>
-        </div>
+  <button
+    onClick={handleNextPage}
+    disabled={currentPage === totalPages || totalPages === 0}
+    style={{ 
+      padding: "8px 12px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      background: "#f0f0f0",
+      cursor: (currentPage === totalPages || totalPages === 0) ? "not-allowed" : "pointer",
+      opacity: (currentPage === totalPages || totalPages === 0) ? 0.5 : 1
+    }}
+  >
+    Next
+  </button>
+</div>
       </div>
     </div>
   );

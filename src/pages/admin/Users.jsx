@@ -86,10 +86,7 @@ export default function Users() {
 
   // Accept / Reject
    
-
-   
-
-  const handleView = (user) => {
+const handleView = (user) => {
     navigate(`/admin/users/${user._id}`, { state: user });
   };
 
@@ -115,11 +112,7 @@ export default function Users() {
     );
   });
 
-
-   
-
- 
-   // Pagination logic
+// Pagination logic
 const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 const startIndex = (currentPage - 1) * usersPerPage;
 const currentUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
